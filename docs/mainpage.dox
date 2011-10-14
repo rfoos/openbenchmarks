@@ -45,7 +45,7 @@ The source code of benchmarks will be available as originals, and as non-perform
 
 
 Project Goals:
-- Provide a consistent build with autotools;
+- Consistent build and porting with autotools;
 - Recipes for Openembedded/OE-Core;
 - Consistent execution scripts with Jenkins-CI support;
 - Results parsed into csv/tsv spreadsheets; and
@@ -58,5 +58,19 @@ Related Projects:
 - Openembedded
 - Linux Foundation Poky (OE-Core)
 - Jenkins-CI
+
+@section changes Changelog
+
+The project is hosted on GitHub. It is a strong alternative to SourceForge, 
+free to me, and provides a working Forge/Dashboard for software development.
+That alone, having worked with customized GForge/Fusionforge is a load off
+my mind. Can live with it, Can't live without it - best of both.
+
+So to set thing up, Consistent build with buildconf, and Consistent 
+documentation with Doxygen. Doxgyen is not supported well in GitHub. You 
+are encouraged to use their Jekyll package. While this is good for the traditional web site to go along with source code, it does not document the source
+code by changing comments in the source code. 
+(See web, tangle, weave from TEX82) Not a new idea... 
+
 */
 
