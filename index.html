@@ -27,7 +27,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Openbenchmarks&#160;<span id="projectnumber">1.0</span></div>
-   <div id="projectbrief">Open Source Benchmarks for Everyone</div>
+   <div id="projectbrief">Open Source Benchmarks</div>
   </td>
  </tr>
  </tbody>
@@ -36,7 +36,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li id="searchli">
@@ -76,9 +75,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Openbenchmarks - Open Source Benchmark Collection </div>  </div>
 </div>
 <div class="contents">
-<div class="textblock"><p>Openbenchmarks is a collection of open source benchmarks relevant to Embedded Systems, Smart Phones, Networking Equipment, and more as we move forward.While some projects have gathered the source locations together, others have wrapped test harnesses around them, and a few of the more popular ones have been converted to rpms, and dpkgs as part of a linux distro.</p>
-<p>None of these projects have addressed the issues that arise from wildly different source bases from different authors at different times. Many have hooks for special research projects, specific hardware accelerator measurements, and makefiles for unique hardware or research compilers. Others are written for bare metal operation don't address portability to a wider base of platforms.</p>
-<p>Packing benchmark source builds into rpm/dpkg formats is a generic way to solve the problem, but it excludes a wide range of users from Researchers, to Silicon Verification. Performance studies need a complete understanding and full disclosure of what was done. Embedded developers may not have a full port of timers to Linux, or worse broken timers requireing alternative hardware methods. Verification Engineers may need to run code in RTL simulators. Validation Engineers working with new silicon have new features that can only be verified by performance differences, or measurements at a low level like a raw instruction stream in pipeline.</p>
+<div class="textblock"><p>Openbenchmarks is a unique collection of open source benchmarks relevant to Embedded Systems, Smart Phones, Networking Equipment, and more as we move forward.Previous projects like this have gathered the source locations together, others have wrapped test harnesses around them, and a few of the more popular ones have been converted to rpms, and dpkgs as part of a linux distro.</p>
+<p>None of the previous projects have addressed the issues that arise from wildly different source bases from different authors at different times. Many have hooks for special research projects, specific hardware accelerators, and makefiles for unique hardware or research compilers. Others are written for bare metal operation and don't address portability to a wider base of platforms.</p>
+<p>Packing benchmark source builds into rpm/dpkg formats is a generic way to solve the problem, but it excludes a wide range of users. Performance studies need a complete understanding and full disclosure of what was done. Embedded developers legitamitely need source code. They may not have a full port of timers to Linux, or worse broken timers requireing alternative hardware methods. Verification Engineers may need to run small blocks of code in RTL simulators. Validation Engineers have new features in silicon that can only be tested by performance differences, or measurements at a low level like a raw instruction stream in pipeline.</p>
 <p>Openbenchmarks shall operate from the original source, and wrap that source with up to date build tools, and modernized packaging for embedded systems and linux distributions. Openbenchmarks will not "throw away", or make it difficult to see the original source code. The source code of benchmarks will be available as originals, and as non-performance changing patches that can be independantly verified as such.</p>
 <p>Project Goals:</p>
 <ul>
@@ -104,7 +103,7 @@ Changelog</h2>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
-      <li class="footer">Generated on Fri Oct 14 2011 16:17:16 for Openbenchmarks by&#160;
+      <li class="footer">Generated on Fri Oct 14 2011 18:00:35 for Openbenchmarks by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

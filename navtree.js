@@ -2,15 +2,14 @@ var NAVTREE =
 [
   [ "Openbenchmarks", "index.html", [
     [ "Openbenchmarks - Open Source Benchmark Collection", "index.html", null ],
-    [ "Modules", "modules.html", [
-      [ "Benchmark Sources", "group__Opensource.html", null ]
-    ] ],
     [ "Namespace List", "namespaces.html", [
-      [ "autogen", "namespaceautogen.html", null ]
+      [ "autogen", "namespaceautogen.html", null ],
+      [ "postmark_1", "namespacepostmark__1.html", null ]
     ] ],
     [ "Namespace Members", "namespacemembers.html", null ],
     [ "File List", "files.html", [
-      [ "buildconf/autogen.sh", "autogen_8sh.html", null ]
+      [ "buildconf/autogen.sh", "autogen_8sh.html", null ],
+      [ "recipes/postmark/postmark_1.51.bb", "postmark__1_851_8bb.html", null ]
     ] ]
   ] ]
 ];

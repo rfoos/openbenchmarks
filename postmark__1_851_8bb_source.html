@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Openbenchmarks: Modules</title>
+<title>Openbenchmarks: recipes/postmark/postmark_1.51.bb Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
@@ -27,7 +27,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Openbenchmarks&#160;<span id="projectnumber">1.0</span></div>
-   <div id="projectbrief">Open Source Benchmarks for Everyone</div>
+   <div id="projectbrief">Open Source Benchmarks</div>
   </td>
  </tr>
  </tbody>
@@ -36,9 +36,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
-      <li><a href="files.html"><span>Files</span></a></li>
+      <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li id="searchli">
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -57,6 +56,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>File&#160;List</span></a></li>
+    </ul>
+  </div>
 </div>
 <div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
@@ -68,22 +72,46 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-  initNavTree('modules.html','');
+  initNavTree('postmark__1_851_8bb.html','');
 </script>
 <div id="doc-content">
 <div class="header">
   <div class="headertitle">
-<div class="title">Modules</div>  </div>
+<div class="title">recipes/postmark/postmark_1.51.bb</div>  </div>
 </div>
 <div class="contents">
-<div class="textblock">Here is a list of all modules:</div><ul>
-<li><a class="el" href="group__Opensource.html">Benchmark Sources</a></li>
-</ul>
-</div>
+<a href="postmark__1_851_8bb.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a><a class="code" href="namespacepostmark__1.html">00001</a> <span class="comment">## Bitbake Recipe for Postmark.</span>
+<a name="l00002"></a>00002 <span class="comment"># @file</span>
+<a name="l00003"></a>00003 
+<a name="l00004"></a><a class="code" href="namespacepostmark__1.html#a8d7358c291e4518bd7c23095e1988917">00004</a> DESCRIPTION = <span class="stringliteral">&quot;Benchmarks filesystem under workload similar to that of a mail server.&quot;</span>
+<a name="l00005"></a><a class="code" href="namespacepostmark__1.html#ae29bd6a3c3db451dc2b799342bfc5e38">00005</a> LICENSE = <span class="stringliteral">&quot;Artistic&quot;</span>
+<a name="l00006"></a>00006 
+<a name="l00007"></a><a class="code" href="namespacepostmark__1.html#a02d6c2b25047a6a1c77989fb9eafb148">00007</a> PR = <span class="stringliteral">&quot;r0&quot;</span>
+<a name="l00008"></a>00008 
+<a name="l00009"></a><a class="code" href="namespacepostmark__1.html#adc3056c2d59a897a67d68400aefe862a">00009</a> SRC_URI = <span class="stringliteral">&quot;${DEBIAN_MIRROR}/main/p/${PN}/${PN}_${PV}.orig.tar.gz \</span>
+<a name="l00010"></a>00010 <span class="stringliteral">           ${DEBIAN_MIRROR}/main/p/${PN}/${PN}_${PV}-7.diff.gz;name=patch&quot;</span>
+<a name="l00011"></a>00011 
+<a name="l00012"></a>00012 SRC_URI[md5sum] = <span class="stringliteral">&quot;b494167c2df1850004110ab28e5ad164&quot;</span>
+<a name="l00013"></a>00013 SRC_URI[sha256sum] = <span class="stringliteral">&quot;7cb7c31d4e7725ce8d8e11fb7df62ed700dee4dbd5ca1e31bf3a9161fc890b41&quot;</span>
+<a name="l00014"></a>00014 SRC_URI[patch.md5sum] = <span class="stringliteral">&quot;c2aafa2c1cc5aafe96390d582e119181&quot;</span>
+<a name="l00015"></a>00015 SRC_URI[patch.sha256sum] = <span class="stringliteral">&quot;345d2b656699e331774a77ef337178ba3e702f96d20e2aefc18e6ce4b50f4a23&quot;</span>
+<a name="l00016"></a>00016 
+<a name="l00017"></a>00017 TARGET_CC_ARCH += <span class="stringliteral">&quot;${LDFLAGS}&quot;</span>
+<a name="l00018"></a>00018 
+<a name="l00019"></a>00019 do_compile() {
+<a name="l00020"></a>00020         ${CC} ${CFLAGS} -o ${PN} ${PN}-${PV}.c
+<a name="l00021"></a>00021 }
+<a name="l00022"></a>00022 
+<a name="l00023"></a>00023 do_install () {
+<a name="l00024"></a>00024         install -d ${D}/usr/bin
+<a name="l00025"></a>00025         install -m 0755 ${PN} ${D}/usr/bin
+<a name="l00026"></a>00026 }
+</pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
-      <li class="footer">Generated on Fri Oct 14 2011 16:17:16 for Openbenchmarks by&#160;
+      <li class="navelem"><a class="el" href="postmark__1_851_8bb.html">postmark_1.51.bb</a>      </li>
+      <li class="footer">Generated on Fri Oct 14 2011 18:00:35 for Openbenchmarks by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>
