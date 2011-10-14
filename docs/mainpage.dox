@@ -1,0 +1,62 @@
+/**
+@brief Documentation file for Mainpage, and defgroups.
+@author Rick Foos at Solengtech dot Com
+@file
+*/
+/** @defgroup Opensource Benchmark Sources */
+
+/**
+@mainpage Openbenchmarks - Open Source Benchmark Collection
+
+Openbenchmarks is a collection of open source benchmarks relevant to
+Embedded Systems, Smart Phones, Networking Equipment, and more as we
+move forward.
+While some projects have gathered the source locations together, others
+have wrapped test harnesses around them, and a few of the more popular 
+ones have been converted to rpms, and dpkgs as part of a linux distro.
+
+
+None of these projects have addressed the issues that arise from wildly 
+different source bases from different authors at different times. Many
+have hooks for special research projects, specific hardware accelerator
+measurements, and makefiles for unique hardware or research compilers.
+Others are written for bare metal operation don't 
+address portability to a wider base of platforms.
+
+
+Packing benchmark source builds into rpm/dpkg formats is a generic way to solve
+the problem, but it excludes a wide range of users from Researchers, to Silicon
+Verification. Performance studies
+ need a complete understanding and full disclosure of what was done. 
+Embedded developers may not have a full port of timers to Linux, or worse 
+broken timers requireing alternative hardware methods.
+Verification Engineers may need to run code in RTL simulators.
+Validation Engineers  
+working with new silicon have new features that can only be verified by
+performance differences, or measurements at a low level 
+like a raw instruction stream in pipeline. 
+
+
+Openbenchmarks shall operate from the original source, and wrap that source with
+up to date build tools, and modernized packaging for embedded systems and
+linux distributions. Openbenchmarks will not "throw away", or make it difficult
+to see the original source code.
+The source code of benchmarks will be available as originals, and as non-performance changing patches that can be independantly verified as such. 
+
+
+Project Goals:
+- Provide a consistent build with autotools;
+- Recipes for Openembedded/OE-Core;
+- Consistent execution scripts with Jenkins-CI support;
+- Results parsed into csv/tsv spreadsheets; and
+- Consistent baseline of Doxygen documentation.
+ 
+
+Related Projects:
+- Buildconf (autogen.sh)
+- Doxygen
+- Openembedded
+- Linux Foundation Poky (OE-Core)
+- Jenkins-CI
+*/
+

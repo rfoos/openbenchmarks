@@ -1,0 +1,32 @@
+Openbenchmarks - Open Source Benchmark Collection
+
+There are a number of tried and true benchmarks that run great on embedded
+systems, break drivers, useful for both QA and Performance Studies. With
+a little modification and upgrades, these can be brought to a common level
+of build with Autotools. This offers some consistent porting between
+architetures, and some consistent execution as a suite.
+
+1) Incorporate into OpenEmbedded, OE-Core.
+2) Standalone build suite for GCC based Compilers.
+3) Some m4 and script extensions to allow other compilers to be used.
+
+These are primarily suited for systems running Linux, Cygwin/Windows, and
+Embedded Linux.
+
+If these are popular, a suite of microcontroller benchmarks can be done, but
+with much smaller kernels, and radically different toolchains.
+
+Rick Foos at Solengtech dot Com.
+Packages:
+buildconf
+Liense: BSD License 
+Source: git clone git://buildconf.git.sourceforge.net/gitroot/buildconf/buildconf
+Download: http://sourceforge.net/projects/buildconf/files/latest`
+Authors: Confirming Names.
+Status: Used as download ATM, will layer this with git as we go forward.
+
+Changelog:
+- Create grandmaster -> master, gh-pages peers for doxygen site.
+- Importing Buildconf (autogen.sh), Adding Doxyfile.
+
+
