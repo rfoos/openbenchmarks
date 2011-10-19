@@ -1,0 +1,3 @@
+[submodule "buildconf"]
+	path = buildconf
+	url = git://buildconf.git.sourceforge.net/gitroot/buildconf/buildconf
