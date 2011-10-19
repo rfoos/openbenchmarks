@@ -4,11 +4,19 @@ var NAVTREE =
     [ "Openbenchmarks - Open Source Benchmark Collection", "index.html", null ],
     [ "Namespace List", "namespaces.html", [
       [ "autogen", "namespaceautogen.html", null ],
-      [ "postmark_1", "namespacepostmark__1.html", null ]
+      [ "helpers", "namespacehelpers.html", null ],
+      [ "postmark_1", "namespacepostmark__1.html", null ],
+      [ "run", "namespacerun.html", null ],
+      [ "suite", "namespacesuite.html", null ]
     ] ],
     [ "Namespace Members", "namespacemembers.html", null ],
     [ "File List", "files.html", [
       [ "buildconf/autogen.sh", "autogen_8sh.html", null ],
+      [ "buildconf/test/helpers.sh", "helpers_8sh.html", null ],
+      [ "buildconf/test/suite.sh", "suite_8sh.html", null ],
+      [ "buildconf/test/detect-foreign-configure/run.sh", "detect-foreign-configure_2run_8sh.html", null ],
+      [ "buildconf/test/detect-foreign-makefile-am/run.sh", "detect-foreign-makefile-am_2run_8sh.html", null ],
+      [ "buildconf/test/neither-foreign-nor-cygnus/run.sh", "neither-foreign-nor-cygnus_2run_8sh.html", null ],
       [ "recipes/postmark/postmark_1.51.bb", "postmark__1_851_8bb.html", null ]
     ] ]
   ] ]

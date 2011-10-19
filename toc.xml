@@ -2,11 +2,19 @@
   <topic label="Openbenchmarks - Open Source Benchmark Collection" href="index.html"/>
   <topic label="Namespace List" href="namespaces.html">
     <topic label="autogen" href="namespaceautogen.html"/>
+    <topic label="helpers" href="namespacehelpers.html"/>
     <topic label="postmark_1" href="namespacepostmark__1.html"/>
+    <topic label="run" href="namespacerun.html"/>
+    <topic label="suite" href="namespacesuite.html"/>
   </topic>
   <topic label="Namespace Members" href="namespacemembers.html"/>
   <topic label="File List" href="files.html">
     <topic label="buildconf/autogen.sh" href="autogen_8sh.html"/>
+    <topic label="buildconf/test/helpers.sh" href="helpers_8sh.html"/>
+    <topic label="buildconf/test/suite.sh" href="suite_8sh.html"/>
+    <topic label="buildconf/test/detect-foreign-configure/run.sh" href="detect-foreign-configure_2run_8sh.html"/>
+    <topic label="buildconf/test/detect-foreign-makefile-am/run.sh" href="detect-foreign-makefile-am_2run_8sh.html"/>
+    <topic label="buildconf/test/neither-foreign-nor-cygnus/run.sh" href="neither-foreign-nor-cygnus_2run_8sh.html"/>
     <topic label="recipes/postmark/postmark_1.51.bb" href="postmark__1_851_8bb.html"/>
   </topic>
 </toc>

@@ -84,9 +84,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="contents">
 
-<p>Buildconf autogen script.  
-<a href="#details">More...</a></p>
-
 <p><a href="autogen_8sh_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="namespaces"></a>
@@ -100,7 +97,7 @@ Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#a7d208ba10c1c6552c6990c5102ecaaf8">autogen::LIBTOOL_VERSION</a> = 1.4</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#ad93d950a4244c5bb4244cadce2b3d108">autogen::__copyright</a> = &quot;`grep Copyright $AUTOGEN_SH | head -${HEAD_N}1 | awk '{print $4}'`&quot;</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">ident function #  <a href="#ad93d950a4244c5bb4244cadce2b3d108"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#a159a36e22577e18386daf06196c966e9">autogen::__id</a> = &quot;$Id: autogen.sh 33925 2009-03-01 23:27:06Z brlcad $&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#a159a36e22577e18386daf06196c966e9">autogen::__id</a> = &quot;$Id$&quot;</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#a21dbd140331cfc834ca236b8fd506bea">autogen::__version</a> = &quot;`echo $__id | sed 's/.*\([0-9][0-9][0-9][0-9]\)[-\/]\([0-9][0-9]\)[-\/]\([0-9][0-9]\).*/\1\2\3/'`&quot;</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#aff0507c7176dc9c02a1082ec95b458be">autogen::_min</a> = &quot;$1&quot;</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">USAGE FUNCTION #.  <a href="#aff0507c7176dc9c02a1082ec95b458be"></a><br/></td></tr>
@@ -116,6 +113,7 @@ Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#a9cb3d78b98cef3b9b0587986e37c4c12">autogen::ARGS</a> = &quot;$*&quot;</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">argument check #  <a href="#a9cb3d78b98cef3b9b0587986e37c4c12"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#aedf013a142013663ac1f71f2a68ee246">autogen::PATH_TO_AUTOGEN</a> = &quot;`dirname $0`&quot;</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">environment check #  <a href="#aedf013a142013663ac1f71f2a68ee246"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#a4613e3b049c06b0c6195537b2fd9de01">autogen::NAME_OF_AUTOGEN</a> = &quot;`basename $0`&quot;</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#ab602289f535b7ff289ed419f724ee26c">autogen::AUTOGEN_SH</a> = &quot;$PATH_TO_AUTOGEN/$NAME_OF_AUTOGEN&quot;</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#a9f2f13fb1ef802c68b248ad824528444">autogen::LIBTOOL_M4</a> = &quot;${PATH_TO_AUTOGEN}/misc/libtool.m4&quot;</td></tr>
@@ -135,7 +133,6 @@ Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#aec31c6265f5ebb5736c1c84e77294194">autogen::AUTOHEADER_OPTIONS</a> = &quot;&quot;</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#a720dfeddd478dbb25ec6177bdc10e752">autogen::CONFIG_GUESS_URL</a> = &quot;http://git.savannah.gnu.org/gitweb/?p=gnulib.git;a=blob_plain;f=build-aux/config.guess;hb=HEAD&quot;</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#a95a261a8f406a5060b7ea8b590f038ad">autogen::LC_ALL</a> = C</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">environment check #  <a href="#a95a261a8f406a5060b7ea8b590f038ad"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#a88959093c1e491215b2c42d7cbae7864">autogen::VERBOSE_ECHO</a> = :</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#ad1e889344c128da645e961f8fda3a0e7">autogen::ECHO</a> = :</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#a4d4b6eb696449489b215128ce6f274db">autogen::RUN_RECURSIVE</a> = yes</td></tr>
@@ -201,7 +198,11 @@ Variables</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">libtoolize #  <a href="#ad3c46a790c1548cd351f8198dade40e6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#abee559112714afecfe8ab1f1912cebf5">autogen::autoconf_output</a> = &quot;`$AUTOCONF $AUTOCONF_OPTIONS 2&gt;&amp;1`&quot;</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">autoconf #  <a href="#abee559112714afecfe8ab1f1912cebf5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#a9582144ea3ff0ebb8d2a9eb26ecb20dc">autogen::ac2_59_macros</a> = &quot;AC_C_RESTRICT AC_INCLUDES_DEFAULT AC_LANG_ASSERT AC_LANG_WERROR AS_SET_CATFILE&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#a9517a2a48324a21e349e3ad80ef08f54">autogen::ac2_65_macros</a> = &quot;AT_CHECK_EUNIT AC_PROG_OBJCXX AC_PROG_OBJCXXCPP&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#a9e1f665d8fdc96c5364e3bdf8984f7ff">autogen::ac2_64_macros</a> = &quot;AT_CHECK_UNQUOTED AT_FAIL_IF AT_SKIP_IF AC_ERLANG_SUBST_ERTS_VER&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#a380e7c633aa009b23b23562e56da6989">autogen::ac2_62_macros</a> = &quot;AC_AUTOCONF_VERSION AC_OPENMP AC_PATH_PROGS_FEATURE_CHECK&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#af937c1496a0620a0462ffb89e9a3d59b">autogen::ac2_60_macros</a> = &quot;AC_C_FLEXIBLE_ARRAY_MEMBER AC_C_VARARRAYS&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#a9582144ea3ff0ebb8d2a9eb26ecb20dc">autogen::ac2_59_macros</a> = &quot;AC_C_RESTRICT AC_INCLUDES_DEFAULT AC_LANG_ASSERT AC_LANG_WERROR AS_SET_CATFILE AC_PROG_SED AC_PROG_GREP AC_REQUIRE_AUX_FILE AC_CHECK_TARGET_TOOL AC_PATH_TARGET_TOOL AC_CHECK_TARGET_TOOLS AC_CHECK_ALIGNOF AC_PROG_OBJC AC_PROG_OBJCPP AC_ERLANG_SUBST_INSTALL_LIB_DIR AC_ERLANG_SUBST_INSTALL_LIB_SUBDIR AC_ERLANG_PATH_ERLC AC_ERLANG_NEED_ERLC AC_ERLANG_PATH_ERL AC_ERLANG_NEED_ERL AC_ERLANG_CHECK_LIB AC_ERLANG_SUBST_ROOT_DIR AC_ERLANG_SUBST_LIB_DIR AT_COPYRIGHT AS_BOURNE_COMPATIBLE AS_SHELL_SANITIZE AS_CASE AH_HEADER AC_USE_SYSTEM_EXTENSIONS AC_TYPE_INT8_T AC_TYPE_INT16_T AC_TYPE_INT32_T AC_TYPE_INT64_T AC_TYPE_INTMAX_T AC_TYPE_INTPTR_T AC_TYPE_LONG_LONG_INT AC_TYPE_SSIZE_T AC_TYPE_UINT8_T AC_TYPE_UINT16_T AC_TYPE_UINT32_T AC_TYPE_UINT64_T AC_TYPE_UINTMAX_T AC_TYPE_UINTPTR_T AC_TYPE_UNSIGNED_LONG_LONG_INT AC_TYPE_LONG_DOUBLE AC_TYPE_LONG_DOUBLE_WIDER AC_STRUCT_DIRENT_D_INO AC_STRUCT_DIRENT_D_TYPE AC_PROG_CC_C89 AC_PROG_CC_C99 AC_PRESERVE_HELP_ORDER AC_HEADER_ASSERT AC_FUNC_STRTOLD AC_C_TYPEOF AC_PROG_MKDIR_P AC_PROG_CXX_C_O&quot;</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#a2bae1d8cb8c5e0a3c250398613a3d075">autogen::ac2_55_macros</a> = &quot;AC_COMPILER_IFELSE AC_FUNC_MBRTOWC AC_HEADER_STDBOOL AC_LANG_CONFTEST AC_LANG_SOURCE AC_LANG_PROGRAM AC_LANG_CALL AC_LANG_FUNC_TRY_LINK AC_MSG_FAILURE AC_PREPROC_IFELSE&quot;</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#ac3145f8cd63f2acfc1b7e8400c584ecd">autogen::ac2_54_macros</a> = &quot;AC_C_BACKSLASH_A AC_CONFIG_LIBOBJ_DIR AC_GNU_SOURCE AC_PROG_EGREP AC_PROG_FGREP AC_REPLACE_FNMATCH AC_FUNC_FNMATCH_GNU AC_FUNC_REALLOC AC_TYPE_MBSTATE_T&quot;</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#af2f7f6ca553b97b90d9e19da3e82c669">autogen::macros_to_search</a> = &quot;&quot;</td></tr>
@@ -219,17 +220,12 @@ Variables</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">RECURSIVE_MANUAL_AUTOGEN FUNCTION #.  <a href="#aa61ab0bd2126304c82d30cb83633fabe"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceautogen.html#a73d7cabcf2def1e6e42b1c9d39b3b784">autogen::config</a> = &quot;`echo $config_ac | sed 's/\.ac$//' | sed 's/\.in$//'`&quot;</td></tr>
 </table>
-<hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>Buildconf autogen script. </p>
-<dl class="author"><dt><b>Author:</b></dt><dd>Christopher Sean Morrison &lt;<a href="mailto:morrison@brlcad.org">morrison@brlcad.org</a>&gt;, Sebastian Pipping &lt;<a href="mailto:sebastian@pipping.org">sebastian@pipping.org</a>&gt; </dd></dl>
-
-<p>Definition in file <a class="el" href="autogen_8sh_source.html">autogen.sh</a>.</p>
-</div></div>
+</div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="autogen_8sh.html">autogen.sh</a>      </li>
-      <li class="footer">Generated on Fri Oct 14 2011 18:00:35 for Openbenchmarks by&#160;
+      <li class="footer">Generated on Wed Oct 19 2011 02:15:56 for Openbenchmarks by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>
