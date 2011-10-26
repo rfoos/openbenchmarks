@@ -1,0 +1,53 @@
+#!/bin/sh
+## Run script for dhrystone 2.1
+# @author Rick Foos
+# @file
+
+for i
+do
+	valid=`echo $i | sed -e "s|[^=]||g"`
+	if [ -n "$valid" ]
+	then
+		eval $i
+		#echo $i
+	else
+		echo "INFO: Invalid argument $i"
+	fi
+done
+## Optional Simulator run.
+EXEC="@SIM@"
+
+[ -z "$srcdir" ] && srcdir=.
+[ -z "$bindir" ] && bindir=.
+[ -z "$run_PROG" ] && run_PROG=${bindir}/dhrystone
+[ -z "$run_OUT" ] && run_OUT=${srcdir}/dhrystone.txt
+# Tune for your system.
+[ -z "$run_LOOPS" ] && run_LOOPS=9000000
+
+
+# Check executables
+
+if [ ! -x "${run_PROG}" ] 
+then
+	echo "ERROR: ${run_PROG} not found or not executable"
+	exit 1
+fi
+
+if [ -f "${run_OUT}" ]
+then
+	echo "INFO: RERUN results in ${run_OUT}"
+else
+	echo "INFO: running ${run_PROG} for ${run_LOOPS} loops..."
+	echo "${run_LOOPS}" | $EXEC ${run_PROG} >${run_OUT}
+        rc=$?
+        if [ "rc" != "0" ]
+        then
+          echo "ERROR: run failed: $rc"
+          rm -f ${run_OUT}
+	elif [ ! -z "`grep increase ${run_OUT}`" ]
+	then
+		echo "ERROR: increase loops (run.sh run_ARGS=xxx)"
+		rm -f ${run_OUT}
+	fi
+fi
+

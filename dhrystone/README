@@ -1,0 +1,9 @@
+Dhrystone History
+
+Released in 1988 as a research paper.
+Dhrystone 2.0 is no longer used, version 2.1 is assumed.
+
+Dhrystone 2.1 delivered as a shar file, dhry-c.
+
+Original source: http://www.netlib.org/benchmark/dhrystone
+

@@ -1,0 +1,19 @@
+Openbenchmarks
+
+Postmark History
+
+Original work by Jeffery Katcher. Distributed under Artistic License.
+
+Picked up as a Debian package, and taken to a 1.51-7.
+
+Unknown - Included in OpenEmbedded
+
+Rick Foos - Added to Openbenchmarks, and proposed for Meta-OE.
+
+Original Site is not available for download:
+wget http://postmark.sourcearchive.com/downloads/1.51-7/postmark_1.51.orig.tar.gz
+wget http://postmark.sourcearchive.com/downloads/1.51-7/postmark_1.51-7.diff.gz
+tar zxf postmark_1.51.orig.tar.gz
+gunzip postmark_1.51-7.diff.gz
+patch -p0 < postmark_1.51-7.diff.gz
+

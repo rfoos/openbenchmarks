@@ -1,0 +1,22 @@
+#!/bin/bash
+
+[ -n "${srcdir}" ] || srcdir=$(pwd)
+[ -n "${bindir}" ] || bindir=$(pwd)
+run_PROG=${bindir}/postmark
+run_OUT=${srcdir}/postmark.txt
+run_IN=${srcdir}/postmark-cmds.txt
+
+if [ ! -x "${run_PROG}" ]
+then
+	echo "ERROR: ${run_PROG} not found or not executable"
+	exit 1
+fi
+
+if [ -f "${run_OUT}" ]
+then
+	echo "INFO: skipping, results in ${run_OUT}"
+else
+	echo "INFO: running ${run_PROG} ..."
+	${run_PROG} <${run_IN} >${run_OUT}
+fi
+

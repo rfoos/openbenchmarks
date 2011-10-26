@@ -1,0 +1,5 @@
+set transactions 1000
+set number 10000
+set size 4096 20000
+run
+quit

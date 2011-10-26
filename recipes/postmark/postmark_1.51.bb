@@ -3,8 +3,9 @@
 
 DESCRIPTION = "Benchmarks filesystem under workload similar to that of a mail server."
 LICENSE = "Artistic"
+LIC_FILES_CHKSUM = "file://postmark-1.51.c;beginline=1;endline=11;md5=1f30542fd7f19c8ca3aaa4d2ab792a64"
 
-PR = "r0"
+PR = "r1"
 
 SRC_URI = "${DEBIAN_MIRROR}/main/p/${PN}/${PN}_${PV}.orig.tar.gz \
 	   ${DEBIAN_MIRROR}/main/p/${PN}/${PN}_${PV}-7.diff.gz;name=patch"
