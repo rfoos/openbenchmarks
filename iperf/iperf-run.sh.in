@@ -1,0 +1,83 @@
+#!/bin/bash
+## Iperf run script.
+# @author Rick Foos
+# @file
+
+#debug
+set -x #echo onset +x #echo off
+
+# Simple optarg to set environment variables, and execute commands.
+for i
+do
+    validopt=$(sed -e "s|[^=]||g" <<<$i)
+    if [ -n "$validopt" ]
+    then
+        eval $i
+        echo "INFO: Option  $i"
+        ## Use this block for fixed option set.
+        #opt=$(sed -e "s|\([^=]*\).*|\1|" <<<$i)
+        #case $opt in
+        #srcdir | bindir)
+        #    eval $i
+        #    echo "INFO: Option  $i";;
+        #*)      echo "WARNING: Invalidopt option: $option";;
+        #esac
+    else
+        echo "WARNING: Invalid command $i ignored"
+        ## Use this block for fixed command set.
+        #echo "INFO: Command  $i"
+        #case $i in
+        #shortrun)
+        #    cmd_SHORTRUN="YES"
+        #    ;;
+        #clean)
+        #    cmd_CLEAN="YES"
+        #    ;;
+        #*)      echo "WARNING: Invalid command $i ignored";;
+        #esac
+    fi
+done
+
+## Allows Simulator or other exec tools.
+[ -n ${SIMULATOR} ] || SIMULATOR="@SIMULATOR@"
+[ -n "${srcdir}" ] || srcdir="$(dirname $0)" # srcdir: @srcdir@
+[ -n "${bindir}" ] || bindir="$(dirname $0)" # bindir: @bindir@
+[ -n "${PROGRAM}" ] || PROGRAM="${bindir}/iperf"
+[ -n "${OUTFILE}" ] || OUTFILE="${srcdir}/iperf.txt"
+#[ -n "${ARGS}" ] || ARGS=""
+[ -n "${SERVERHOST}" ] || SERVERHOST="localhost"
+[ -n "${PROCESSES}" ] || PROCESSES="1 2 4 8 16 32 64"
+[ -n "${SERVER}" ] || SERVER="$PROGRAM -s"
+[ -n "${CLIENT}" ] || CLIENT="$PROGRAM -c"
+
+# Command Execution
+[ "${RUNCMD}" == "clean" ] && rm -f ${OUTFILE} && echo "INFO: clean..."
+
+# Check executable
+if [ ! -x "${PROGRAM}" ]
+then
+    echo "ERROR: ${PROGRAM} not found or not executable"
+    exit 1
+fi
+
+# Create a server and get the pid.
+## @todo add more cases for local adapter selection.
+if [ "${SERVERHOST}" == "localhost" ]; then
+    ${SERVER} &
+    pid=$!
+    echo "INFO: $PROGRAM server at $pid"
+fi
+
+if [ -f "${OUTFILE}" ]
+then
+	echo "INFO: skipping, results in ${OUTFILE}"
+else
+	for i in ${PROCESSES}
+	do
+		echo "INFO: running ${CLIENT} with $i processes on ${SERVERHOST}"
+		$SIMULATOR ${CLIENT} ${ARGS} ${SERVERHOST} -P $i >>${OUTFILE}
+	done
+fi
+
+[ -n "$pid" ] && kill -9 $pid
+

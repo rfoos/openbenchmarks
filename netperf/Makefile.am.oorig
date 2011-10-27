@@ -1,0 +1,36 @@
+## Automake Definitions for Netperf.
+# @author Rick Foos
+# @file
+
+AUTOMAKE_OPTIONS = foreign
+
+bin_PROGRAMS = netperf netserver
+bin_SCRIPTS   = tcp_range_script tcp_stream_script tcp_rr_script \
+                    udp_stream_script udp_rr_script snapshot_script \
+		    netperf-run.sh
+
+LOG_FILE=DEBUG_LOG_FILE="\"/tmp/netperf.debug\""
+AM_CFLAGS = -D$(LOG_FILE) -DUSE_PROC_STAT
+
+netserver_SOURCES  = netserver.c nettest_bsd.c nettest_dlpi.c \
+                    nettest_unix.c netlib.c netsh.c  \
+		    nettest_xti.c nettest_ipv6.c \
+                    nettest_dns.c
+
+netperf_SOURCES	  = netperf.c netsh.c netlib.c nettest_bsd.c \
+                    nettest_dlpi.c nettest_unix.c  \
+		    nettest_xti.c nettest_ipv6.c \
+                    nettest_dns.c
+
+noinst_HEADERS = \
+	hist.h \
+	netlib.h \
+	netsh.h \
+	nettest_bsd.h \
+	nettest_dlpi.h \
+	nettest_dns.h \
+	nettest_ipv6.h \
+	nettest_unix.h \
+	nettest_xti.h 
+	
+EXTRA_DIST = autogen.sh run.sh $(bin_SCRIPTS) 

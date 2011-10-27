@@ -1,0 +1,81 @@
+#!/bin/bash
+## Run script for TTCP
+# @author Rick Foos
+# @file
+
+#debug
+set -x #echo onset +x #echo off
+
+# Simple optarg to set environment variables, and execute commands.
+for i
+do
+    validopt=$(sed -e "s|[^=]||g" <<<$i)
+    if [ -n "$validopt" ]
+    then
+        eval $i
+        echo "INFO: Option  $i"
+        ## Use this block for fixed option set.
+        #opt=$(sed -e "s|\([^=]*\).*|\1|" <<<$i)
+        #case $opt in
+        #srcdir | bindir)
+        #    eval $i
+        #    echo "INFO: Option  $i";;
+        #*)      echo "WARNING: Invalidopt option: $option";;
+        #esac
+    else
+        echo "WARNING: Invalid command $i ignored"
+        ## Use this block for fixed command set.
+        #echo "INFO: Command  $i"
+        #case $i in
+        #shortrun)
+        #    cmd_SHORTRUN="YES"
+        #    ;;
+        #clean)
+        #    cmd_CLEAN="YES"
+        #    ;;
+        #*)      echo "WARNING: Invalid command $i ignored";;
+        #esac
+    fi
+done
+
+# Set Default values from Autotools, may be overridden in command line
+[ -n "${srcdir}" ] || srcdir=$(dirname $0) # srcdir: @srcdir@
+[ -n "${bindir}" ] || bindir=$(dirname $0) # bindir: @bindir@
+[ -n "${SIMULATOR}" ] || SIMULATOR=@SIMULATOR@
+[ -n "${PROGRAM}" ] || PROGRAM="${bindir}/ttcp"
+[ -n "${OUTFILE}" ] || OUTFILE="${srcdir}/ttcp.txt"
+
+SERVERHOST="localhost"
+PROCESSES="1 2 4 8 16 32 64"
+SERVER="$PROGRAM -s -r -f m"
+CLIENT="$PROGRAM -s -t -f m"
+
+START_PORT=5000
+START_NUMBUFFERS=2048
+START_BUFSIZE=8192
+
+# Command Execution
+[ "${RUNCMD}" == "clean" ] && rm -f ${OUTFILE} && echo "INFO: clean..."
+
+# Check executable
+if [ ! -x "${PROGRAM}" ]
+then
+    echo "ERROR: ${PROGRAM} not found or not executable"
+    exit 1
+fi
+
+if [ -f "${OUTFILE}" ]
+then
+    echo "$0: skipping, results in ${OUTFILE}"
+else
+    echo "$0: Receiver with $START_NUMBUFFERS, size $START_BUFSIZE"
+    ${SERVER} -p ${START_PORT} -l ${START_BUFSIZE} ${SERVERHOST} &
+    PID=$?
+    echo "${SERVER} -p ${START_PORT} -l ${START_BUFSIZE} ${SERVERHOST} "
+    echo "$0: Transmiting $START_NUMBUFFERS on ${SERVERHOST}"
+    ${CLIENT} -p ${START_PORT} -n ${START_NUMBUFFERS} -l ${START_BUFSIZE} ${SERVERHOST} >>${OUTFILE}
+    echo "${CLIENT} -p ${START_PORT} -n ${START_NUMBUFFERS} -l ${START_BUFSIZE} ${SERVERHOST} >>${OUTFILE}"
+fi
+
+[ -n "$PID" ] && kill -9 $PID
+

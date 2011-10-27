@@ -1,0 +1,379 @@
+
+------------------------------------------------------
+Testing with the following command line:
+./netperf -l 20 -H localhost -t TCP_RR -i 10,3 -I 99,5 -- -s 0 -S 0
+
+and these settings for send sizes 1 16 32 64 128 256 512 1024 1460 1461 2920 2921 4380 4381
+
+TCP REQUEST/RESPONSE TEST to localhost : +/-0.0% @ -16843009% conf.
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+Local /Remote
+Socket Size   Request  Resp.   Elapsed  Trans.
+Send   Recv   Size     Size    Time     Rate         
+bytes  Bytes  bytes    bytes   secs.    per sec   
+
+16384  87380  1        1       0.00     134221535.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  16       1       0.00     134221151.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  32       1       0.00     134220895.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  64       1       0.00     134221151.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  128      1       0.00     134221151.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  256      1       0.00     134220639.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  512      1       0.00     134221023.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  1024     1       0.00     134221919.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  1460     1       0.00     134221919.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  1461     1       0.00     134222431.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  2920     1       0.00     134220895.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  2921     1       0.00     134221279.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  4380     1       0.00     134222175.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  4381     1       0.00     134222175.75   
+262142 262142
+
+------------------------------------------------------
+Testing with the following command line:
+./netperf -l 20 -H localhost -t TCP_RR -i 10,3 -I 99,5 -- -s 0 -S 0
+and these settings for response sizes 1 16 32 64 128 256 512 1024 1460 1461 2920 2921 4380 4381
+
+TCP REQUEST/RESPONSE TEST to localhost : +/-0.0% @ -16843009% conf.
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+Local /Remote
+Socket Size   Request  Resp.   Elapsed  Trans.
+Send   Recv   Size     Size    Time     Rate         
+bytes  Bytes  bytes    bytes   secs.    per sec   
+
+16384  87380  1        1       0.00     134221407.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  1        16      0.00     134221535.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  1        32      0.00     134221407.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  1        64      0.00     134221151.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  1        128     0.00     134221151.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  1        256     0.00     134222047.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  1        512     0.00     134221407.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  1        1024    0.00     134220767.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  1        1460    0.00     134220639.75   
+262142 262142
+16384  87380  1        1461    0.00     134220255.75   
+65536  262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  1        2920    0.00     134221407.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  1        2921    0.00     134222431.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  1        4380    0.00     134221791.75   
+262142 262142
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+16384  87380  1        4381    0.00     134220895.75   
+262142 262142
+
+------------------------------------------------------
+Testing with the following command line:
+./netperf -l 20 -H localhost -t TCP_STREAM -i 10,3 -I 99,5 -- -s 0 -S 0
+and these settings for response sizes 1 16 32 64 128 256 512 1024 1460 1461 2920 2921 4380 4381
+
+TCP STREAM TEST to localhost : +/-0.0% @ -16843009% conf. : nodelay
+Recv   Send    Send                          
+Socket Socket  Message  Elapsed              
+Size   Size    Size     Time     Throughput  
+bytes  bytes   bytes    secs.    10^6bits/sec  
+
+262142  16384      1    0.00        0.00   
+262142  16384     16    0.00        0.00   
+262142  16384     32    0.00        0.00   
+262142  16384     64    0.00        0.00   
+262142  16384    128    0.00        0.00   
+262142  16384    256    0.00        0.00   
+262142  16384    512    0.00        0.00   
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+262142  16384   1024    0.00        0.00   
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+262142  16384   1460    0.00        0.00   
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+262142  16384   1461    0.00        0.00   
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+262142  16384   2920    0.00        0.00   
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+262142  16384   2921    0.00        0.00   
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+262142  16384   4380    0.00        0.00   
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+262142  16384   4381    0.00        0.00   

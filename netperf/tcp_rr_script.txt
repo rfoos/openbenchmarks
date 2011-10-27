@@ -1,0 +1,89 @@
+
+------------------------------------------------------
+Testing with the following command line:
+./netperf -l 60 -H localhost -t TCP_RR -i 10,3 -I 99,5 -- -r 1,1 -s 0 -S 0
+
+TCP REQUEST/RESPONSE TEST to localhost : +/-0.0% @ -16843009% conf.
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+Local /Remote
+Socket Size   Request  Resp.   Elapsed  Trans.
+Send   Recv   Size     Size    Time     Rate         
+bytes  Bytes  bytes    bytes   secs.    per sec   
+
+16384  87380  1        1       0.00     1099528140800.00   
+262142 262142
+
+------------------------------------------------------
+Testing with the following command line:
+./netperf -l 60 -H localhost -t TCP_RR -i 10,3 -I 99,5 -- -r 64,64 -s 0 -S 0
+
+TCP REQUEST/RESPONSE TEST to localhost : +/-0.0% @ -16843009% conf.
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+Local /Remote
+Socket Size   Request  Resp.   Elapsed  Trans.
+Send   Recv   Size     Size    Time     Rate         
+bytes  Bytes  bytes    bytes   secs.    per sec   
+
+16384  87380  64       64      0.00     1099526043648.00   
+262142 262142
+
+------------------------------------------------------
+Testing with the following command line:
+./netperf -l 60 -H localhost -t TCP_RR -i 10,3 -I 99,5 -- -r 100,200 -s 0 -S 0
+
+TCP REQUEST/RESPONSE TEST to localhost : +/-0.0% @ -16843009% conf.
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+Local /Remote
+Socket Size   Request  Resp.   Elapsed  Trans.
+Send   Recv   Size     Size    Time     Rate         
+bytes  Bytes  bytes    bytes   secs.    per sec   
+
+16384  87380  100      200     0.00     1099529189376.00   
+262142 262142
+
+------------------------------------------------------
+Testing with the following command line:
+./netperf -l 60 -H localhost -t TCP_RR -i 10,3 -I 99,5 -- -r 128,8192 -s 0 -S 0
+
+TCP REQUEST/RESPONSE TEST to localhost : +/-0.0% @ -16843009% conf.
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+Local /Remote
+Socket Size   Request  Resp.   Elapsed  Trans.
+Send   Recv   Size     Size    Time     Rate         
+bytes  Bytes  bytes    bytes   secs.    per sec   
+
+16384  87380  128      8192    0.00     1099527092224.00   
+262142 262142
+
+If you wish to submit these results to the netperf database at
+http://www.cup.hp.com/netperf/NetperfPage.html, please submit each
+datapoint individually. Individual datapoints are separated by
+lines of dashes.

@@ -1,0 +1,50 @@
+
+This is a useful benchmark for function and performance. It is in
+work, and the goal is to submit changes back to the author.
+
+Two GIT repos are required, and loaded as submodules.
+  git clone git://git.lttng.org/benchmarks.git
+  git clone git://git.lttng.org/ust.git
+
+
+Rick Foos
+----
+On 02/15/2011 11:25 AM, William Cohen wrote:
+> On 02/15/2011 10:53 AM, Julien Desfossez wrote:
+>> LTTng-UST vs SystemTap userspace tracing benchmarks
+>>
+>> February 15th, 2011
+>>
+>> Authors: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+>>          Julien Desfossez <julien.desfossez@polymtl.ca>
+> 
+>> * SystemTap probe (stap testutrace.stp -F) :
+>> probe process("./.libs/tracepoint_benchmark").mark("single_trace") {
+>>     printf("%d : %s\n", gettimeofday_ns(), $arg1);
+>> }
+
+Hi William,
+> How much of the SystemTap overhead is due to the printf() statement in the probe? What is the run time for the following:
+> 
+> probe process("./.libs/tracepoint_benchmark").mark("single_trace") {}
+Except the fact that it produces a warning because the probe is empty,
+the results differ a little but not as much as I expected. I also tested
+(in flight recorder mode) with just removing the gettimeofday_ns() call
+(and printing) :
+
+# of threads   With printf    Without gtod_ns()   Without printf
+1              0:58.36        0:52.27             0:46.45
+2              1:49.94        1:37.61             1:27.33
+4              2:38.49        2:35.13             2:50.87
+
+> Is the code for the benchmarks available, so we can take a look at reducing the overhead of SystemTap?
+For those who want to play with the benchmark, we setup a git repository
+here : git://git.lttng.org/benchmarks.git
+
+If you have any suggestions or ideas to make these tests better, we'll
+be happy to integrate it.
+
+Thanks,
+
+Julien
+

@@ -1,0 +1,133 @@
+6/06/06
+
+Current version is 5.3.1.  Introduced since 4.0.3 is max segment setting,
+tos settings, ipv4 multicast support, as well as many bug fixes and
+improvements. The beginning of a man page can be found in nuttcp.8 and
+a set of examples in examples.txt with commentary.
+
+Version 4.0.3 introduced IPv6 support and changed the command defaults to 
+brief output, 10 second time limited transmit.  The "-xt" option now does
+both forward and reverse traceroutes.
+
+Note the rarely used "-b" option has been changed to instead signify
+brief output.  The old "-b" option is now "-wb".
+
+********************************************************************************
+The nuttcp software is geared toward network managers, and is *NOT* intended
+for general public use.  You may send bug reports, feature requests, or general
+comments to billfink@mindspring.com, but we make no promises about being able
+to respond.  In other words, we hope you find this network performance
+monitoring tool useful (it's based on the original ttcp/nttcp), but there is
+no warranty of any kind.  It has several useful features beyond those of the
+basic ttcp/nttcp, such as a server mode, rate limiting, multiple parallel
+streams, and timer based usage.  It has been successfully tested and used on
+a variety of Solaris, SGI, PPC/X86 Linux, FreeBSD, AIX, and Windows systems,
+and should probably work on most other flavors of Unix.  To get a usage
+statement, just run nuttcp with no arguments.
+********************************************************************************
+
+The source code together with available binaries is available at:
+
+	ftp://ftp.lcp.nrl.navy.mil/pub/nuttcp/
+
+To find the latest version, follow the "latest" symbolic link.
+To find a possibly older, better tested version follow the "stable" link.
+
+********************************************************************************
+To use as an inetd or xinetd daemon, do the following:
+
+1.  Add an entry similar to the following to the /etc/inetd.conf file
+    (for an IPv4 server).
+
+nuttcp  stream  tcp     nowait  root    /usr/local/sbin/tcpd /usr/local/bin/nuttcp -S
+
+Sample xinetd configuration files can be found in the "xinetd.d" subdirectory.
+
+2.  Add entries like the following to the /etc/services file.
+
+nuttcp          5000/tcp
+nuttcp-data     5001/tcp
+nuttcp6         5000/tcp
+nuttcp6-data    5001/tcp
+
+For inetd it may be necessary to run the IPv4 and IPv6 servers on
+different ports.
+
+3.  Add a nuttcp entry to the /etc/hosts.allow file to control what hosts
+    you want to allow access to the nuttcp service.
+
+4.  Send a HUP signal to the inetd or xinetd process (older xinetd
+    requires USR2 signal).
+
+You can also just run a "nuttcp -S" as a normal user process to test out
+the server functionality before putting it into the inetd.conf or xinetd.d
+configuration file.
+
+The files in the "missing" subdirectory are required to build nuttcp on certain
+architectures  which lack either poll() or the newer inet functions.  For
+MacOS X the only required extra file is "missing/fakepoll.h".  Solaris
+before 2.8 requires all the extra files in missing.
+
+The files in the "cygwin" subdirectory are the source, patches, and license for
+the cygwin library which has been linked into the Windows binary.
+
+Finally, here's a basic sample usage of the nuttcp client talking to an
+already established nuttcp server, specifying a window size of 512 KB
+and interval reporting every second, and using the default of transmitting
+to the server for 10 seconds and producing brief output (across a GigE
+link):
+
+% nuttcp -i1 -w512 192.168.75.75
+  117.8587 MB /   1.00 sec =  989.2512 Mbps
+  118.0138 MB /   1.00 sec =  989.9721 Mbps
+  117.9086 MB /   1.00 sec =  989.0879 Mbps
+  118.0239 MB /   1.00 sec =  990.0540 Mbps
+  117.9979 MB /   1.00 sec =  989.8300 Mbps
+  118.0165 MB /   1.00 sec =  990.0062 Mbps
+  118.0052 MB /   1.00 sec =  989.8798 Mbps
+  118.0138 MB /   1.00 sec =  989.9880 Mbps
+  117.9967 MB /   1.00 sec =  989.8121 Mbps
+  118.0165 MB /   1.00 sec =  990.0102 Mbps
+
+ 1183.2500 MB /  10.03 sec =  989.8024 Mbps 74 %TX 9 %RX
+
+Without the "-i" interval option, the default brief output gives
+a one-line summary such as the following which demonstrates the
+simplest use of nuttcp when accepting all the default settings:
+
+% nuttcp 192.168.75.75
+  827.8125 MB /  10.02 sec =  692.8015 Mbps 51 %TX 7 %RX
+
+And here's a sample of verbose output.  This test was across a 768 Kbps
+DSL line, doing a receive from the server instead of the default transmit,
+using a window size of 512 KB, and transferring 8 MB of data (1024 buffers
+each of length 8192).
+
+% nuttcp -r -l8192 -n1024 -w512 -v 192.168.7.20
+nuttcp-r: v4.0.3: socket
+nuttcp-r: buflen=8192, nbuf=1024, nstream=1, port=5001 tcp
+nuttcp-r: accept from 192.168.7.20
+nuttcp-r: send window size = 16384, receive window size = 1048576
+nuttcp-r: 8.0000 MB in 126.15 real seconds = 64.94 KB/sec = 0.5320 Mbps
+nuttcp-r: 5893 I/O calls, msec/call = 21.92, calls/sec = 46.71
+nuttcp-r: 0.0user 0.0sys 2:06real 0% 0i+0d 0maxrss 1+0pf 0+0csw
+
+nuttcp-t: v4.0.3: socket
+nuttcp-t: buflen=8192, nbuf=1024, nstream=1, port=5001 tcp -> 192.168.75.30
+nuttcp-t: connect to 192.168.75.30
+nuttcp-t: send window size = 1048576, receive window size = 87380
+nuttcp-t: 8.0000 MB in 116.43 real seconds = 70.36 KB/sec = 0.5764 Mbps
+nuttcp-t: 1024 I/O calls, msec/call = 116.43, calls/sec = 8.80
+nuttcp-t: 0.0user 0.0sys 1:56real 0% 0i+0d 0maxrss 1+0pf 0+0csw
+
+We hope you find it useful.
+
+						-Bill Fink
+						 billfink@mindspring.com
+
+						-Rob Scott
+						 rob@hpcmo.hpc.mil
+
+Contact the projects authors at nuttcp@lcp.nrl.navy.mil
+
+Report bugs to nuttcp-bugs@lcp.nrl.navy.mil

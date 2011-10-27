@@ -1,0 +1,16 @@
+## Definitions
+# @author Rick Foos
+# @file
+
+AUTOMAKE_OPTIONS = no-installman foreign 
+SUBDIRS = compat doc include src
+bin_SCRIPTS = iperf-run.sh
+noinst_SCRIPTS = m4/acx_pthread.m4 m4/dast.m4
+
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	      -I$(top_srcdir)/include \
+	      @STRIP_END@
+
+ACLOCAL_AMFLAGS = -I m4
+
+EXTRA_DIST = autogen.sh $(bin_SCRIPTS) $(noinst_SCRIPTS)

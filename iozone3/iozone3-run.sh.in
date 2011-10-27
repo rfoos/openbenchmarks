@@ -1,0 +1,51 @@
+#!/bin/bash
+## Run script for Whetstone
+# @author Rick Foos
+# @file
+
+#debug
+set -x #echo onset +x #echo off
+
+# Simple optarg to set environment variables.
+for optarg
+do
+	optargvalid=$(echo $optarg | sed -e "s|[^=]||g")
+	if [ -n "$optargvalid" ]
+	then
+		eval $optarg
+	else
+		echo "INFO: Ignored invalid option=argument $optarg"
+	fi
+done
+
+## Allows Simulator or other exec tools.
+[ -n ${SIMULATOR} ] || SIMULATOR="@SIMULATOR@"
+
+[ -n "${bindir}" ] || bindir=$(dirname $0)
+[ -n "${srcdir}" ] || srcdir=$(dirname $0)
+[ -n "${PROGRAM}" ] || PROGRAM='${bindir}/iozone"
+[ -n "${OUTFILE}" ] || OUTFILE="${srcdir}/iozone.txt"
+[ -n "${LOOPS}" ] || LOOPS=10000
+
+# Check executables
+
+if [ ! -x "${PROGRAM}" ]
+then
+	echo "ERROR: ${PROGRAM} not found or not executable"
+	exit 1
+fi
+
+if [ -f "${OUTFILE}" ]
+then
+	echo "$0: skipping, results in ${OUTFILE}"
+else
+	echo "$0: running $SIMULATOR ${PROGRAM} for ${LOOPS} loops..."
+	$SIMULATOR ${PROGRAM} ${LOOPS} >${OUTFILE}
+	if [ ! -z "`grep Insufficient ${OUTFILE}`" ]
+	then
+		echo "ERROR: increase loops ($(basename $0) LOOPS=xxx > $LOOPS)"
+		rm -f ${OUTFILE}
+		exit 1
+	fi
+fi
+

@@ -1,0 +1,69 @@
+#!/bin/bash
+## Netpipe execution.
+# @author Rick Foos
+# @file
+
+#debug
+set -x #echo onset +x #echo off
+
+# Simple optarg to set environment variables, and execute commands.
+for i
+do
+    validopt=$(sed -e "s|[^=]||g" <<<$i)
+    if [ -n "$validopt" ]
+    then
+        eval $i
+        echo "INFO: Option  $i"
+        ## Use this block for fixed option set.
+        #opt=$(sed -e "s|\([^=]*\).*|\1|" <<<$i)
+        #case $opt in
+        #srcdir | bindir)
+        #    eval $i
+        #    echo "INFO: Option  $i";;
+        #*)      echo "WARNING: Invalidopt option: $option";;
+        #esac
+    else
+        echo "WARNING: Invalid command $i ignored"
+        ## Use this block for fixed command set.
+        #echo "INFO: Command  $i"
+        #case $i in
+        #shortrun)
+        #    cmd_SHORTRUN="YES"
+        #    ;;
+        #clean)
+        #    cmd_CLEAN="YES"
+        #    ;;
+        #*)      echo "WARNING: Invalid command $i ignored";;
+        #esac
+    fi
+done
+
+# Set Default values from Autotools, may be overridden in command line
+[ -n "${srcdir}" ] || srcdir=$(dirname $0) # srcdir: @srcdir@
+[ -n "${bindir}" ] || bindir=$(dirname $0) # bindir: @bindir@
+[ -n "${SIMULATOR}" ] || SIMULATOR=@SIMULATOR@
+#[ -n "${PROGRAM}" ] || PROGRAM=$bindir/netperf
+#[ -n "${OUTFILE}" ] || OUTFILE="${srcdir}/bonnie.txt"
+#[ -n "${ARGS}" ] || ARGS=""
+
+# Command Execution
+[ "${RUNCMD}" == "clean" ] && rm -f ${OUTFILE} && echo "INFO: clean..."
+
+## @note Rerun may be passed by caller.
+[ -n "$PROGRAMS" ] || PROGRAMS=$(find . -perm +111 -type f -name "np*")
+
+for PROG in $PROGRAMS
+do
+    if [ "$PROG" != "$(echo \"$PROG" | sed -e \"s|nptcp||\")" ]
+    then
+        echo "INFO: skipping $PROG ..."
+        continue
+    fi
+    if [ -f "$PROG-plot.txt" -a -z "${rerun}" ]; then
+        echo "INFO: Skipping $PROG"
+    else
+        echo "INFO: Running $PROG"
+        $SIMULATOR $PROG $ARGS -o $PROG-plot.txt 1>$PROG-notes.txt 2>$PROG.txt
+    fi
+done
+

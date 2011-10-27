@@ -1,0 +1,79 @@
+#!/bin/bash
+## Run script for Whetstone
+# @author Rick Foos
+# @file
+
+#debug
+set -x #echo onset +x #echo off
+
+# Simple optarg to set environment variables, and execute commands.
+for i
+do
+    validopt=$(sed -e "s|[^=]||g" <<<$i)
+    if [ -n "$validopt" ]
+    then
+        eval $i
+        echo "INFO: Option  $i"
+        ## Use this block for fixed option set.
+        #opt=$(sed -e "s|\([^=]*\).*|\1|" <<<$i)
+        #case $opt in
+        #srcdir | bindir)
+        #    eval $i
+        #    echo "INFO: Option  $i";;
+        #*)      echo "WARNING: Invalidopt option: $option";;
+        #esac
+    else
+        echo "WARNING: Invalid command $i ignored"
+        ## Use this block for fixed command set.
+        #echo "INFO: Command  $i"
+        #case $i in
+        #shortrun)
+        #    cmd_SHORTRUN="YES"
+        #    ;;
+        #clean)
+        #    cmd_CLEAN="YES"
+        #    ;;
+        #*)      echo "WARNING: Invalid command $i ignored";;
+        #esac
+    fi
+done
+
+## Allows Simulator or other exec tools.
+[ -n ${SIMULATOR} ] || SIMULATOR="@SIMULATOR@"
+[ -n "${srcdir}" ] || srcdir="$(dirname $0)" # srcdir: @srcdir@
+[ -n "${bindir}" ] || bindir="$(dirname $0)" # bindir: @bindir@
+[ -n "${PROGRAM}" ] || PROGRAM="${bindir}/whetstone"
+[ -n "${OUTFILE}" ] || OUTFILE="${srcdir}/whetstone.txt"
+#[ -n "${ARGS}" ] || ARGS=""
+
+## @note Must adjust LOOPS for your system, error if time captured invalid.
+[ -n "${LOOPS}" ] || LOOPS=10000
+
+# Command Execution
+[ "${RUNCMD}" == "clean" ] && rm -f ${OUTFILE} && echo "INFO: clean..."
+
+# Check executable
+if [ ! -x "${PROGRAM}" ]
+then
+    echo "ERROR: ${PROGRAM} not found or not executable"
+    exit 1
+fi
+
+if [ -f "${OUTFILE}" ]
+then
+    echo "INFO: RERUN results in ${OUTFILE}"
+else
+    echo "INFO: running ${PROGRAM} for ${LOOPS} loops..."
+    echo "${LOOPS}" | $SIMULATOR ${PROGRAM} ${ARGS} ${LOOPS} >${OUTFILE}
+    rc=$?
+    if [ "$rc" != "0" ]
+    then
+        echo "ERROR: run failed: $rc"
+        rm -f ${OUTFILE}
+    elif [ -n "$(grep Insufficient ${OUTFILE})" ] # Look for error message
+    then
+        echo "ERROR: increase loops (whetstone-run.sh LOOPS=xxx)"
+        rm -f ${OUTFILE}
+    fi
+fi
+

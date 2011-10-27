@@ -1,0 +1,88 @@
+#!/bin/bash
+## Run script for httperf.
+# @author Rick Foos
+# @file
+
+#debug
+set -x #echo onset +x #echo off
+
+# Simple optarg to set environment variables, and execute commands.
+for i
+do
+    validopt=$(sed -e "s|[^=]||g" <<<$i)
+    if [ -n "$validopt" ]
+    then
+        eval $i
+        echo "INFO: Option  $i"
+        ## Use this block for fixed option set.
+        #opt=$(sed -e "s|\([^=]*\).*|\1|" <<<$i)
+        #case $opt in
+        #srcdir | bindir)
+        #    eval $i
+        #    echo "INFO: Option  $i";;
+        #*)      echo "WARNING: Invalidopt option: $option";;
+        #esac
+    else
+        echo "WARNING: Invalid command $i ignored"
+        ## Use this block for fixed command set.
+        #echo "INFO: Command  $i"
+        #case $i in
+        #shortrun)
+        #    cmd_SHORTRUN="YES"
+        #    ;;
+        #clean)
+        #    cmd_CLEAN="YES"
+        #    ;;
+        #*)      echo "WARNING: Invalid command $i ignored";;
+        #esac
+    fi
+done
+
+## Allows Simulator or other exec tools.
+[ -n ${SIMULATOR} ] || SIMULATOR="@SIMULATOR@"
+[ -n "${srcdir}" ] || srcdir="$(dirname $0)" # srcdir: @srcdir@
+[ -n "${bindir}" ] || bindir="$(dirname $0)" # bindir: @bindir@
+[ -n "${PROGRAM}" ] || PROGRAM="${bindir}/httperf"
+[ -n "${OUTFILE}" ] || OUTFILE="${srcdir}/httperf.txt"
+#[ -n "${ARGS}" ] || ARGS=""
+#[ -n "${SERVERARGS}" ] || SERVERARGS=""
+
+# Standard buffers and connections. (Required ARGS arrays to program)
+[ -n "${recv_buffers}" ] || recv_buffers="16384 1024 64"
+[ -n "${send_buffers}" ] || send_buffers="16384 1024 64"
+[ -n "${num_conns}" ] || num_conns="100 500 1000"3
+[ -n "${num_calls}" ] || num_calls="1 4"
+[ -n "${targetIP}" ] || targetIP="localhost"
+
+# Command Execution
+[ "${RUNCMD}" == "clean" ] && rm -f ${OUTFILE} && echo "INFO: clean..."
+
+# Check executable
+if [ ! -x "${PROGRAM}" ]
+then
+    echo "ERROR: ${PROGRAM} not found or not executable"
+    exit 1
+fi
+
+# Create a server and get the pid.
+## @todo add more cases for local adapter selection.
+if [ "$targetIP" == "localhost" ]; then
+    $PROGRAM $SERVERARGS &
+    pid=$!
+    echo "INFO: $PROGRAM server at $pid"
+fi
+
+# Now execute the client tests.
+for r in $recv_buffers; do
+    for s in $send_buffers; do
+        for n in $num_conns; do
+            for c in $num_calls; do
+                echo "INFO: $SIMULATOR Httperf $ARGS $r $s $n $c ..."
+                $SIMULATOR $PROGRAM $ARGS --server=${targetIP} --rate=10 --send-buffer=${s} --recv-buffer=${r} --num-conns=${n} --num-calls=${c} >> $OUTFILE
+            done
+        done
+    done
+done
+
+[ -n "$pid" ] && kill -9 $pid
+

@@ -1,0 +1,37 @@
+
+------------------------------------------------------
+Testing with the following command line:
+./netperf -l 60 -H localhost -i 10,2 -I 99,10 -t UDP_RR -- -r 1,1 -s 0 -S 0
+108544 108544 1        1       0.00     1099523946496.00   
+262142 262142
+
+------------------------------------------------------
+Testing with the following command line:
+./netperf -l 60 -H localhost -i 10,2 -I 99,10 -t UDP_RR -- -r 64,64 -s 0 -S 0
+108544 108544 64       64      0.00     1099520800768.00   
+217088 217088
+
+------------------------------------------------------
+Testing with the following command line:
+./netperf -l 60 -H localhost -i 10,2 -I 99,10 -t UDP_RR -- -r 100,200 -s 0 -S 0
+108544 108544 100      200     0.00     1099522897920.00   
+262142 262142
+
+------------------------------------------------------
+Testing with the following command line:
+./netperf -l 60 -H localhost -i 10,2 -I 99,10 -t UDP_RR -- -r 1024,1024 -s 0 -S 0
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+108544 108544 1024     1024    0.00     1099523946496.00   
+262142 262142
+
+If you wish to submit these results to the netperf database at
+http://www.cup.hp.com/netperf/NetperfPage.html, please submit each
+datapoint individually. Individual datapoints are separated by
+lines of dashes.

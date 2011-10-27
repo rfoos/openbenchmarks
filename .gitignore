@@ -1,1 +1,17 @@
 html/
+aclocal.m4
+autom4te.cache
+.deps
+depcomp
+Makefile.in
+configure.in
+configure
+config.guess
+config.sub
+config.log
+config.status
+stamp-h1
+install-sh
+missing
+config.h.in
+compile

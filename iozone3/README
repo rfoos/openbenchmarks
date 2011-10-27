@@ -1,0 +1,44 @@
+Iozone history:
+
+Original Author: Willian Norcott (wnorcott@us.oracle.com)
+/*  Copyright 1991, 1992, 1994, 1998, 2000, 2001  William D. Norcott	*/
+http://iozone.org/src/current/iozone.c
+
+Iozone is actively maintained from iozone.org. Iozone is at Revision 3.397,  27-May-2011.
+Version 3.397 is listed as both the latest version, and the stable version. 
+This version reflects some recent changes provided by RedHat.
+
+RedHat currently releases Iozone3 as part of EPEL 6. Iozone is listed as
+deprecated in Fedora.
+https://admin.fedoraproject.org/pkgdb/acls/name/iozone
+
+Iozone claims to be Open Source, but the license is not GPL or BSD.
+It appears that it may have a history of BSD, since it mentions reagents. 
+
+Iozone has placed restrictions on changes, needed for porting that have
+caused it to be rejected by Debian Legal, and RedHat. 
+Iozone allows distribution, but does not allow changes exept from the 
+original author or those authorized by the author.
+
+The Iozone package was removed from Fedora, and EPEL as the upstream declined 
+to fix the license to make Iozone open source. The decision was made in 2008,
+and after further review in 2011 the package has been removed from EPEL. 
+http://lists.fedoraproject.org/pipermail/epel-announce/2010-March/000001.html
+
+Debian Legal has also had problems with the Iozone license.
+http://lists.debian.org/debian-legal/2000/03/msg00008.html
+http://lists.debian.org/debian-legal/2000/03/msg00024.html
+
+Openembedded adopted and recieved permission to distribute a 3.263 version
+from 2006 with an ARM fix to the makefile. Part of the distribution was a
+patch to be included in the next IOZone release, however the recipe has not
+been updated to incorporate that patch. 
+http://www.mail-archive.com/openembedded-devel@lists.openembedded.org/msg20626.html
+
+Iozone published scores focus on AMD vs. Intel.
+http://openbenchmarking.org/test/pts/iozone
+
+CPAN has a released parser for IOZone output to a hash which can be fed 
+to GNU plot.
+http://search.cpan.org/~markwkm/Test-Parser-1.9/lib/Test/Parser/iozone.pm
+

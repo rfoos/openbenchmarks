@@ -1,0 +1,176 @@
+
+------------------------------------
+
+./netperf -l 60 -H localhost -t TCP_STREAM -i 10,2 -I 99,5 -- -m 4096 -s 57344 -S 57344
+
+TCP STREAM TEST to localhost : +/-0.0% @ -16843009% conf.
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+Recv   Send    Send                          
+Socket Socket  Message  Elapsed              
+Size   Size    Size     Time     Throughput  
+bytes  bytes   bytes    secs.    10^6bits/sec  
+
+262142 114688   4096    0.00        0.00   
+
+------------------------------------
+
+./netperf -l 60 -H localhost -t TCP_STREAM -i 10,2 -I 99,5 -- -m 8192 -s 57344 -S 57344
+
+TCP STREAM TEST to localhost : +/-0.0% @ -16843009% conf.
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+Recv   Send    Send                          
+Socket Socket  Message  Elapsed              
+Size   Size    Size     Time     Throughput  
+bytes  bytes   bytes    secs.    10^6bits/sec  
+
+262142 114688   8192    0.00        0.00   
+
+------------------------------------
+
+./netperf -l 60 -H localhost -t TCP_STREAM -i 10,2 -I 99,5 -- -m 32768 -s 57344 -S 57344
+
+TCP STREAM TEST to localhost : +/-0.0% @ -16843009% conf.
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+Recv   Send    Send                          
+Socket Socket  Message  Elapsed              
+Size   Size    Size     Time     Throughput  
+bytes  bytes   bytes    secs.    10^6bits/sec  
+
+262142 114688  32768    0.00        0.00   
+
+------------------------------------
+
+./netperf -l 60 -H localhost -t TCP_STREAM -i 10,2 -I 99,5 -- -m 4096 -s 32768 -S 32768
+
+TCP STREAM TEST to localhost : +/-0.0% @ -16843009% conf.
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+Recv   Send    Send                          
+Socket Socket  Message  Elapsed              
+Size   Size    Size     Time     Throughput  
+bytes  bytes   bytes    secs.    10^6bits/sec  
+
+262142  65536   4096    0.00        0.00   
+
+------------------------------------
+
+./netperf -l 60 -H localhost -t TCP_STREAM -i 10,2 -I 99,5 -- -m 8192 -s 32768 -S 32768
+
+TCP STREAM TEST to localhost : +/-0.0% @ -16843009% conf.
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+Recv   Send    Send                          
+Socket Socket  Message  Elapsed              
+Size   Size    Size     Time     Throughput  
+bytes  bytes   bytes    secs.    10^6bits/sec  
+
+262142  65536   8192    0.00        0.00   
+
+------------------------------------
+
+./netperf -l 60 -H localhost -t TCP_STREAM -i 10,2 -I 99,5 -- -m 32768 -s 32768 -S 32768
+
+TCP STREAM TEST to localhost : +/-0.0% @ -16843009% conf.
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+Recv   Send    Send                          
+Socket Socket  Message  Elapsed              
+Size   Size    Size     Time     Throughput  
+bytes  bytes   bytes    secs.    10^6bits/sec  
+
+262142  65536  32768    0.00        0.00   
+
+------------------------------------
+
+./netperf -l 60 -H localhost -t TCP_STREAM -i 10,2 -I 99,5 -- -m 4096 -s 8192 -S 8192
+
+TCP STREAM TEST to localhost : +/-0.0% @ -16843009% conf.
+Recv   Send    Send                          
+Socket Socket  Message  Elapsed              
+Size   Size    Size     Time     Throughput  
+bytes  bytes   bytes    secs.    10^6bits/sec  
+
+ 65536  16384   4096    0.00        0.00   
+
+------------------------------------
+
+./netperf -l 60 -H localhost -t TCP_STREAM -i 10,2 -I 99,5 -- -m 8192 -s 8192 -S 8192
+
+TCP STREAM TEST to localhost : +/-0.0% @ -16843009% conf.
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+Recv   Send    Send                          
+Socket Socket  Message  Elapsed              
+Size   Size    Size     Time     Throughput  
+bytes  bytes   bytes    secs.    10^6bits/sec  
+
+262142  16384   8192    0.00        0.00   
+
+------------------------------------
+
+./netperf -l 60 -H localhost -t TCP_STREAM -i 10,2 -I 99,5 -- -m 32768 -s 8192 -S 8192
+
+TCP STREAM TEST to localhost : +/-0.0% @ -16843009% conf.
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+Recv   Send    Send                          
+Socket Socket  Message  Elapsed              
+Size   Size    Size     Time     Throughput  
+bytes  bytes   bytes    secs.    10^6bits/sec  
+
+262142  16384  32768    0.00        0.00   
+If you wish to submit these results to the netperf database at
+http://www.cup.hp.com/netperf/NetperfPage.html, please submit each
+datapoint individually. Individual datapoints are separated by
+lines of dashes.

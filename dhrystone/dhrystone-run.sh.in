@@ -1,53 +1,79 @@
-#!/bin/sh
-## Run script for dhrystone 2.1
+#!/bin/bash
+## Run script for dhrystone.
 # @author Rick Foos
 # @file
 
+#debug
+set -x #echo onset +x #echo off
+
+# Simple optarg to set environment variables, and execute commands.
 for i
 do
-	valid=`echo $i | sed -e "s|[^=]||g"`
-	if [ -n "$valid" ]
-	then
-		eval $i
-		#echo $i
-	else
-		echo "INFO: Invalid argument $i"
-	fi
+    validopt=$(sed -e "s|[^=]||g" <<<$i)
+    if [ -n "$validopt" ]
+    then
+        eval $i
+        echo "INFO: Option  $i"
+        ## Use this block for fixed option set.
+        #opt=$(sed -e "s|\([^=]*\).*|\1|" <<<$i)
+        #case $opt in
+        #srcdir | bindir)
+        #    eval $i
+        #    echo "INFO: Option  $i";;
+        #*)      echo "WARNING: Invalidopt option: $option";;
+        #esac
+    else
+        echo "WARNING: Invalid command $i ignored"
+        ## Use this block for fixed command set.
+        #echo "INFO: Command  $i"
+        #case $i in
+        #shortrun)
+        #    cmd_SHORTRUN="YES"
+        #    ;;
+        #clean)
+        #    cmd_CLEAN="YES"
+        #    ;;
+        #*)      echo "WARNING: Invalid command $i ignored";;
+        #esac
+    fi
 done
-## Optional Simulator run.
-EXEC="@SIM@"
 
-[ -z "$srcdir" ] && srcdir=.
-[ -z "$bindir" ] && bindir=.
-[ -z "$run_PROG" ] && run_PROG=${bindir}/dhrystone
-[ -z "$run_OUT" ] && run_OUT=${srcdir}/dhrystone.txt
-# Tune for your system.
-[ -z "$run_LOOPS" ] && run_LOOPS=9000000
+## Allows Simulator or other exec tools.
+[ -n ${SIMULATOR} ] || SIMULATOR="@SIMULATOR@"
+[ -n "${srcdir}" ] || srcdir="$(dirname $0)" # srcdir: @srcdir@
+[ -n "${bindir}" ] || bindir="$(dirname $0)" # bindir: @bindir@
+[ -n "${PROGRAM}" ] || PROGRAM="${bindir}/dhrystone"
+[ -n "${OUTFILE}" ] || OUTFILE="${srcdir}/dhrystone.txt"
+#[ -n "${ARGS}" ] || ARGS=""
 
+## @note Must adjust LOOPS for your system, error if time captured invalid.
+[ -n "${LOOPS}" ] || LOOPS=9200000
 
-# Check executables
+# Command Execution
+[ "${RUNCMD}" == "clean" ] && rm -f ${OUTFILE} && echo "INFO: clean..."
 
-if [ ! -x "${run_PROG}" ] 
+# Check executable
+if [ ! -x "${PROGRAM}" ]
 then
-	echo "ERROR: ${run_PROG} not found or not executable"
-	exit 1
+    echo "ERROR: ${PROGRAM} not found or not executable"
+    exit 1
 fi
 
-if [ -f "${run_OUT}" ]
+if [ -f "${OUTFILE}" ]
 then
-	echo "INFO: RERUN results in ${run_OUT}"
+    echo "INFO: RERUN results in ${OUTFILE}"
 else
-	echo "INFO: running ${run_PROG} for ${run_LOOPS} loops..."
-	echo "${run_LOOPS}" | $EXEC ${run_PROG} >${run_OUT}
-        rc=$?
-        if [ "rc" != "0" ]
-        then
-          echo "ERROR: run failed: $rc"
-          rm -f ${run_OUT}
-	elif [ ! -z "`grep increase ${run_OUT}`" ]
-	then
-		echo "ERROR: increase loops (run.sh run_ARGS=xxx)"
-		rm -f ${run_OUT}
-	fi
+    echo "INFO: running ${PROGRAM} for ${LOOPS} loops..."
+    echo "${LOOPS}" | $SIMULATOR ${PROGRAM} ${ARGS} >${OUTFILE}
+    rc=$?
+    if [ "$rc" != "0" ]
+    then
+        echo "ERROR: run failed: $rc"
+        rm -f ${OUTFILE}
+    elif [ -n "$(grep increase ${OUTFILE})" ] # Look for error message
+    then
+        echo "ERROR: increase loops (dhrystone-run.sh LOOPS=xxx)"
+        rm -f ${OUTFILE}
+    fi
 fi
 

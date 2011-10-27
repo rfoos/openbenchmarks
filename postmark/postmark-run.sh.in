@@ -1,22 +1,67 @@
 #!/bin/bash
+## Postmark Execution
+# @author Rick Foos
+# @file
 
-[ -n "${srcdir}" ] || srcdir=$(pwd)
-[ -n "${bindir}" ] || bindir=$(pwd)
-run_PROG=${bindir}/postmark
-run_OUT=${srcdir}/postmark.txt
-run_IN=${srcdir}/postmark-cmds.txt
+#debug
+set -x #echo onset +x #echo off
 
-if [ ! -x "${run_PROG}" ]
+# Simple optarg to set environment variables, and execute commands.
+for i
+do
+    validopt=$(sed -e "s|[^=]||g" <<<$i)
+    if [ -n "$validopt" ]
+    then
+        eval $i
+        echo "INFO: Option  $i"
+        ## Use this block for fixed option set.
+        #opt=$(sed -e "s|\([^=]*\).*|\1|" <<<$i)
+        #case $opt in
+        #srcdir | bindir)
+        #    eval $i
+        #    echo "INFO: Option  $i";;
+        #*)      echo "WARNING: Invalidopt option: $option";;
+        #esac
+    else
+        echo "WARNING: Invalid command $i ignored"
+        ## Use this block for fixed command set.
+        #echo "INFO: Command  $i"
+        #case $i in
+        #shortrun)
+        #    cmd_SHORTRUN="YES"
+        #    ;;
+        #clean)
+        #    cmd_CLEAN="YES"
+        #    ;;
+        #*)      echo "WARNING: Invalid command $i ignored";;
+        #esac
+    fi
+done
+
+# Set Default values from Autotools, may be overridden in command line
+[ -n "${srcdir}" ] || srcdir=$(dirname $0) # srcdir: @srcdir@
+[ -n "${bindir}" ] || bindir=$(dirname $0) # bindir: @bindir@
+[ -n "${SIMULATOR}" ] || SIMULATOR=@SIMULATOR@
+[ -n "${PROGRAM}" ] || PROGRAM="$bindir/postmark"
+[ -n "${OUTFILE}" ] || OUTFILE="${srcdir}/postmark.txt"
+#[ -n "${ARGS}" ] || ARGS=""
+[ -n "${INFILE}" ] || INFILE=${srcdir}/postmark-cmds.txt
+
+# Command Execution
+[ "${RUNCMD}" == "clean" ] && rm -f ${OUTFILE} && echo "INFO: clean..."
+
+# Check executable
+if [ ! -x "${PROGRAM}" ]
 then
-	echo "ERROR: ${run_PROG} not found or not executable"
-	exit 1
+    echo "ERROR: ${PROGRAM} not found or not executable"
+    exit 1
 fi
 
-if [ -f "${run_OUT}" ]
+if [ -f "${OUTFILE}" ]
 then
-	echo "INFO: skipping, results in ${run_OUT}"
+	echo "INFO: skipping, results in ${OUTFILE}"
 else
-	echo "INFO: running ${run_PROG} ..."
-	${run_PROG} <${run_IN} >${run_OUT}
+	echo "INFO: running ${PROGRAM} ..."
+	${SIMULATOR} ${PROGRAM} ${ARGS} <${INFILE} >${OUTFILE}
 fi
 

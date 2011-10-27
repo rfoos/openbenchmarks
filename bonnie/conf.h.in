@@ -1,0 +1,14 @@
+/** Autotools addition. */
+#ifdef HAVE_CONFIG_H
+include "config.h"
+#endif
+
+#ifndef CONF_H
+#define CONF_H
+
+#undef HAVE_ALGO_H
+#undef HAVE_ALGO
+#undef HAVE_ALGORITHM
+#undef HAVE_VECTOR
+
+#endif

@@ -1,0 +1,141 @@
+Nuttcp top 5 commands:
+
++++++++++++++++++++++++
+nuttcp <serverhost>
+
+Good for a relatively close <serverhost>.
+
+This command will use the defaults which is to do a tcp transfer for 10 seconds.
+It will use the default window size for the hosts it is run on. It will do ipv4
+if <serverhost> is either a v4 numeric address or is a name that resolves to a
+v4 address. It will do v6 if <serverhost> is a v6 numeric address or a name
+that resolves to a v6 address.
+[<serverhost> must already have a server running]
+
+Example:
+[rob@damp-nrl rob]$ nuttcp damp-arl-ge
+  647.9830 MB /  10.01 sec =  542.9427 Mbps 9 %TX 14 %RX
+
+Note that the %TX and %RX are the cpu utilization on the transmitter and
+receiver.
+
+
++++++++++++++++++++++++
+nuttcp -w6m <serverhost>
+
+Good for a cross-country oc12 size link
+
+Same as above except it uses a likely much larger window size that is more
+appropriate for a tcp transfer with a larger bandwidth delay product.  For
+more information on BDP and appropriate window sizing please refer to one of
+Phil Dykstra's DREN Conference presentations or papers. See
+http://sd.wareonearth.com/~phil/
+[In order to utilize a 6 megabyte window both the transmit and receive systems
+must support that size. On some systems this requires modifying system
+parameters. Remember 6m is 6*1024*1024 bytes.]
+
+Example:
+[rob@damp-ssc rob]$ nuttcp -w6m damp-arl-ge
+  642.2890 MB /  10.31 sec =  522.5387 Mbps 9 %TX 5 %RX
+
+
+
++++++++++++++++++++++++
+nuttcp -u -i -Ri50m <serverhost>
+
+Good for checking on packet loss
+
+This nuttcp command transmits a 10 second stream of udp packets at 50Mbps. It
+will present interval reports once a second. The interval and final reports
+not only present throughput, but also packet loss. It is important to rate
+limit udp transfers to avoid causing network problems with your testing. If
+you know the bandwidth and utilization of the whole path you are testing then
+you can choose a different number for the rate limit. The default is to use
+8192 byte buffers and this may cause undesired fragmentation. If you are
+still on a 1500 mtu network you should consider -l1200 to set the buffers
+to 1200 bytes.]
+
+Example:
+[rob@damp-ssc rob]$ nuttcp -u -i -Ri50m damp-asc-atm
+0.3281 MB /  1.00 sec =    2.7587 Mbps   706 /   748 ~drop/pkt 94.39 ~%loss
+0.3203 MB /  1.00 sec =    2.6873 Mbps   721 /   762 ~drop/pkt 94.62 ~%loss
+0.2734 MB /  1.00 sec =    2.2941 Mbps   726 /   761 ~drop/pkt 95.40 ~%loss
+0.2969 MB /  1.00 sec =    2.4907 Mbps   729 /   767 ~drop/pkt 95.05 ~%loss
+0.2500 MB /  1.00 sec =    2.0974 Mbps   734 /   766 ~drop/pkt 95.82 ~%loss
+0.2266 MB /  1.00 sec =    1.9008 Mbps   742 /   771 ~drop/pkt 96.24 ~%loss
+0.2266 MB /  1.00 sec =    1.9008 Mbps   697 /   726 ~drop/pkt 96.01 ~%loss
+0.2188 MB /  1.00 sec =    1.8353 Mbps   742 /   770 ~drop/pkt 96.36 ~%loss
+0.2734 MB /  1.00 sec =    2.2941 Mbps   736 /   771 ~drop/pkt 95.46 ~%loss
+0.2188 MB /  1.00 sec =    1.8353 Mbps   745 /   773 ~drop/pkt 96.38 ~%loss
+
+2.6330 MB /  10.00 sec =   2.2087 Mbps 99 %TX 0 %RX 7292 / 7629 drop/pkt 95.58 %loss
+
+
++++++++++++++++++++++++
+nuttcp -w1m 127.0.0.1
+nuttcp -w1m ::1
+
+Good for checking a hosts internal capability
+
+Since this never goes through an actual interface it is a measure of the cpu
+power, memory bandwidth and tcp stack efficiency. The first one is ipv4, and
+the second is ipv6. If you run both it will give you a comparison of the
+efficiency of a host's v4 and v6 stacks. If the host is a single processor
+machine you can more or less double the number as the maximum it could ever
+perform through an actual interface. This does not test things like bus
+performance or nic card performance. Since this test is very dependent on
+system load and processor scheduling, the result will vary from test to test,
+so it is probably a good idea to run several to get a good measure.
+
+Example:
+[rob@damp-ssc rob]$ nuttcp -w1m 127.0.0.1
+ 6340.5000 MB /   9.99 sec = 5321.5008 Mbps 68 %TX 31 %RX
+[rob@damp-ssc rob]$ 
+
+[rob@damp-ssc rob]$ nuttcp -w1m ::1
+ 6661.3125 MB /  10.00 sec = 5588.5398 Mbps 71 %TX 28 %RX
+
+
+
++++++++++++++++++++++++
+For any of these commands you might want to add the following 
+options:
+
+-r  runs the stream in the other direction, ie. From the server to the client
+
+-v  turns on verbose reporting (the old default style) which such things as the
+    used window size
+ 
+-F this flips the connect, which you don't need to understand. What you need to
+   know is that if you are behind a NAT, or a port block, this allows you to do
+   a receive by doing -r -F.
+
+-R[i]<rate>  this limits the rate of the transmitter. This is important if you
+             really don't want to use the maximum bandwidth that a host can
+	     produce, especially when running udp transfers. The optional
+	     extra 'i' is to have the rate limit apply instantaneously as
+	     opposed to an average which may go above and below the limit.
+
+
+
++++++++++++++++++++++++
+Running a nuttcp server:
+
+Any user on a machine can run a server by simply running the nuttcp -S command,
+which starts an ipv4 server. nuttcp -S -6 will start an ipv6 server which
+depending on the system and kernel setting may also listen on a 4to6
+translation. If you get a message about address being in use you can use the
+-P<number> to run the server on a different port, any client would also have
+to specify the same -P option to talk to it. Note that under windows port 5000
+is in use and opening another server on the port does NOT give you an error, so
+you will always need a -P option to run a server on windows. A good example of
+2 servers on 2 different ports would be:
+	nuttcp -S
+	nuttcp -S -6 -P5008
+and the localhost client commands would be
+	nuttcp 127.0.0.1
+	nuttcp -P5008 ::1
+
+nuttcp servers automatically fork themselves into the background and run until
+they hit an error or are killed. For permanent availability nuttcp can be run
+out of inetd or xinetd, examples of which can be found on the ftp site.

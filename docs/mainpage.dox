@@ -7,37 +7,79 @@
 /**
 @mainpage Openbenchmarks - Open Source Benchmark Collection
 
-Openbenchmarks is a unique collection of open source benchmarks relevant to
-Embedded Systems, Smart Phones, Networking Equipment, and more as we
-move forward. 
-Previous projects like this have gathered the source locations together, 
-others have wrapped test harnesses around them, and a few of the more popular 
-ones have been converted to rpms, and dpkgs as part of a linux distro.
+Openbenchmarks is a unique collection of open source benchmarks that covers
+embedded environments of Simulation, Silicon/FPGA, Research Compilers, RTOS, and
+Linux Distributions.
 
+This workflow is familiar to embedded developers, but there is a noticeable
+lack of benchmark suites that can be employed at all these levels.
 
-None of the previous projects have addressed the issues that arise from wildly 
-different source bases from different authors at different times. Many
-have hooks for special research projects, specific hardware accelerators,
-and makefiles for unique hardware or research compilers.
-Others are written for bare metal operation and don't address portability to a wider base of platforms.
+The Openbenchmarks Project allows verification that new silicon functions produce the
+expected results on silicon, and continues to provide those results as software layers are
+added.
 
+Existing open source benchmarks are incorporated and wrapped with new
+tools that span the environments defined by the workflow. The layered
+approach reflects the software layers added as the workflow progresses from
+silicon to end user product.
+
+The Openbenchmarks Project has three layers:
+# The Autotools Layer, a wrapper for the original benchmark
+source providing an automated porting layer;
+# The Recipe Layer, a staging area to move recipes for packages to Openembedded/Yocto
+Linux Distributions; and
+# The Repo Manifest Layer, to bring in performance libraries to the Autotools
+Layer, and Recipe Layer. It is also used to construct systems for Android, and
+provides a path to integration.
+
+The Recipe Layer is a staging ares for contributions to Openembedded Yocto
+Linux distributions. Standard OE recipes will be submitted to Yocto meta-oe/recipes-benchmark when
+they are tested.
+
+The Autotools Layer wraps original benchmark source with autotools for porting.
+An Autotools framework with libtoolize provides a structured way to add performance libs for
+architecture specific builds. It provides a simple Makefile environment for
+building benchmarks in earlier stages of the workflow.
+
+The Repo Manifest Layer is intended to bring in performance libraries from their owners, and
+incorporate them with libtoolize at the Autotools layer. Related projects can be brought in as
+well to build a system.
+Repo is the tool used to construct Android, and can be employed to construct
+system level collections in other environments as well.
+
+Several projects collecting benchmarks into suites already exist. The types of
+suites include Industry Standard Benchmarks, Test Suites, Open Source
+Benchmarks, Windows Benchmarks, Yocto Project recipes-benchmarks.
+
+\ref Benchmark Computing http://en.wikipedia.org/wiki/Benchmark_%28computing%29
+
+Embedded Systems, Smart Phones, Networking Equipment, are addressed in part by
+some of these suites. Most of these are characterised by holding one aspect of
+the collection private as a differentiator of the suite, or to provide some
+consistency in the environment of the suite.
 
 Packing benchmark source builds into rpm/dpkg formats is a generic way to solve
-the problem, but it excludes a wide range of users.
-Performance studies need a complete understanding and full disclosure of what was done.  
-Embedded developers legitamitely need source code. They may not have a full port of timers to Linux, or worse broken timers requireing alternative hardware methods. 
-Verification Engineers may need to run small blocks of code in RTL simulators.
-Validation Engineers  
-have new features in silicon that can only be tested by
-performance differences, or measurements at a low level 
-like a raw instruction stream in pipeline. 
+the problem, but it excludes a wide range of users. Linux distributions, and
+high-end embedded distributions use this format.
 
+Source access to the benchmark code is legitmately required for embedded
+benchmarking.
+Performance studies need a complete understanding and full disclosure of what was done.
+Embedded developers legitamitely need source code when special build tools are
+required. When an RTOS is involved the device driver environment to access
+timers may not be standard. Even in embedded linux, a full port of timers, or worse broken
+timers requireing alternative hardware methods may need to be employed.
+Verification Engineers may need to run small blocks of code in RTL simulators.
+Validation Engineers
+have new features in silicon that can only be tested by
+performance differences, or measurements at a low level
+like a raw instruction stream in pipeline.
 
 Openbenchmarks shall operate from the original source, and wrap that source with
 up to date build tools, and modernized packaging for embedded systems and
 linux distributions. Openbenchmarks will not "throw away", or make it difficult
 to see the original source code.
-The source code of benchmarks will be available as originals, and as non-performance changing patches that can be independantly verified as such. 
+The source code of benchmarks will be available as originals, and as non-performance changing patches that can be independantly verified as such.
 
 
 Project Goals:
@@ -46,7 +88,7 @@ Project Goals:
 - Consistent execution scripts with Jenkins-CI support;
 - Results parsed into csv/tsv spreadsheets; and
 - Consistent baseline of Doxygen documentation.
- 
+
 
 Related Projects:
 - Buildconf (autogen.sh)
@@ -57,16 +99,16 @@ Related Projects:
 
 @section changes Changelog
 
-The project is hosted on GitHub. It is a strong alternative to SourceForge, 
+The project is hosted on GitHub. It is a strong alternative to SourceForge,
 free to me, and provides a working Forge/Dashboard for software development.
 That alone, having worked with customized GForge/Fusionforge is a load off
 my mind. Can live with it, Can't live without it - best of both.
 
-So to set thing up, Consistent build with buildconf, and Consistent 
-documentation with Doxygen. Doxgyen is not supported well in GitHub. You 
+So to set thing up, Consistent build with buildconf, and Consistent
+documentation with Doxygen. Doxgyen is not supported well in GitHub. You
 are encouraged to use their Jekyll package. While this is good for the traditional web site to go along with source code, it does not document the source
-code by changing comments in the source code. 
-(See web, tangle, weave from TEX82) Not a new idea... 
+code by changing comments in the source code.
+(See web, tangle, weave from TEX82) Not a new idea...
 
 */
 

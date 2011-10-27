@@ -1,3 +1,13 @@
 [submodule "buildconf"]
 	path = buildconf
 	url = git://buildconf.git.sourceforge.net/gitroot/buildconf/buildconf
+[submodule "html"]
+	path = html
+	branch = gh-pages
+	url = git@github.com:rickfoosusa/openbenchmarks.git
+[submodule "lttng/benchmarks"]
+	path = lttng/benchmarks
+	url = git://git.lttng.org/benchmarks.git
+[submodule "lttng/ust"]
+	path = lttng/ust
+	url = git://git.lttng.org/ust.git

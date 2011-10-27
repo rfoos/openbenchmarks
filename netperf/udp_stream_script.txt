@@ -1,0 +1,41 @@
+
+------------------------------------------------------
+Testing with the following command line:
+./netperf -l 60 -H localhost -i 10,2 -I 99,10 -t UDP_STREAM -- -m 64 -s 32768 -S 32768
+UDP UNIDIRECTIONAL SEND TEST to localhost : +/-0.0% @ -16843009% conf.
+Socket  Message  Elapsed      Messages                
+Size    Size     Time         Okay Errors   Throughput
+bytes   bytes    secs            #      #   10^6bits/sec
+
+ 65536      64   0.00       108544 3027674    1099518703616.00
+-1082130432           -0.01     1077532173              0.00
+
+
+------------------------------------------------------
+Testing with the following command line:
+./netperf -l 60 -H localhost -i 10,2 -I 99,10 -t UDP_STREAM -- -m 1024 -s 32768 -S 32768
+UDP UNIDIRECTIONAL SEND TEST to localhost : +/-0.0% @ -16843009% conf.
+Socket  Message  Elapsed      Messages                
+Size    Size     Time         Okay Errors   Throughput
+bytes   bytes    secs            #      #   10^6bits/sec
+
+ 65536    1024   0.00       108544 2747634    1099520800768.00
+-1082130432           -0.01     1081569867              0.00
+
+
+------------------------------------------------------
+Testing with the following command line:
+./netperf -l 60 -H localhost -i 10,2 -I 99,10 -t UDP_STREAM -- -m 1472 -s 32768 -S 32768
+UDP UNIDIRECTIONAL SEND TEST to localhost : +/-0.0% @ -16843009% conf.
+Socket  Message  Elapsed      Messages                
+Size    Size     Time         Okay Errors   Throughput
+bytes   bytes    secs            #      #   10^6bits/sec
+
+ 65536    1472   0.00       108544 2642633    1099520800768.00
+-1082130432           -0.01     1082144072              0.00
+
+
+If you wish to submit these results to the netperf database at
+http://www.cup.hp.com/netperf/NetperfPage.html, please submit each
+datapoint individually. Individual datapoints are separated by
+lines of dashes.

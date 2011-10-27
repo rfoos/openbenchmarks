@@ -1,0 +1,130 @@
+
+------------------------------------
+Testing with the following command line:
+./netperf -t TCP_STREAM -l 60 -H localhost -i 10,3 -I 99,5 -- -s 57344 -S 57344 -m 4096
+
+TCP STREAM TEST to localhost : +/-0.0% @ -16843009% conf.
+Recv   Send    Send                          
+Socket Socket  Message  Elapsed              
+Size   Size    Size     Time     Throughput  
+bytes  bytes   bytes    secs.    10^6bits/sec  
+
+262142 114688   4096    0.00        0.00   
+
+
+
+------------------------------------
+Testing with the following command line:
+./netperf -t TCP_STREAM -l 60 -H localhost -i 10,3 -I 99,5 -- -s 32768 -S 32768 -m 4096
+
+TCP STREAM TEST to localhost : +/-0.0% @ -16843009% conf.
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+Recv   Send    Send                          
+Socket Socket  Message  Elapsed              
+Size   Size    Size     Time     Throughput  
+bytes  bytes   bytes    secs.    10^6bits/sec  
+
+262142  65536   4096    0.00        0.00   
+
+
+
+------------------------------------
+Testing with the following command line:
+./netperf -t TCP_RR -l 60 -H localhost -i 10,3 -I 99,5 -- -r 1,1
+
+TCP REQUEST/RESPONSE TEST to localhost : +/-0.0% @ -16843009% conf.
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+Local /Remote
+Socket Size   Request  Resp.   Elapsed  Trans.
+Send   Recv   Size     Size    Time     Rate         
+bytes  Bytes  bytes    bytes   secs.    per sec   
+
+16384  87380  1        1       0.00     1099527092224.00   
+262142 262142
+
+
+
+------------------------------------
+Testing with the following command line:
+./netperf -t UDP_RR -l 60 -H localhost -i 10,3 -I 99,5 -- -r 1,1
+
+UDP REQUEST/RESPONSE TEST to localhost : +/-0.0% @ -16843009% conf.
+Local /Remote
+Socket Size   Request  Resp.   Elapsed  Trans.
+Send   Recv   Size     Size    Time     Rate         
+bytes  Bytes  bytes    bytes   secs.    per sec   
+
+108544 108544 1        1       0.00     1099521849344.00   
+262142 262142
+
+
+
+------------------------------------
+Testing with the following command line:
+./netperf -t UDP_RR -l 60 -H localhost -i 10,3 -I 99,5 -- -r 516,4
+
+UDP REQUEST/RESPONSE TEST to localhost : +/-0.0% @ -16843009% conf.
+Local /Remote
+Socket Size   Request  Resp.   Elapsed  Trans.
+Send   Recv   Size     Size    Time     Rate         
+bytes  Bytes  bytes    bytes   secs.    per sec   
+
+108544 108544 516      4       0.00     1099524995072.00   
+262142 262142
+
+------------------------------------
+Testing with the following command line:
+./netperf -t UDP_STREAM -l 60 -H localhost -i 10,3 -I 99,5 -- -s 32768 -S 32768 -m 4096
+
+UDP UNIDIRECTIONAL SEND TEST to localhost : +/-0.0% @ -16843009% conf.
+!!! WARNING
+!!! Desired confidence was not achieved within the specified iterations.
+!!! This implies that there was variability in the test environment that
+!!! must be investigated before going further.
+!!! Confidence intervals: Throughput      :  0.0%
+!!!                       Local CPU util  :  0.0%
+!!!                       Remote CPU util :  0.0%
+
+Socket  Message  Elapsed      Messages                
+Size    Size     Time         Okay Errors   Throughput
+bytes   bytes    secs            #      #   10^6bits/sec
+
+ 65536    4096   0.00       108544 2106359    1099522897920.00
+-1082130432           -0.01     1083308392              0.00
+
+
+
+
+------------------------------------
+Testing with the following command line:
+./netperf -t UDP_STREAM -l 60 -H localhost -i 10,3 -I 99,5 -- -s 32768 -S 32768 -m 1024
+
+UDP UNIDIRECTIONAL SEND TEST to localhost : +/-0.0% @ -16843009% conf.
+Socket  Message  Elapsed      Messages                
+Size    Size     Time         Okay Errors   Throughput
+bytes   bytes    secs            #      #   10^6bits/sec
+
+ 65536    1024   0.00       108544 2750707    1099521849344.00
+-1082130432           -0.01     1081571586              0.00
+
+
+
+
+If you wish to submit these results to the netperf database at
+http://www.cup.hp.com/netperf/NetperfPage.html, please submit each
+datapoint individually. Individual datapoints are separated by
+lines of dashes.

@@ -1,0 +1,777 @@
+diff -aurN orig/cygwin-1.5.19-4/winsup/cygserver/transport_sockets.cc cygwin-1.5.19-4/winsup/cygserver/transport_sockets.cc
+--- orig/cygwin-1.5.19-4/winsup/cygserver/transport_sockets.cc	2004-10-19 02:41:37.000000000 +0900
++++ cygwin-1.5.19-4/winsup/cygserver/transport_sockets.cc	2006-01-22 11:06:11.678000000 +0900
+@@ -202,7 +202,7 @@
+   socklen_t client_addr_len = sizeof (client_addr);
+ 
+   const int accept_fd =
+-    cygwin_accept (_fd, (struct sockaddr *) &client_addr, &client_addr_len);
++    cygwin_accept (_fd, (struct sockaddr *) &client_addr, (int *)&client_addr_len);
+ 
+   if (accept_fd == -1)
+     {
+diff -aurN orig/cygwin-1.5.19-4/winsup/cygwin/autoload.cc cygwin-1.5.19-4/winsup/cygwin/autoload.cc
+--- orig/cygwin-1.5.19-4/winsup/cygwin/autoload.cc	2006-01-21 00:54:29.000000000 +0900
++++ cygwin-1.5.19-4/winsup/cygwin/autoload.cc	2006-01-22 11:06:11.693625000 +0900
+@@ -496,6 +496,9 @@
+ LoadDLLfunc (WSAEventSelect, 12, ws2_32)
+ LoadDLLfunc (WSAEnumNetworkEvents, 12, ws2_32)
+ LoadDLLfunc (__WSAFDIsSet, 8, ws2_32)
++LoadDLLfunc (getaddrinfo, 16, ws2_32)
++LoadDLLfunc (freeaddrinfo, 4, ws2_32)
++LoadDLLfunc (getnameinfo, 28, ws2_32)
+ 
+ LoadDLLfuncEx (GetIfTable, 12, iphlpapi, 1)
+ LoadDLLfuncEx (GetIfEntry, 4, iphlpapi, 1)
+diff -aurN orig/cygwin-1.5.19-4/winsup/cygwin/cygwin.din cygwin-1.5.19-4/winsup/cygwin/cygwin.din
+--- orig/cygwin-1.5.19-4/winsup/cygwin/cygwin.din	2006-01-17 02:14:35.000000000 +0900
++++ cygwin-1.5.19-4/winsup/cygwin/cygwin.din	2006-01-22 11:06:11.709250000 +0900
+@@ -323,6 +323,13 @@
+ getsockopt = cygwin_getsockopt SIGFE
+ getsubopt SIGFE
+ getusershell SIGFE
++getaddrinfo = cygwin_getaddrinfo SIGFE
++gai_strerror = cygwin_gai_strerror SIGFE
++freeaddrinfo = cygwin_freeaddrinfo SIGFE
++getnameinfo = cygwin_getnameinfo SIGFE
++gethostbyname2 = cygwin_gethostbyname2 SIGFE
++in6addr_any DATA
++in6addr_loopback DATA
+ herror = cygwin_herror SIGFE
+ hstrerror = cygwin_hstrerror NOSIGFE
+ inet_addr = cygwin_inet_addr SIGFE
+diff -aurN orig/cygwin-1.5.19-4/winsup/cygwin/fhandler_socket.cc cygwin-1.5.19-4/winsup/cygwin/fhandler_socket.cc
+--- orig/cygwin-1.5.19-4/winsup/cygwin/fhandler_socket.cc	2006-01-21 00:54:29.000000000 +0900
++++ cygwin-1.5.19-4/winsup/cygwin/fhandler_socket.cc	2006-01-22 11:06:11.724875000 +0900
+@@ -49,15 +49,15 @@
+ /* cygwin internal: map sockaddr into internet domain address */
+ static int
+ get_inet_addr (const struct sockaddr *in, int inlen,
+-	       struct sockaddr_in *out, int *outlen,
++	       struct sockaddr *out, int *outlen,
+ 	       int *type = NULL, int *secret = NULL)
+ {
+   int secret_buf [4];
+   int* secret_ptr = (secret ? : secret_buf);
+ 
+-  if (in->sa_family == AF_INET)
++  if (in->sa_family == AF_INET || in->sa_family == AF_INET6)
+     {
+-      *out = * (struct sockaddr_in *)in;
++      memcpy(out, in, inlen);
+       *outlen = inlen;
+       return 1;
+     }
+@@ -101,7 +101,7 @@
+ 		  secret_ptr, secret_ptr + 1, secret_ptr + 2, secret_ptr + 3);
+ 	  sin.sin_port = htons (sin.sin_port);
+ 	  sin.sin_addr.s_addr = htonl (INADDR_LOOPBACK);
+-	  *out = sin;
++	  memcpy(out, &sin, sizeof sin);
+ 	  *outlen = sizeof sin;
+ 	  if (type)
+ 	    *type = (ctype == 's' ? SOCK_STREAM :
+@@ -666,11 +666,11 @@
+ {
+   int res = -1;
+   bool in_progress = false;
+-  struct sockaddr_in sin;
++  struct sockaddr_storage sin;
+   DWORD err;
+   int type;
+ 
+-  if (!get_inet_addr (name, namelen, &sin, &namelen, &type, connect_secret))
++  if (!get_inet_addr (name, namelen, (struct sockaddr *)&sin, &namelen, &type, connect_secret))
+     return -1;
+ 
+   if (get_addr_family () == AF_LOCAL && get_socket_type () != type)
+@@ -761,13 +761,13 @@
+   int res = -1;
+ 
+   /* Allows NULL peer and len parameters. */
+-  struct sockaddr_in peer_dummy;
++  struct sockaddr_storage peer_dummy;
+   int len_dummy;
+   if (!peer)
+     peer = (struct sockaddr *) &peer_dummy;
+   if (!len)
+     {
+-      len_dummy = sizeof (struct sockaddr_in);
++      len_dummy = sizeof (struct sockaddr_storage);
+       len = &len_dummy;
+     }
+ 
+@@ -1099,7 +1099,7 @@
+   const int iovcnt = msg->msg_iovlen;
+ 
+   struct sockaddr *from = (struct sockaddr *) msg->msg_name;
+-  int *fromlen = from ? &msg->msg_namelen : NULL;
++  int *fromlen = from ? (int *)&msg->msg_namelen : NULL;
+ 
+   int res = SOCKET_ERROR;
+ 
+@@ -1186,9 +1186,9 @@
+ fhandler_socket::sendto (const void *ptr, size_t len, int flags,
+ 			 const struct sockaddr *to, int tolen)
+ {
+-  struct sockaddr_in sin;
++  struct sockaddr_storage sin;
+ 
+-  if (to && !get_inet_addr (to, tolen, &sin, &tolen))
++  if (to && !get_inet_addr (to, tolen, (struct sockaddr *)&sin, &tolen))
+     return SOCKET_ERROR;
+ 
+   int res = SOCKET_ERROR;
+diff -aurN orig/cygwin-1.5.19-4/winsup/cygwin/include/cygwin/in.h cygwin-1.5.19-4/winsup/cygwin/include/cygwin/in.h
+--- orig/cygwin-1.5.19-4/winsup/cygwin/include/cygwin/in.h	2006-01-17 02:14:36.000000000 +0900
++++ cygwin-1.5.19-4/winsup/cygwin/include/cygwin/in.h	2006-01-22 11:06:11.740500000 +0900
+@@ -19,6 +19,7 @@
+ #define _CYGWIN_IN_H
+ 
+ #include <cygwin/socket.h>
++#include <cygwin/in6.h>
+ 
+ typedef uint16_t in_port_t;
+ typedef uint32_t in_addr_t;
+@@ -36,6 +37,7 @@
+   IPPROTO_PUP = 12,		/* PUP protocol				*/
+   IPPROTO_UDP = 17,		/* User Datagram Protocol		*/
+   IPPROTO_IDP = 22,		/* XNS IDP protocol			*/
++  IPPROTO_IPV6 = 41,		/* Internet Protocol Version 6		*/
+   IPPROTO_RAW = 255,		/* Raw IP packets			*/
+   IPPROTO_MAX
+ };
+@@ -185,21 +187,4 @@
+ 
+ #endif
+ 
+-#ifdef USE_IPV6
+-/* IPv6 definitions as we start to include them. This is just
+-   a beginning dont get excited 8) */
+-struct in6_addr
+-{
+-  uint8_t 	  s6_addr[16];
+-};
+-
+-struct sockaddr_in6
+-{
+-  sa_family_t	  sin6_family;		/* AF_INET6 */
+-  in_port_t	  sin6_port;		/* Port number. */
+-  uint32_t	  sin6_flowinfo;	/* Traffic class and flow inf. */
+-  struct in6_addr sin6_addr;		/* IPv6 address. */
+-  uint32_t	  sin6_scope_id;	/* Set of interfaces for a scope. */
+-};
+-#endif
+ #endif	/* _CYGWIN_IN_H */
+diff -aurN orig/cygwin-1.5.19-4/winsup/cygwin/include/cygwin/in6.h cygwin-1.5.19-4/winsup/cygwin/include/cygwin/in6.h
+--- orig/cygwin-1.5.19-4/winsup/cygwin/include/cygwin/in6.h	1970-01-01 09:00:00.000000000 +0900
++++ cygwin-1.5.19-4/winsup/cygwin/include/cygwin/in6.h	2006-01-22 11:06:11.756125000 +0900
+@@ -0,0 +1,158 @@
++#ifndef _CYGWIN_IN6_H
++#define _CYGWIN_IN6_H
++
++#define	INET6_ADDRSTRLEN	46
++
++/*
++ *	IPv6 definitions as we start to include them. This is just
++ *	a beginning dont get excited 8)
++ */
++
++struct in6_addr
++{
++	union {
++	      u_int8_t	__u6_addr8[16];
++	      u_int16_t	__u6_addr16[8];
++	      u_int32_t	__u6_addr32[4];
++	} __u6_addr;			/* 128-bit IP6 address */
++};
++#define	s6_addr	__u6_addr.__u6_addr8
++
++struct sockaddr_in6
++{
++	unsigned short sin6_family;	/* AF_INET6 (sa_family_t) */
++	unsigned short sin6_port;	/* Transport layer port # (in_port_t)*/
++	unsigned long sin6_flowinfo;	/* IP6 flow information */
++	struct in6_addr sin6_addr;	/* IP6 address */
++	unsigned long sin6_scope_id;	/* scope zone index */
++};
++
++/* Argument structure for IPV6_JOIN_GROUP and IPV6_LEAVE_GROUP */
++
++#define IN6ADDR_ANY_INIT        { 0 }
++#define IN6ADDR_LOOPBACK_INIT   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 }
++
++#ifdef __INSIDE_CYGWIN_NET__
++extern const struct in6_addr in6addr_any;
++extern const struct in6_addr in6addr_loopback;
++#else
++extern __declspec(dllimport) const struct in6_addr in6addr_any;
++extern __declspec(dllimport) const struct in6_addr in6addr_loopback;
++#endif /* __INSIDE_CYGWIN_NET__ */
++
++/*
++ * Equality
++ */
++#define IN6_ARE_ADDR_EQUAL(a, b)	\
++       (memcmp(&(a)->s6_addr[0], &(b)->s6_addr[0], sizeof(struct in6_addr)) == 0)
++
++/*
++ * Unspecified
++ */
++#define IN6_IS_ADDR_UNSPECIFIED(a)	\
++	((*(u_int32_t *)(&(a)->s6_addr[0]) == 0) &&	\
++	 (*(u_int32_t *)(&(a)->s6_addr[4]) == 0) &&	\
++	 (*(u_int32_t *)(&(a)->s6_addr[8]) == 0) &&	\
++	 (*(u_int32_t *)(&(a)->s6_addr[12]) == 0))
++
++/*
++ * Loopback
++ */
++#define IN6_IS_ADDR_LOOPBACK(a)		\
++	((*(u_int32_t *)(&(a)->s6_addr[0]) == 0) &&	\
++	 (*(u_int32_t *)(&(a)->s6_addr[4]) == 0) &&	\
++	 (*(u_int32_t *)(&(a)->s6_addr[8]) == 0) &&	\
++	 (*(u_int32_t *)(&(a)->s6_addr[12]) == ntohl(1)))
++
++/*
++ * Multicast
++ */
++#define IN6_IS_ADDR_MULTICAST(a)	((a)->s6_addr[0] == 0xff)
++
++/*
++ * Unicast Scope
++ * Note that we must check topmost 10 bits only, not 16 bits (see RFC2373).
++ */
++#define IN6_IS_ADDR_LINKLOCAL(a)	\
++	(((a)->s6_addr[0] == 0xfe) && (((a)->s6_addr[1] & 0xc0) == 0x80))
++#define IN6_IS_ADDR_SITELOCAL(a)	\
++	(((a)->s6_addr[0] == 0xfe) && (((a)->s6_addr[1] & 0xc0) == 0xc0))
++
++/*
++ * Mapped
++ */
++#define IN6_IS_ADDR_V4MAPPED(a)		\
++	((*(u_int32_t *)(&(a)->s6_addr[0]) == 0) &&	\
++	 (*(u_int32_t *)(&(a)->s6_addr[4]) == 0) &&	\
++	 (*(u_int32_t *)(&(a)->s6_addr[8]) == ntohl(0x0000ffff)))
++
++/*
++ * IPv4 compatible
++ */
++#define IN6_IS_ADDR_V4COMPAT(a)		\
++	((*(u_int32_t *)(&(a)->s6_addr[0]) == 0) &&	\
++	 (*(u_int32_t *)(&(a)->s6_addr[4]) == 0) &&	\
++	 (*(u_int32_t *)(&(a)->s6_addr[8]) == 0) &&	\
++	 (*(u_int32_t *)(&(a)->s6_addr[12]) != 0) &&	\
++	 (*(u_int32_t *)(&(a)->s6_addr[12]) != ntohl(1)))
++
++#define IPV6_ADDR_SCOPE_NODELOCAL	0x01
++#define IPV6_ADDR_SCOPE_LINKLOCAL	0x02
++#define IPV6_ADDR_SCOPE_SITELOCAL	0x05
++#define IPV6_ADDR_SCOPE_ORGLOCAL	0x08
++#define IPV6_ADDR_SCOPE_GLOBAL		0x0e
++
++/*
++ * Multicast Scope
++ */
++#define IN6_IS_ADDR_MC_NODELOCAL(a)	\
++	(IN6_IS_ADDR_MULTICAST(a) &&	\
++	 (IPV6_ADDR_MC_SCOPE(a) == IPV6_ADDR_SCOPE_NODELOCAL))
++#define IN6_IS_ADDR_MC_LINKLOCAL(a)	\
++	(IN6_IS_ADDR_MULTICAST(a) &&	\
++	 (IPV6_ADDR_MC_SCOPE(a) == IPV6_ADDR_SCOPE_LINKLOCAL))
++#define IN6_IS_ADDR_MC_SITELOCAL(a)	\
++	(IN6_IS_ADDR_MULTICAST(a) &&	\
++	 (IPV6_ADDR_MC_SCOPE(a) == IPV6_ADDR_SCOPE_SITELOCAL))
++#define IN6_IS_ADDR_MC_ORGLOCAL(a)	\
++	(IN6_IS_ADDR_MULTICAST(a) &&	\
++	 (IPV6_ADDR_MC_SCOPE(a) == IPV6_ADDR_SCOPE_ORGLOCAL))
++#define IN6_IS_ADDR_MC_GLOBAL(a)	\
++	(IN6_IS_ADDR_MULTICAST(a) &&	\
++	 (IPV6_ADDR_MC_SCOPE(a) == IPV6_ADDR_SCOPE_GLOBAL))
++
++/* Argument structure for IPV6_JOIN_GROUP and IPV6_LEAVE_GROUP */
++
++typedef struct ipv6_mreq {
++    struct in6_addr ipv6mr_multiaddr;  /* IPv6 multicast address. */
++    unsigned int    ipv6mr_interface;  /* Interface index. */
++};
++
++/*
++ * Socket options at the IPPROTO_IPV6 level.
++ */
++#define IPV6_UNICAST_HOPS	4  /* Set/get IP unicast hop limit. */
++#define IPV6_MULTICAST_IF	9  /* Set/get IP multicast interface. */
++#define IPV6_MULTICAST_HOPS	10 /* Set/get IP multicast ttl. */
++#define IPV6_MULTICAST_LOOP	11 /* Set/get IP multicast loopback. */
++#define IPV6_ADD_MEMBERSHIP	12 /* Add an IP group membership. */
++#define IPV6_DROP_MEMBERSHIP	13 /* Drop an IP group membership. */
++#define IPV6_JOIN_GROUP		IPV6_ADD_MEMBERSHIP
++#define IPV6_LEAVE_GROUP	IPV6_DROP_MEMBERSHIP
++#define IPV6_PKTINFO		19 /* Receive packet information for ipv6 */
++
++/*
++ * Socket options at the IPPROTO_UDP level.
++ */
++#define UDP_CHECKSUM_COVERAGE   20  // Set/get UDP-Lite checksum coverage.
++
++/*
++ * WARNING: The gai_strerror inline functions below use static buffers, 
++ * and hence are not thread-safe.  We'll use buffers long enough to hold 
++ * 1k characters.  Any system error messages longer than this will be 
++ * returned as empty strings.  However 1k should work for the error codes 
++ * used by getaddrinfo().
++ */
++#define GAI_STRERROR_BUFFER_SIZE 1024
++
++#endif /* _CYGWIN_IN6_H */
+diff -aurN orig/cygwin-1.5.19-4/winsup/cygwin/include/cygwin/socket.h cygwin-1.5.19-4/winsup/cygwin/include/cygwin/socket.h
+--- orig/cygwin-1.5.19-4/winsup/cygwin/include/cygwin/socket.h	2006-01-21 00:47:51.000000000 +0900
++++ cygwin-1.5.19-4/winsup/cygwin/include/cygwin/socket.h	2006-01-22 11:06:11.771750000 +0900
+@@ -149,9 +149,7 @@
+ #define AF_HYLINK       15              /* NSC Hyperchannel */
+ #define AF_APPLETALK    16              /* AppleTalk */
+ #define AF_NETBIOS      17              /* NetBios-style addresses */
+-#if 0					/* Not yet */
+ #define AF_INET6        23              /* IP version 6 */
+-#endif
+ 
+ #define AF_MAX          32
+ /*
+@@ -177,9 +175,7 @@
+ #define PF_HYLINK       AF_HYLINK
+ #define PF_APPLETALK    AF_APPLETALK
+ #define PF_NETBIOS      AF_NETBIOS
+-#if 0
+ #define PF_INET6        AF_INET6
+-#endif
+ 
+ #define PF_MAX          AF_MAX
+ 
+diff -aurN orig/cygwin-1.5.19-4/winsup/cygwin/include/netdb.h cygwin-1.5.19-4/winsup/cygwin/include/netdb.h
+--- orig/cygwin-1.5.19-4/winsup/cygwin/include/netdb.h	2002-06-11 11:52:15.000000000 +0900
++++ cygwin-1.5.19-4/winsup/cygwin/include/netdb.h	2006-01-22 11:06:27.006125000 +0900
+@@ -63,6 +63,9 @@
+ extern "C" {
+ #endif
+ 
++/* for socklen_t */
++#include <cygwin/socket.h>
++
+ /*
+  * Structures returned by network data base library.  All addresses are
+  * supplied in host order, and returned in network order (suitable for
+@@ -111,6 +114,63 @@
+ 	int	r_number;	/* rpc program number */
+ };
+ 
++struct addrinfo {
++        int     ai_flags;       /* AI_PASSIVE, AI_CANONNAME, AI_NUMERICHOST */
++        int     ai_family;      /* PF_xxx */
++        int     ai_socktype;    /* SOCK_xxx */
++        int     ai_protocol;    /* 0 or IPPROTO_xxx for IPv4 and IPv6 */
++        size_t  ai_addrlen;     /* length of ai_addr */
++        char    *ai_canonname;  /* canonical name for hostname */
++        struct  sockaddr *ai_addr;      /* binary address */
++        struct  addrinfo *ai_next;      /* next structure in linked list */
++};
++
++
++/*
++ * Error codes from getaddrinfo().
++ */
++#define _WSABASEERR			10000
++#define _WSATRY_AGAIN			(_WSABASEERR+1002)
++#define _WSAEINVAL			(_WSABASEERR+22)
++#define _WSANO_RECOVERY			(_WSABASEERR+1003)
++#define _WSAEAFNOSUPPORT		(_WSABASEERR+47)
++#define _ERROR_NOT_ENOUGH_MEMORY	8L
++#define _WSA_NOT_ENOUGH_MEMORY		_ERROR_NOT_ENOUGH_MEMORY
++#define _WSANO_DATA			(_WSABASEERR+1004)
++#define _WSAHOST_NOT_FOUND		(_WSABASEERR+1001)
++#define _WSATYPE_NOT_FOUND		(_WSABASEERR+109)
++#define _WSAESOCKTNOSUPPORT		(_WSABASEERR+44)
++
++#define EAI_AGAIN       _WSATRY_AGAIN
++#define EAI_BADFLAGS    _WSAEINVAL
++#define EAI_FAIL        _WSANO_RECOVERY
++#define EAI_FAMILY      _WSAEAFNOSUPPORT
++#define EAI_MEMORY      _WSA_NOT_ENOUGH_MEMORY
++#define EAI_NODATA      _WSANO_DATA
++#define EAI_NONAME      _WSAHOST_NOT_FOUND
++#define EAI_SERVICE     _WSATYPE_NOT_FOUND
++#define EAI_SOCKTYPE    _WSAESOCKTNOSUPPORT
++
++/*
++ * Flags used in "hints" argument to getaddrinfo().
++ */
++#define AI_PASSIVE     0x1  /* Socket address will be used in bind() call. */
++#define AI_CANONNAME   0x2  /* Return canonical name in first ai_canonname. */
++#define AI_NUMERICHOST 0x4  /* Nodename must be a numeric address string. */
++
++
++#define NI_MAXHOST  1025  /* Max size of a fully-qualified domain name. */
++#define NI_MAXSERV    32  /* Max size of a service name. */
++
++/*
++ * Flags for getnameinfo().
++ */
++#define NI_NOFQDN       0x01  /* Only return nodename portion for local hosts. */
++#define NI_NUMERICHOST  0x02  /* Return numeric form of the host's address. */
++#define NI_NAMEREQD     0x04  /* Error if the host's name not in DNS. */
++#define NI_NUMERICSERV  0x08  /* Return numeric form of the service (port #). */
++#define NI_DGRAM        0x10  /* Service is a datagram service. */
++
+ /*
+  * Error return codes from gethostbyname() and gethostbyaddr()
+  * (left in extern int h_errno).
+@@ -158,6 +218,11 @@
+ void		setprotoent (int);
+ void		setservent (int);
+ void		setrpcent (int);
++int		getaddrinfo (const char *, const char *, struct addrinfo *, struct addrinfo **);
++char		*gai_strerror(int);
++void		freeaddrinfo(struct addrinfo *);
++int		getnameinfo(const struct sockaddr *, socklen_t, char *, size_t, char *, size_t, int);
++struct hostent	*gethostbyname2(const char *, int);
+ #endif
+ 
+ #ifdef __cplusplus
+diff -aurN orig/cygwin-1.5.19-4/winsup/cygwin/include/netinet/in.h cygwin-1.5.19-4/winsup/cygwin/include/netinet/in.h
+--- orig/cygwin-1.5.19-4/winsup/cygwin/include/netinet/in.h	2001-03-26 06:09:52.000000000 +0900
++++ cygwin-1.5.19-4/winsup/cygwin/include/netinet/in.h	2006-01-22 11:06:11.787375000 +0900
+@@ -12,5 +12,6 @@
+ #define _NETINET_IN_H
+ 
+ #include <cygwin/in.h>
++#include <cygwin/in6.h>
+ 
+ #endif /* _NETINET_IN_H */
+diff -aurN orig/cygwin-1.5.19-4/winsup/cygwin/include/netinet/in6.h cygwin-1.5.19-4/winsup/cygwin/include/netinet/in6.h
+--- orig/cygwin-1.5.19-4/winsup/cygwin/include/netinet/in6.h	1970-01-01 09:00:00.000000000 +0900
++++ cygwin-1.5.19-4/winsup/cygwin/include/netinet/in6.h	2006-01-22 11:06:11.803000000 +0900
+@@ -0,0 +1,7 @@
++#ifndef _NETINET_IN6_H
++#define _NETINET_IN6_H
++
++#include <cygwin/in.h>
++#include <cygwin/in6.h>
++
++#endif /* _NETINET_IN6_H */
+diff -aurN orig/cygwin-1.5.19-4/winsup/cygwin/net.cc cygwin-1.5.19-4/winsup/cygwin/net.cc
+--- orig/cygwin-1.5.19-4/winsup/cygwin/net.cc	2006-01-21 00:54:29.000000000 +0900
++++ cygwin-1.5.19-4/winsup/cygwin/net.cc	2006-01-22 11:24:29.224875000 +0900
+@@ -26,6 +26,7 @@
+ #include <netdb.h>
+ #define USE_SYS_TYPES_FD_SET
+ #include <winsock2.h>
++#include <ws2tcpip.h>
+ #include <assert.h>
+ #include "cygerrno.h"
+ #include "security.h"
+@@ -50,6 +51,13 @@
+ 		       char *password, char *cmd, SOCKET * fd2p);
+   int __stdcall rresvport (int *);
+   int sscanf (const char *, const char *, ...);
++
++  extern const struct in6_addr __declspec (dllexport) in6addr_any = {{
++	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }};
++  extern const struct in6_addr __declspec (dllexport) in6addr_loopback =  {{
++	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 }};
+ }				/* End of "C" section */
+ 
+ static fhandler_socket *
+@@ -569,7 +577,17 @@
+ 
+   debug_printf ("socket (%d, %d, %d)", af, type, protocol);
+ 
+-  soc = socket (AF_INET, type, af == AF_LOCAL ? 0 : protocol);
++  switch (af)
++    {
++      case AF_INET6:
++      case AF_INET:
++	soc = socket (af, type, protocol);
++	break;
++      case AF_UNIX:
++      default:
++	soc = socket (AF_INET, type, 0);
++	break;
++    }
+ 
+   if (soc == INVALID_SOCKET)
+     {
+@@ -579,7 +597,7 @@
+ 
+   const device *dev;
+ 
+-  if (af == AF_INET)
++  if (af == AF_INET || af == AF_INET6)
+     dev = type == SOCK_STREAM ? tcp_dev : udp_dev;
+   else
+     dev = type == SOCK_STREAM ? stream_dev : dgram_dev;
+@@ -2111,6 +2129,172 @@
+ {
+ }
+ 
++/* exported as getaddrinfo: standards? */
++extern "C" int
++cygwin_getaddrinfo (const char *hname, const char *pname,
++		    struct addrinfo *hints, struct addrinfo **res)
++{
++
++  int g;
++
++  g = getaddrinfo (hname, pname, hints, res);
++  if (g)
++    {
++      set_winsock_errno ();
++      set_host_errno ();
++    }
++  else
++    {
++      debug_printf ("hname = %s, pname = %s", hname, pname);
++      h_errno = 0;
++    }
++  return g;
++}
++
++/* exported as gai_strerror: standards? */
++extern "C" const char *
++cygwin_gai_strerror (int ecode)
++{
++  switch (ecode)
++    {
++    case EAI_AGAIN:
++      return ("Temporary failure in name resolution");
++    case EAI_BADFLAGS:
++      return ("Invalid value for ai_flags");
++    case EAI_FAIL:
++      return ("Non-recoverable failure in name resolution");
++    case EAI_FAMILY:
++      return ("Address family not supported");
++    case EAI_MEMORY:
++      return ("Memory allocation failure");
++    case EAI_NODATA:
++      return ("No address associated with nodename");
++    case EAI_NONAME:
++      return ("Node name nor service name provided, or not known");
++    case EAI_SERVICE:
++      return ("Service name not supported for socket type");
++    case EAI_SOCKTYPE:
++      return ("Socket type not supported");
++    default:
++      return ("Unknown error");
++    }
++}
++
++/* exported as freeaddrinfo: standards? */
++extern "C" void
++cygwin_freeaddrinfo (struct addrinfo *ai)
++{
++  freeaddrinfo(ai);
++}
++
++/* exported as getnameinfo: standards? */
++extern "C" int
++cygwin_getnameinfo(const struct sockaddr *sa, socklen_t salen, char *host,
++		   size_t hostlen, char *serv, size_t servlen, int flags)
++{
++  int g;
++
++  g = getnameinfo (sa, salen, host, hostlen, serv, servlen, flags);
++  if (g)
++    {
++      set_winsock_errno ();
++      set_host_errno ();
++    }
++  else
++    {
++      debug_printf ("getnameinfo protocol family = %d\n", (struct sockaddr *)sa->sa_family);
++      h_errno = 0;
++    }
++  return g;
++}
++
++#define CYGWIN_MAXHOSTNAMELEN  128
++#define CYGWIN_MAXALIASES      35
++#define CYGWIN_MAXADDRS        35
++
++static struct hostent host;
++static char host_name[CYGWIN_MAXHOSTNAMELEN];
++static char *host_aliases[CYGWIN_MAXALIASES];
++static char host_alias[CYGWIN_MAXHOSTNAMELEN];
++
++static char *host_addrtbl[CYGWIN_MAXADDRS];
++static char host_addr[16 * CYGWIN_MAXADDRS];
++
++/* exported as gethostbyname2: standards? */
++extern "C" struct hostent *
++cygwin_gethostbyname2(const char * name, int af)
++{
++  struct addrinfo hints;
++  struct addrinfo * res;
++  struct addrinfo * res0;
++  int g;
++  int offset;
++  int i;
++
++  if (af != AF_INET && af != AF_INET6)
++    {
++      set_errno(EAFNOSUPPORT);
++      h_errno = 0;
++      return NULL;
++    }
++
++  memset(&hints, 0, sizeof(hints));
++  hints.ai_family = af;
++  hints.ai_flags = AI_CANONNAME;
++  g = getaddrinfo(name, NULL, &hints, &res0);
++  if (g)
++    {
++      set_winsock_errno ();
++      set_host_errno ();
++      return NULL;
++    }
++
++  memset(&host, 0, sizeof(host));
++  host.h_name = host_name;
++  host.h_aliases = host_aliases;
++  host.h_aliases[0] = host_alias;
++  host.h_addrtype = af;
++  host.h_addr_list = host_addrtbl;
++
++  for (i = 0, offset = 0, res = res0; res && i < CYGWIN_MAXADDRS - 1; res = res->ai_next, i++)
++    {
++      if (i == 0)
++	{
++	  strncpy(host_name, res->ai_canonname, CYGWIN_MAXHOSTNAMELEN - 1);
++	  host_name[strlen(res->ai_canonname)] = '\0';
++	  /* */
++	  strncpy(host.h_aliases[0], name, CYGWIN_MAXHOSTNAMELEN - 1);
++	  host.h_aliases[0][strlen(name)] = '\0';
++	}
++      host.h_addr_list[i] = (char *)(host_addr + offset);
++      switch (af)
++	{
++	case AF_INET:
++	  host.h_length = sizeof(struct in_addr);
++	  offset += host.h_length;
++	  memcpy(host.h_addr_list[i],
++		 &((struct sockaddr_in *)(res->ai_addr))->sin_addr, host.h_length);
++	  break;
++	case AF_INET6:
++	  host.h_length = sizeof(struct in6_addr);
++	  offset += host.h_length;
++	  memcpy(host.h_addr_list[i],
++		 &((struct sockaddr_in6 *)(res->ai_addr))->sin6_addr, host.h_length);
++	  break;
++	default:
++	  freeaddrinfo(res0);
++	  set_errno(EAFNOSUPPORT);
++	  h_errno = 0;
++	  return NULL;
++	}
++    }
++
++  host.h_addr_list[i] = NULL;
++  freeaddrinfo(res0);
++  h_errno = 0;
++  return &host;
++}
++
+ /* endhostent: standards? */
+ extern "C" void
+ endhostent (void)
+@@ -2179,6 +2363,28 @@
+ 	}
+       return 0;
+     }
++  else if (family == AF_INET6)
++    {
++      struct addrinfo hints;
++      struct addrinfo * res;
++      int g;
++      struct sockaddr_in6 * saddr6;
++
++      memset (&hints, 0, sizeof(hints));
++      hints.ai_family = family;
++      hints.ai_flags = AI_NUMERICHOST;
++      g = getaddrinfo (strptr, NULL, &hints, &res);
++      if (g)
++	{
++	  set_errno(g);
++	  return 0;
++	}
++      saddr6 = (struct sockaddr_in6 *)res->ai_addr;
++      memcpy (addrptr, &saddr6->sin6_addr, sizeof(struct in6_addr));
++
++      freeaddrinfo (res);
++      return 1;
++    }
+   set_errno (EAFNOSUPPORT);
+   return -1;
+ }
+@@ -2206,6 +2412,33 @@
+       strcpy (strptr, temp);
+       return strptr;
+     }
++  else if (family == AF_INET6)
++    {
++      char hname[NI_MAXHOST];
++      int g;
++      struct sockaddr_in6 addr6;
++      struct sockaddr * paddr;
++
++      memset (&addr6, 0, sizeof(addr6));
++      addr6.sin6_family = AF_INET6;
++      memcpy (&addr6.sin6_addr, addrptr, sizeof(struct in6_addr));
++      paddr = (struct sockaddr *)&addr6;
++      g = getnameinfo (paddr, sizeof(struct sockaddr_in6),
++		       hname, sizeof(hname), NULL, 0, NI_NUMERICHOST);
++      if (g)
++	{
++	  set_errno(g);
++	  return NULL;
++	}
++
++      if  (strlen (hname) >= (size_t) len)
++	{
++	  set_errno (ENOSPC);
++	  return NULL;
++	}
++      strcpy (strptr, hname);
++      return strptr;
++    }
+   set_errno (EAFNOSUPPORT);
+   return NULL;
+ }
+diff -aurN orig/cygwin-1.5.19-4/winsup/w32api/include/ws2tcpip.h cygwin-1.5.19-4/winsup/w32api/include/ws2tcpip.h
+--- orig/cygwin-1.5.19-4/winsup/w32api/include/ws2tcpip.h	2005-04-01 00:46:35.000000000 +0900
++++ cygwin-1.5.19-4/winsup/w32api/include/ws2tcpip.h	2006-01-22 11:06:11.834250000 +0900
+@@ -283,6 +283,7 @@
+ };
+ typedef struct  in6_pktinfo IN6_PKTINFO;
+ 
++#if !(defined (__INSIDE_CYGWIN__) || (__INSIDE_MSYS__))
+ struct addrinfo {
+ 	int     ai_flags;
+ 	int     ai_family;
+@@ -293,6 +294,7 @@
+ 	struct sockaddr  *ai_addr;
+ 	struct addrinfo  *ai_next;
+ };
++#endif /* !(defined (__INSIDE_CYGWIN__) || (__INSIDE_MSYS__)) */
+ 
+ #if (_WIN32_WINNT >= 0x0501)
+ void WSAAPI freeaddrinfo (struct addrinfo*);
+diff -aurN orig/cygwin-1.5.19-4/winsup/w32api/lib/wship6.def cygwin-1.5.19-4/winsup/w32api/lib/wship6.def
+--- orig/cygwin-1.5.19-4/winsup/w32api/lib/wship6.def	1970-01-01 09:00:00.000000000 +0900
++++ cygwin-1.5.19-4/winsup/w32api/lib/wship6.def	2006-01-22 11:06:11.849875000 +0900
+@@ -0,0 +1,5 @@
++LIBRARY WSHIP6.DLL
++EXPORTS
++getaddrinfo@16
++freeaddrinfo@4
++getnameinfo@28

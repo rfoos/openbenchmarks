@@ -17,16 +17,36 @@ If these are popular, a suite of microcontroller benchmarks can be done, but
 with much smaller kernels, and radically different toolchains.
 
 Rick Foos at Solengtech dot Com.
-Packages:
-buildconf
-Liense: BSD License 
-Source: git clone git://buildconf.git.sourceforge.net/gitroot/buildconf/buildconf
-Download: http://sourceforge.net/projects/buildconf/files/latest`
-Authors: Confirming Names.
-Status: Used as download ATM, will layer this with git as we go forward.
+
+Buildconf - git://buildconf.git.sourceforge.net/gitroot/buildconf/buildconf
+Buildconf - http://sourceforge.net/projects/buildconf/files/latest
+Crosstool-ng - http://crosstool-ng.org/download/crosstool-ng/http://crosstool-ng.org/download/crosstool-ng/
+Crosstool-ng - hg clone http://crosstool-ng.org/hg/crosstool-ng
+
+iperf - http://sourceforge.net/projects/iperf/files/iperf-2.0.5.tar.gz/download
+dhrystone -  
+postmark - 
+lmbench - http://sourceforge.net/projects/lmbench/files/development/lmbench-3.0-a9/lmbench-3.0-a9.tgz/download
+netperf - ftp://ftp.netperf.org/netperf/netperf-2.5.0.tar.gz
+httperf - http://code.google.com/p/httperf/downloads/detail?name=httperf-0.9.0.tar.gz&can=2&q=
+httperf - ftp://ftp.hpl.hp.com/pub/httperf/httperf-0.9.0.tar.gz
+iozone3 - http://www.iozone.org/src/current/iozone3_263.tar
+iozone3 - http://iozone.org/src/current/iozone3_397.tar
+iozone - https://admin.fedoraproject.org/pkgdb/users/packages/nhorman?_csrf_token=f4a54d599ac121b8d4e353d4579077cb44cc59c8
+iozone3 - http://linux.softpedia.com/get/System/Benchmarks/IOzone-1355.shtml
+iozone3 - http://linux.softpedia.com/dyn-postdownload.php?p=1355&t=0&i=3
+memtester - http://pyropus.ca/software/memtester/old-versions/memtester-4.2.2.tar.gz
+tiobench - cvs -d:pserver:anonymous@cvs.tiobench.sourceforge.net:/cvsroot/tiobench
+tiobench - http://sourceforge.net/projects/tiobench/files/tiobench/0.3.3/tiobench-0.3.3.tar.gz
+tiobench 0.4.1 - wget http://tiobench.cvs.sourceforge.net/viewvc/tiobench/tiobench/?view=tar -O tiobench-tiobench.tar.gz
 
 Changelog:
 - Create grandmaster -> master, gh-pages peers for doxygen site.
 - Importing Buildconf (autogen.sh), Adding Doxyfile.
+- Convert gh-pages and buildconf to submodules.
+- Add benchmarks
+- Porting Iperf: undefined reference to rpl_malloc
+http://lecs.cs.ucla.edu/wiki/index.php/Cross_compile_iperf
+
 
 

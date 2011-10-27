@@ -1,0 +1,541 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of NUTTCP</TITLE>
+</HEAD><BODY>
+<H1>NUTTCP</H1>
+Section: Under Construction (8)<BR>Updated: 3 February 2007<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+nuttcp - network performance measurement tool
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+
+
+<B>nuttcp -h</B>
+
+<BR>
+
+<B>nuttcp -V</B>
+
+<BR>
+
+<B>nuttcp -t</B>
+
+[ <B>-bdDsuv</B> ]
+
+[ <B>-c </B><I>dscp_value</I> ]
+
+[ <B>-l </B><I>buffer_len</I> ]
+
+[ <B>-n </B><I>num_bufs</I> ]
+
+<BR>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[ <B>-w </B><I>window_size</I> ]
+
+[ <B>-ws </B><I>server_window</I> ]
+
+[ <B>-wb</B> ]
+
+<BR>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[ <B>-p </B><I>data_port</I> ]
+
+[ <B>-P </B><I>control_port</I> ]
+
+<BR>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[ <B>-N </B><I>num_streams</I> ]
+
+[ <B>-R </B><I>xmit_rate_limit</I> [m|g] ]
+
+<BR>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[ <B>-T </B><I>xmit_timeout</I> [m] ]
+
+<I>host</I>
+
+[
+<B>&lt;</B>
+
+<I>input</I>
+
+]
+<BR>
+
+<B>nuttcp -r</B>
+
+[ <B>-bBdsuv</B> ]
+
+[ <B>-c </B><I>dscp_value</I> ]
+
+[ <B>-l </B><I>buffer_len</I> ]
+
+[ <B>-n </B><I>num_bufs</I> ]
+
+<BR>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[ <B>-w </B><I>window_size</I> ]
+
+[ <B>-ws </B><I>server_window</I> ]
+
+[ <B>-wb</B> ]
+
+<BR>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[ <B>-p </B><I>data_port</I> ]
+
+[ <B>-P </B><I>control_port</I> ]
+
+<BR>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[ <B>-N </B><I>num_streams</I> ]
+
+[ <B>-R </B><I>xmit_rate_limit</I> [m|g] ]
+
+<BR>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[ <B>-T </B><I>xmit_timeout</I> [m] ]
+
+[
+<I>host</I>
+
+]
+[
+<B>&gt;</B>
+
+<I>output</I>
+
+]
+<BR>
+
+<B>nuttcp -S</B>
+
+[ <B>-P </B><I>control_port</I> ]
+
+<BR>
+
+<B>nuttcp -1</B>
+
+[ <B>-P </B><I>control_port</I> ]
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+nuttcp is a network performance measurement tool intended for use by
+network and system managers.  Its most basic usage is to determine the
+raw TCP (or UDP) network layer throughput by transferring memory buffers
+from a source system across an interconnecting network to a destination
+system, either transferring data for a specified time interval, or
+alternatively transferring a specified number of bytes.  In addition
+to reporting the achieved network throughput in Mbps, nuttcp also
+provides additional useful information related to the data transfer
+such as user, system, and wall-clock time, transmitter and receiver
+CPU utilization, and loss percentage (for UDP transfers).
+<P>
+
+nuttcp is based on nttcp, which in turn was an enhancement by someone
+at Silicon Graphics (SGI) on the original ttcp, which was written by
+Mike Muuss at BRL sometime before December 1984, to compare the performance
+of TCP stacks by U.C. Berkeley and BBN to help DARPA decide which version
+to place in the first BSD Unix release.  nuttcp has several useful features
+beyond those of the basic ttcp/nttcp, such as a server mode, rate limiting,
+multiple parallel streams, and timer based usage.  More recent changes
+include IPv6 support, IPv4 multicast, and the ability to set the maximum
+segment size or TOS/DSCP bits.  nuttcp is continuing to evolve to meet
+new requirements that arise and to add desired new features.  nuttcp has
+been successfully built and run on a variety of Solaris, SGI, and
+PPC/X86 Linux systems, and should probably work fine on most flavors
+of Unix.  It has also been used successfully on various versions of
+the Windows operating system.
+<P>
+
+There are two basic modes of operation for nuttcp.  The original or
+classic mode is the transmitter/receiver mode, which is also the way
+the original ttcp and nttcp worked.  In this mode, a receiver is first
+initiated on the destination host using &quot;nuttcp -r&quot;, and then a
+transmitter must be started on the source host using &quot;nuttcp -t&quot;.
+This mode is somewhat deprecated and is no longer recommended for
+general use.  The preferred and recommended mode of operation for
+nuttcp is the new client/server mode.  With this mode, a server is
+first started on one system using &quot;nuttcp -S&quot; (or &quot;nuttcp -1&quot;),
+and then a client may either transmit data to (using &quot;nuttcp -t&quot;)
+or receive data from (using &quot;nuttcp -r&quot;) the server system.  All
+the information provided by nuttcp is reported by the client, including
+the information from the server, thus providing a full snapshot of both
+the transmitter and receiver ends of the data transfer.
+<P>
+
+The server may be started by a normal, non-privileged user by issuing
+either a &quot;nuttcp -S&quot; or a &quot;nuttcp -1&quot; command.  However, the optimal
+and recommended method of running a server is to run &quot;nuttcp -S&quot; via
+the inetd/xinetd daemon.  This method has several significant advantages,
+including being more robust, allowing multiple simultaneous connections,
+and providing for access control over who is allowed to use the nuttcp
+server via the hosts.allow (and hosts.deny) file.  By default, the
+nuttcp server listens for commands on port 5000, and the actual nuttcp
+data transfers take place on port 5001.
+<P>
+
+The
+<I>host</I>
+
+parameter must be specified for the transmitter, and provides the
+host name or IP address of the receiver.  In classic transmitter/receiver
+mode, the
+<I>host</I>
+
+parameter may not be specified for the receiver.  In client/server mode,
+when the client is the receiver, the
+<I>host</I>
+
+parameter specifies the host name or IP address of the transmitter
+(server).
+<P>
+
+Normally, a nuttcp data transfer is memory-to-memory.  However, by
+using the &quot;-s&quot; option, it is possible to also perform memory-to-disk,
+disk-to-memory, and disk-to-disk data transfers.  Using the &quot;-s&quot; option
+with the transmitter will cause nuttcp to read its data from the
+standard input instead of using a prefabricated memory buffer,
+while using the &quot;-s&quot; option on the receiver causes nuttcp to write
+its data to standard output.  All these types of data transfers are
+possible with the classic transmitter/receiver mode.  For security
+reasons, the &quot;-s&quot; option is disabled on the server, so it is not
+possible to access the disk on the server side of a data transfer.
+<P>
+
+The allowed options to nuttcp are:
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<DL COMPACT>
+<DT><B>-h</B>
+
+<DD>
+Print out a usage statement.  Running nuttcp with no arguments will
+also produce a usage statement.
+<DT><B>-V</B>
+
+<DD>
+Prints the nuttcp version number.  The nuttcp version is also printed
+as part of the normal nuttcp output when the &quot;-v&quot; verbose output is
+used (but not when using the default brief output).  In client/server
+mode, the version number of both the client and server is identified.
+<DT><B>-t</B>
+
+<DD>
+Indicates that this nuttcp is the transmitter.  In client/server mode,
+this means the server specified by the
+<I>host</I>
+
+parameter is the receiver.
+<DT><B>-r</B>
+
+<DD>
+Indicates that this nuttcp is the receiver.  In client/server mode,
+this means the server specified by the
+<I>host</I>
+
+parameter is the transmitter.
+<DT><B>-S</B>
+
+<DD>
+Indicates that this nuttcp is the server.  The only option that may
+be specified to the server is the &quot;-P&quot; option, which allows one to
+change the control port used by the server, but only when the server
+is started by a normal, non-privileged user.  When the server is
+initiated by inetd/xinetd, the server control port should be specified
+in the
+<I>services</I>
+
+file.
+<DT><B>-1</B>
+
+<DD>
+Basically the same as the &quot;-S&quot; option, but indicates a one-shot server,
+i.e. the server exits after the first data transfer initiated by a
+client.  The &quot;-1&quot; option should only be used when the server is started
+by a normal, non-privileged user.  This option will probably rarely
+need to be used, but can be useful for a quick test and eliminates
+the possibilty of leaving a non-access controlled nuttcp server running
+on the system (which can happen when using the &quot;-S&quot; option and forgetting
+to kill the nuttcp server after finishing a series of tests).
+<DT><B>-b</B>
+
+<DD>
+Produce brief one-line output, which includes the amount of data
+transferred in MB (1024**2 bytes), the time interval in seconds,
+the TCP (or UDP) network throughput in Mbps (millions of bits per
+second), the transmitter and/or receiver CPU utilization, and for
+UDP data transfers also outputs the loss percentage.  In client/server
+mode, most of the printed statistics are from the viewpoint of the
+receiver.  This is the default output format.
+<DT><B>-B</B>
+
+<DD>
+This option is only valid for the receiver, and forces the receiver
+to read a full buffer (as specified by the &quot;-l&quot; buffer length option)
+from the network.  It is mainly intended to be used with the &quot;-s&quot;
+option to only output full buffers to standard output (e.g. for use
+with tar).  It is also implicitly set whenever the number of streams
+as specified by the &quot;-N&quot; option is greater than 1.  This option is
+not passed to the server.
+<DT><B>-d</B>
+
+<DD>
+For TCP data transfers, sets the SO_DEBUG option on the data socket.
+This option is not passed to the server.  It is a rarely used option
+which may possibly be removed or renamed in a future version of nuttcp.
+<DT><B>-D</B>
+
+<DD>
+This option is only valid for the transmitter, and only for TCP data
+transfers, in which case it sets the TCP_NODELAY option on the data
+socket, which turns off the Nagle algorithm causing data packets to
+be sent as soon as possible without introducing any unnecessary delays.
+This option is not passed to the server.  It is a rarely used option
+which may possibly be removed or renamed in a future version of nuttcp.
+<DT><B>-s</B>
+
+<DD>
+Setting the &quot;-s&quot; option causes nuttcp to either read its data from
+standard input rather than using prefabricated memory buffers (for
+&quot;nuttcp -t&quot;), or to write its data out to standard output (for
+&quot;nuttcp -r&quot;).  The &quot;-s&quot; option is disabled for security reasons
+on the server.
+<DT><B>-u</B>
+
+<DD>
+Use UDP for the data transfer instead of the default of TCP.
+<DT><B>-v</B>
+
+<DD>
+Verbose output that provides some additional information related to
+the data transfer.  In client/server mode, the server is always verbose
+(implicit &quot;-v&quot; option), but the client controls the extent and type of
+output via the &quot;-v&quot; and &quot;-b&quot; options.
+<DT><B>-c</B><I>dscp_value</I>
+
+<DD>
+Sets the socket option to support COS.  Either takes a dscp value or
+with the t|T modifier it takes the full TOS field.
+<DT><B>-l</B><I>buffer_len</I>
+
+<DD>
+Length of the network write/read buffer in bytes for the
+transmitter/receiver.  It defaults to 64 KB (65536) for TCP data
+transfers and to 8 KB (8192) for UDP.  For client/server mode, it
+sets both the client and server buffer lengths.
+<DT><B>-n</B><I>num_bufs</I>
+
+<DD>
+Specifies the number of source buffers written to the network
+(default is unlimited), and is ignored by the receiver.  For client/server
+mode, if the client issues a &quot;nuttcp -r&quot; command making it the
+receiver, this parameter is passed to the server since the server
+is the transmitter in this case.  This parameter is also ignored
+if the &quot;-s&quot; parameter is specified to the transmitter.
+<DT><B>-w</B><I>window_size</I>
+
+<DD>
+Indicates the window size in KB of the transmitter (for &quot;nuttcp -t&quot;)
+or receiver (for &quot;nuttcp -r&quot;).  Actually, to be technically correct,
+it sets the sender or receiver TCP socket buffer size, which then
+effectively sets the window size.  For client/server mode, both the
+transmitter and receiver window sizes are set.  The default window
+size is architecture and system dependent.  Note recent Linux systems,
+out of a misguided desire to be helpful, double whatever window size
+is actually specified by the user (this is not a bug with nuttcp but
+a bug/feature of the Linux kernel).  Also, with these Linux systems,
+the actual window size that's used on the intervening network, as
+observed with tcpdump, is greater than the requested window size,
+but less than the doubled value set by Linux.
+<DT><B>-ws</B><I>server_window</I>
+
+<DD>
+For client/server mode, the &quot;-ws&quot; option provides a mechanism for
+setting a different window size on the server than the client window
+size as specified with the &quot;-w&quot; option.
+<DT><B>-wb</B>
+
+<DD>
+Normally, to conserve memory, the transmitter only sets the TCP send
+socket buffer size and the receiver only sets the TCP receive socket
+buffer size.  However, if the &quot;-wb&quot; option is used, the transmitter
+will also set the TCP receive socket buffer size and the receiver will
+also set the TCP send socket buffer size.  Under normal circumstances,
+this should never be necessary.  This option was implemented because
+certain early braindead Solaris 2.8 systems would not properly set
+the TCP window size unless both the TCP send and receive socket buffer
+sizes were set (later Solaris 2.8 systems have corrected this deficiency).
+Thus the 'b' in this option can stand either for &quot;braindead&quot; or &quot;both&quot;.
+<DT><B>-p</B><I>data_port</I>
+
+<DD>
+Port number used for the data connection, which defaults to port 5001.
+If multiple streams are specified with the &quot;-N&quot; option, the &quot;-p&quot; option
+specifies the starting port number for the data connection.  For example,
+if four streams are specified using the default data connection port
+number, nuttcp will use ports 5001, 5002, 5003, and 5004 for the four
+TCP (or UDP) connections used to perform the data transfer.
+<DT><B>-P</B><I>control_port</I>
+
+<DD>
+For client/server mode, specifies the port number used for the control
+connection between the client and server, and defaults to port 5000.
+On the server side, the &quot;-P&quot; option should only be used when the server
+is started manually by the user.  If the server is started by inetd/xinetd
+(the preferred method), the control connection must be specified by adding
+a nuttcp entry to the
+<I>services</I>
+
+file.
+<DT><B>-N</B><I>num_streams</I>
+
+<DD>
+Species the number of parallel TCP (or UDP) data streams to be used for
+the data transfer, with the default being a single data stream.  The
+maximum number of parallel data streams that can be used is 128.  If the
+number of streams is greater than one, the &quot;-B&quot; option is implicitly set.
+The current implementation does not fork off separate processes for each
+data stream, so specifying multiple streams on an SMP machine will not
+take advantage of its multiple processors.  Of course it is always possible
+to run multiple nuttcp commands in parallel on an SMP system to determine
+if there is any advantage to running on multiple processors.  This is
+especially simple to do when running in client/server mode when the server
+is started from the inetd/xinetd daemon.  When running multiple nuttcp
+commands in parallel, the &quot;-T&quot; transmitter timeout option may be used
+to insure that all the nuttcp commands finish at approximately the same
+time.
+<DT><B>-R</B><I>xmit_rate_limit</I><B>[m|g]</B>
+
+<DD>
+The transmitter rate limit throttles the speed at which the transmitter
+sends data to the network, and by default is in Kbps, although the 'm'
+or 'g' suffix may be used to specify Mbps or Gbps.  This option may be
+used with either TCP or UDP data streams.  Because of the way this option
+is currently implemented, it will consume all the available CPU on the
+transmitter side of the connection so the &quot;%TX&quot; stats are not meaningful
+when using the rate limit option.  By default the rate limit is applied
+to the average rate of the data transfer in real time, and not in CPU
+time, so if nuttcp is switched out of the processor for any reason, when
+it is switched back in, it is possible that the instantaneous rate may
+momentarily exceed the specified value.  There is an 'i' qualifier to
+the rate limit option (specified as &quot;-Ri&quot;) that will restrict the
+instantaneous rate at any given point in time to the specified value,
+although in this case the final rate reported by nuttcp may be less
+than the specified value since nuttcp won't attempt to catch up if other
+processes gain control of the CPU.  The default is no rate limit.  Note
+another way to throttle the throughput of TCP data streams is to reduce
+the window size.
+<DT><B>-T</B><I>xmit_time_limit</I><B>[m]</B>
+
+<DD>
+Limits the amount of time that the transmitter will send data to the
+specified number of seconds, or number of minutes if the 'm' suffix
+is used.  Normally a data transfer will either specify a fixed amount
+of data to send using the &quot;-n&quot; option, or a fixed period of time to
+send using the &quot;-T&quot; option.  However, if both the &quot;-n&quot; and &quot;-T&quot; options
+are used, the data transfer will be stopped by whichever option takes
+affect first.  The default is a 10 second time limit for the data
+transfer.
+</DL>
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>USAGE</H2>
+
+Under Construction
+<P>
+
+For now, consult the README file for basic usage guidelines.
+<A NAME="lbAG">&nbsp;</A>
+<H2>EXAMPLES</H2>
+
+Under Construction
+<P>
+
+For now, see the examples.txt file for some examples of using nuttcp.
+<A NAME="lbAH">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+ping">ping</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+traceroute">traceroute</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+tracepath">tracepath</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+pathchar">pathchar</A></B>(8),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+netstat">netstat</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+mtrace">mtrace</A></B>(8)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>AUTHORS</H2>
+
+Developed by Bill Fink based on nttcp which in turn was an enhancement
+of the original ttcp developed by Mike Muuss at BRL.  IPv6 capability
+and some other fixes and enhancements contributed by Rob Scott.  Many
+useful suggestions and testing performed by Phil Dykstra and others.
+<P>
+
+The current version is available via anonymous ftp from:
+<P>
+
+<DL COMPACT><DT><DD>
+<I><A HREF="ftp://ftp.lcp.nrl.navy.mil/pub/nuttcp/">ftp://ftp.lcp.nrl.navy.mil/pub/nuttcp/</A></I>
+
+</DL>
+
+<P>
+
+The authors can be reached at <A HREF="mailto:nuttcp@lcp.nrl.navy.mil">nuttcp@lcp.nrl.navy.mil</A>.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>BUGS</H2>
+
+Please send bug reports to <A HREF="mailto:nuttcp-bugs@lcp.nrl.navy.mil">nuttcp-bugs@lcp.nrl.navy.mil</A>.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">USAGE</A><DD>
+<DT><A HREF="#lbAG">EXAMPLES</A><DD>
+<DT><A HREF="#lbAH">SEE ALSO</A><DD>
+<DT><A HREF="#lbAI">AUTHORS</A><DD>
+<DT><A HREF="#lbAJ">BUGS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 09:16:29 GMT, February 03, 2007
+</BODY>
+</HTML>
