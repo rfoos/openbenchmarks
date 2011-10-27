@@ -85,33 +85,34 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00003"></a>00003 
 <a name="l00004"></a><a class="code" href="namespacepostmark__1.html#a8d7358c291e4518bd7c23095e1988917">00004</a> DESCRIPTION = <span class="stringliteral">&quot;Benchmarks filesystem under workload similar to that of a mail server.&quot;</span>
 <a name="l00005"></a><a class="code" href="namespacepostmark__1.html#ae29bd6a3c3db451dc2b799342bfc5e38">00005</a> LICENSE = <span class="stringliteral">&quot;Artistic&quot;</span>
-<a name="l00006"></a>00006 
-<a name="l00007"></a><a class="code" href="namespacepostmark__1.html#a02d6c2b25047a6a1c77989fb9eafb148">00007</a> PR = <span class="stringliteral">&quot;r0&quot;</span>
-<a name="l00008"></a>00008 
-<a name="l00009"></a><a class="code" href="namespacepostmark__1.html#adc3056c2d59a897a67d68400aefe862a">00009</a> SRC_URI = <span class="stringliteral">&quot;${DEBIAN_MIRROR}/main/p/${PN}/${PN}_${PV}.orig.tar.gz \</span>
-<a name="l00010"></a>00010 <span class="stringliteral">           ${DEBIAN_MIRROR}/main/p/${PN}/${PN}_${PV}-7.diff.gz;name=patch&quot;</span>
-<a name="l00011"></a>00011 
-<a name="l00012"></a>00012 SRC_URI[md5sum] = <span class="stringliteral">&quot;b494167c2df1850004110ab28e5ad164&quot;</span>
-<a name="l00013"></a>00013 SRC_URI[sha256sum] = <span class="stringliteral">&quot;7cb7c31d4e7725ce8d8e11fb7df62ed700dee4dbd5ca1e31bf3a9161fc890b41&quot;</span>
-<a name="l00014"></a>00014 SRC_URI[patch.md5sum] = <span class="stringliteral">&quot;c2aafa2c1cc5aafe96390d582e119181&quot;</span>
-<a name="l00015"></a>00015 SRC_URI[patch.sha256sum] = <span class="stringliteral">&quot;345d2b656699e331774a77ef337178ba3e702f96d20e2aefc18e6ce4b50f4a23&quot;</span>
-<a name="l00016"></a>00016 
-<a name="l00017"></a>00017 TARGET_CC_ARCH += <span class="stringliteral">&quot;${LDFLAGS}&quot;</span>
-<a name="l00018"></a>00018 
-<a name="l00019"></a>00019 do_compile() {
-<a name="l00020"></a>00020         ${CC} ${CFLAGS} -o ${PN} ${PN}-${PV}.c
-<a name="l00021"></a>00021 }
-<a name="l00022"></a>00022 
-<a name="l00023"></a>00023 do_install () {
-<a name="l00024"></a>00024         install -d ${D}/usr/bin
-<a name="l00025"></a>00025         install -m 0755 ${PN} ${D}/usr/bin
-<a name="l00026"></a>00026 }
+<a name="l00006"></a><a class="code" href="namespacepostmark__1.html#a3b5fad62cbb69fb1b6fc6787a173b41c">00006</a> LIC_FILES_CHKSUM = <span class="stringliteral">&quot;file://postmark-1.51.c;beginline=1;endline=11;md5=1f30542fd7f19c8ca3aaa4d2ab792a64&quot;</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a><a class="code" href="namespacepostmark__1.html#a02d6c2b25047a6a1c77989fb9eafb148">00008</a> PR = <span class="stringliteral">&quot;r1&quot;</span>
+<a name="l00009"></a>00009 
+<a name="l00010"></a><a class="code" href="namespacepostmark__1.html#adc3056c2d59a897a67d68400aefe862a">00010</a> SRC_URI = <span class="stringliteral">&quot;${DEBIAN_MIRROR}/main/p/${PN}/${PN}_${PV}.orig.tar.gz \</span>
+<a name="l00011"></a>00011 <span class="stringliteral">           ${DEBIAN_MIRROR}/main/p/${PN}/${PN}_${PV}-7.diff.gz;name=patch&quot;</span>
+<a name="l00012"></a>00012 
+<a name="l00013"></a>00013 SRC_URI[md5sum] = <span class="stringliteral">&quot;b494167c2df1850004110ab28e5ad164&quot;</span>
+<a name="l00014"></a>00014 SRC_URI[sha256sum] = <span class="stringliteral">&quot;7cb7c31d4e7725ce8d8e11fb7df62ed700dee4dbd5ca1e31bf3a9161fc890b41&quot;</span>
+<a name="l00015"></a>00015 SRC_URI[patch.md5sum] = <span class="stringliteral">&quot;c2aafa2c1cc5aafe96390d582e119181&quot;</span>
+<a name="l00016"></a>00016 SRC_URI[patch.sha256sum] = <span class="stringliteral">&quot;345d2b656699e331774a77ef337178ba3e702f96d20e2aefc18e6ce4b50f4a23&quot;</span>
+<a name="l00017"></a>00017 
+<a name="l00018"></a>00018 TARGET_CC_ARCH += <span class="stringliteral">&quot;${LDFLAGS}&quot;</span>
+<a name="l00019"></a>00019 
+<a name="l00020"></a>00020 do_compile() {
+<a name="l00021"></a>00021         ${CC} ${CFLAGS} -o ${PN} ${PN}-${PV}.c
+<a name="l00022"></a>00022 }
+<a name="l00023"></a>00023 
+<a name="l00024"></a>00024 do_install () {
+<a name="l00025"></a>00025         install -d ${D}/usr/bin
+<a name="l00026"></a>00026         install -m 0755 ${PN} ${D}/usr/bin
+<a name="l00027"></a>00027 }
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="postmark__1_851_8bb.html">postmark_1.51.bb</a>      </li>
-      <li class="footer">Generated on Fri Oct 14 2011 18:00:35 for Openbenchmarks by&#160;
+      <li class="footer">Generated on Thu Oct 27 2011 17:48:24 for Openbenchmarks by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

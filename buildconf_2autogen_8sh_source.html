@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-  initNavTree('autogen_8sh.html','');
+  initNavTree('buildconf_2autogen_8sh.html','');
 </script>
 <div id="doc-content">
 <div class="header">
@@ -80,344 +80,344 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">buildconf/autogen.sh</div>  </div>
 </div>
 <div class="contents">
-<a href="autogen_8sh.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a><a class="code" href="namespaceautogen.html">00001</a> <span class="comment">#!/bin/sh</span>
-<a name="l00002"></a>00002 <span class="comment">## Buildconf autogen script. </span>
-<a name="l00003"></a>00003 <span class="comment"># @author Christopher Sean Morrison &lt;morrison@brlcad.org&gt;, Sebastian Pipping &lt;sebastian@pipping.org&gt;</span>
-<a name="l00004"></a>00004 <span class="comment"># @file</span>
-<a name="l00005"></a>00005 
-<a name="l00006"></a>00006 <span class="comment">#                        a u t o g e n . s h</span>
-<a name="l00007"></a>00007 <span class="comment">#</span>
-<a name="l00008"></a>00008 <span class="comment"># Copyright (c) 2005-2009 United States Government as represented by</span>
-<a name="l00009"></a>00009 <span class="comment"># the U.S. Army Research Laboratory.</span>
+<a href="buildconf_2autogen_8sh.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a><a class="code" href="namespaceautogen.html">00001</a> <span class="comment">#!/bin/sh</span>
+<a name="l00002"></a>00002 <span class="comment">#                        a u t o g e n . s h</span>
+<a name="l00003"></a>00003 <span class="comment">#</span>
+<a name="l00004"></a>00004 <span class="comment"># Copyright (c) 2005-2010 United States Government as represented by</span>
+<a name="l00005"></a>00005 <span class="comment"># the U.S. Army Research Laboratory.</span>
+<a name="l00006"></a>00006 <span class="comment">#</span>
+<a name="l00007"></a>00007 <span class="comment"># Redistribution and use in source and binary forms, with or without</span>
+<a name="l00008"></a>00008 <span class="comment"># modification, are permitted provided that the following conditions</span>
+<a name="l00009"></a>00009 <span class="comment"># are met:</span>
 <a name="l00010"></a>00010 <span class="comment">#</span>
-<a name="l00011"></a>00011 <span class="comment"># Redistribution and use in source and binary forms, with or without</span>
-<a name="l00012"></a>00012 <span class="comment"># modification, are permitted provided that the following conditions</span>
-<a name="l00013"></a>00013 <span class="comment"># are met:</span>
-<a name="l00014"></a>00014 <span class="comment">#</span>
-<a name="l00015"></a>00015 <span class="comment"># 1. Redistributions of source code must retain the above copyright</span>
-<a name="l00016"></a>00016 <span class="comment"># notice, this list of conditions and the following disclaimer.</span>
-<a name="l00017"></a>00017 <span class="comment">#</span>
-<a name="l00018"></a>00018 <span class="comment"># 2. Redistributions in binary form must reproduce the above</span>
-<a name="l00019"></a>00019 <span class="comment"># copyright notice, this list of conditions and the following</span>
-<a name="l00020"></a>00020 <span class="comment"># disclaimer in the documentation and/or other materials provided</span>
-<a name="l00021"></a>00021 <span class="comment"># with the distribution.</span>
+<a name="l00011"></a>00011 <span class="comment"># 1. Redistributions of source code must retain the above copyright</span>
+<a name="l00012"></a>00012 <span class="comment"># notice, this list of conditions and the following disclaimer.</span>
+<a name="l00013"></a>00013 <span class="comment">#</span>
+<a name="l00014"></a>00014 <span class="comment"># 2. Redistributions in binary form must reproduce the above</span>
+<a name="l00015"></a>00015 <span class="comment"># copyright notice, this list of conditions and the following</span>
+<a name="l00016"></a>00016 <span class="comment"># disclaimer in the documentation and/or other materials provided</span>
+<a name="l00017"></a>00017 <span class="comment"># with the distribution.</span>
+<a name="l00018"></a>00018 <span class="comment">#</span>
+<a name="l00019"></a>00019 <span class="comment"># 3. The name of the author may not be used to endorse or promote</span>
+<a name="l00020"></a>00020 <span class="comment"># products derived from this software without specific prior written</span>
+<a name="l00021"></a>00021 <span class="comment"># permission.</span>
 <a name="l00022"></a>00022 <span class="comment">#</span>
-<a name="l00023"></a>00023 <span class="comment"># 3. The name of the author may not be used to endorse or promote</span>
-<a name="l00024"></a>00024 <span class="comment"># products derived from this software without specific prior written</span>
-<a name="l00025"></a>00025 <span class="comment"># permission.</span>
-<a name="l00026"></a>00026 <span class="comment">#</span>
-<a name="l00027"></a>00027 <span class="comment"># THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS&#39;&#39; AND ANY EXPRESS</span>
-<a name="l00028"></a>00028 <span class="comment"># OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED</span>
-<a name="l00029"></a>00029 <span class="comment"># WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</span>
-<a name="l00030"></a>00030 <span class="comment"># ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY</span>
-<a name="l00031"></a>00031 <span class="comment"># DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</span>
-<a name="l00032"></a>00032 <span class="comment"># DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE</span>
-<a name="l00033"></a>00033 <span class="comment"># GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS</span>
-<a name="l00034"></a>00034 <span class="comment"># INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,</span>
-<a name="l00035"></a>00035 <span class="comment"># WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING</span>
-<a name="l00036"></a>00036 <span class="comment"># NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS</span>
-<a name="l00037"></a>00037 <span class="comment"># SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
-<a name="l00038"></a>00038 <span class="comment">#</span>
-<a name="l00039"></a>00039 <span class="comment">###</span>
-<a name="l00040"></a>00040 <span class="comment">#</span>
-<a name="l00041"></a>00041 <span class="comment"># Script for automatically preparing the sources for compilation by</span>
-<a name="l00042"></a>00042 <span class="comment"># performing the myriad of necessary steps.  The script attempts to</span>
-<a name="l00043"></a>00043 <span class="comment"># detect proper version support, and outputs warnings about particular</span>
-<a name="l00044"></a>00044 <span class="comment"># systems that have autotool peculiarities.</span>
-<a name="l00045"></a>00045 <span class="comment">#</span>
-<a name="l00046"></a>00046 <span class="comment"># Basically, if everything is set up and installed correctly, the</span>
-<a name="l00047"></a>00047 <span class="comment"># script will validate that minimum versions of the GNU Build System</span>
-<a name="l00048"></a>00048 <span class="comment"># tools are installed, account for several common configuration</span>
-<a name="l00049"></a>00049 <span class="comment"># issues, and then simply run autoreconf for you.</span>
-<a name="l00050"></a>00050 <span class="comment">#</span>
-<a name="l00051"></a>00051 <span class="comment"># If autoreconf fails, which can happen for many valid configurations,</span>
-<a name="l00052"></a>00052 <span class="comment"># this script proceeds to run manual preparation steps effectively</span>
-<a name="l00053"></a>00053 <span class="comment"># providing a POSIX shell script (mostly complete) reimplementation of</span>
-<a name="l00054"></a>00054 <span class="comment"># autoreconf.</span>
-<a name="l00055"></a>00055 <span class="comment">#</span>
-<a name="l00056"></a>00056 <span class="comment"># The AUTORECONF, AUTOCONF, AUTOMAKE, LIBTOOLIZE, ACLOCAL, AUTOHEADER</span>
-<a name="l00057"></a>00057 <span class="comment"># environment variables and corresponding _OPTIONS variables (e.g.</span>
-<a name="l00058"></a>00058 <span class="comment"># AUTORECONF_OPTIONS) may be used to override the default automatic</span>
-<a name="l00059"></a>00059 <span class="comment"># detection behaviors.  Similarly the _VERSION variables will override</span>
-<a name="l00060"></a>00060 <span class="comment"># the minimum required version numbers.</span>
-<a name="l00061"></a>00061 <span class="comment">#</span>
-<a name="l00062"></a>00062 <span class="comment"># Examples:</span>
-<a name="l00063"></a>00063 <span class="comment">#</span>
-<a name="l00064"></a>00064 <span class="comment">#   To obtain help on usage:</span>
-<a name="l00065"></a>00065 <span class="comment">#     ./autogen.sh --help</span>
-<a name="l00066"></a>00066 <span class="comment">#</span>
-<a name="l00067"></a>00067 <span class="comment">#   To obtain verbose output:</span>
-<a name="l00068"></a>00068 <span class="comment">#     ./autogen.sh --verbose</span>
-<a name="l00069"></a>00069 <span class="comment">#</span>
-<a name="l00070"></a>00070 <span class="comment">#   To skip autoreconf and prepare manually:</span>
-<a name="l00071"></a>00071 <span class="comment">#     AUTORECONF=false ./autogen.sh</span>
-<a name="l00072"></a>00072 <span class="comment">#</span>
-<a name="l00073"></a>00073 <span class="comment">#   To verbosely try running with an older (unsupported) autoconf:</span>
-<a name="l00074"></a>00074 <span class="comment">#     AUTOCONF_VERSION=2.50 ./autogen.sh --verbose</span>
-<a name="l00075"></a>00075 <span class="comment">#</span>
-<a name="l00076"></a>00076 <span class="comment"># Author:</span>
-<a name="l00077"></a>00077 <span class="comment">#   Christopher Sean Morrison &lt;morrison@brlcad.org&gt;</span>
+<a name="l00023"></a>00023 <span class="comment"># THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS&#39;&#39; AND ANY EXPRESS</span>
+<a name="l00024"></a>00024 <span class="comment"># OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED</span>
+<a name="l00025"></a>00025 <span class="comment"># WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</span>
+<a name="l00026"></a>00026 <span class="comment"># ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY</span>
+<a name="l00027"></a>00027 <span class="comment"># DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</span>
+<a name="l00028"></a>00028 <span class="comment"># DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE</span>
+<a name="l00029"></a>00029 <span class="comment"># GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS</span>
+<a name="l00030"></a>00030 <span class="comment"># INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,</span>
+<a name="l00031"></a>00031 <span class="comment"># WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING</span>
+<a name="l00032"></a>00032 <span class="comment"># NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS</span>
+<a name="l00033"></a>00033 <span class="comment"># SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<a name="l00034"></a>00034 <span class="comment">#</span>
+<a name="l00035"></a>00035 <span class="comment">###</span>
+<a name="l00036"></a>00036 <span class="comment">#</span>
+<a name="l00037"></a>00037 <span class="comment"># Script for automatically preparing the sources for compilation by</span>
+<a name="l00038"></a>00038 <span class="comment"># performing the myriad of necessary steps.  The script attempts to</span>
+<a name="l00039"></a>00039 <span class="comment"># detect proper version support, and outputs warnings about particular</span>
+<a name="l00040"></a>00040 <span class="comment"># systems that have autotool peculiarities.</span>
+<a name="l00041"></a>00041 <span class="comment">#</span>
+<a name="l00042"></a>00042 <span class="comment"># Basically, if everything is set up and installed correctly, the</span>
+<a name="l00043"></a>00043 <span class="comment"># script will validate that minimum versions of the GNU Build System</span>
+<a name="l00044"></a>00044 <span class="comment"># tools are installed, account for several common configuration</span>
+<a name="l00045"></a>00045 <span class="comment"># issues, and then simply run autoreconf for you.</span>
+<a name="l00046"></a>00046 <span class="comment">#</span>
+<a name="l00047"></a>00047 <span class="comment"># If autoreconf fails, which can happen for many valid configurations,</span>
+<a name="l00048"></a>00048 <span class="comment"># this script proceeds to run manual preparation steps effectively</span>
+<a name="l00049"></a>00049 <span class="comment"># providing a POSIX shell script (mostly complete) reimplementation of</span>
+<a name="l00050"></a>00050 <span class="comment"># autoreconf.</span>
+<a name="l00051"></a>00051 <span class="comment">#</span>
+<a name="l00052"></a>00052 <span class="comment"># The AUTORECONF, AUTOCONF, AUTOMAKE, LIBTOOLIZE, ACLOCAL, AUTOHEADER</span>
+<a name="l00053"></a>00053 <span class="comment"># environment variables and corresponding _OPTIONS variables (e.g.</span>
+<a name="l00054"></a>00054 <span class="comment"># AUTORECONF_OPTIONS) may be used to override the default automatic</span>
+<a name="l00055"></a>00055 <span class="comment"># detection behaviors.  Similarly the _VERSION variables will override</span>
+<a name="l00056"></a>00056 <span class="comment"># the minimum required version numbers.</span>
+<a name="l00057"></a>00057 <span class="comment">#</span>
+<a name="l00058"></a>00058 <span class="comment"># Examples:</span>
+<a name="l00059"></a>00059 <span class="comment">#</span>
+<a name="l00060"></a>00060 <span class="comment">#   To obtain help on usage:</span>
+<a name="l00061"></a>00061 <span class="comment">#     ./autogen.sh --help</span>
+<a name="l00062"></a>00062 <span class="comment">#</span>
+<a name="l00063"></a>00063 <span class="comment">#   To obtain verbose output:</span>
+<a name="l00064"></a>00064 <span class="comment">#     ./autogen.sh --verbose</span>
+<a name="l00065"></a>00065 <span class="comment">#</span>
+<a name="l00066"></a>00066 <span class="comment">#   To skip autoreconf and prepare manually:</span>
+<a name="l00067"></a>00067 <span class="comment">#     AUTORECONF=false ./autogen.sh</span>
+<a name="l00068"></a>00068 <span class="comment">#</span>
+<a name="l00069"></a>00069 <span class="comment">#   To verbosely try running with an older (unsupported) autoconf:</span>
+<a name="l00070"></a>00070 <span class="comment">#     AUTOCONF_VERSION=2.50 ./autogen.sh --verbose</span>
+<a name="l00071"></a>00071 <span class="comment">#</span>
+<a name="l00072"></a>00072 <span class="comment"># Author:</span>
+<a name="l00073"></a>00073 <span class="comment">#   Christopher Sean Morrison &lt;morrison@brlcad.org&gt;</span>
+<a name="l00074"></a>00074 <span class="comment">#</span>
+<a name="l00075"></a>00075 <span class="comment"># Patches:</span>
+<a name="l00076"></a>00076 <span class="comment">#   Sebastian Pipping &lt;sebastian@pipping.org&gt;</span>
+<a name="l00077"></a>00077 <span class="comment">#   Tom Browder &lt;tbrowder2@users.sourceforge.net&gt;</span>
 <a name="l00078"></a>00078 <span class="comment">#</span>
-<a name="l00079"></a>00079 <span class="comment"># Patches:</span>
-<a name="l00080"></a>00080 <span class="comment">#   Sebastian Pipping &lt;sebastian@pipping.org&gt;</span>
-<a name="l00081"></a>00081 <span class="comment">#</span>
-<a name="l00082"></a>00082 <span class="comment">######################################################################</span>
-<a name="l00083"></a>00083 
-<a name="l00084"></a>00084 <span class="comment"># set to minimum acceptable version of autoconf</span>
-<a name="l00085"></a>00085 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$AUTOCONF_VERSION&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00086"></a><a class="code" href="namespaceautogen.html#a6ccbeb3dc4e2670d83dafcfbe21a9582">00086</a>     AUTOCONF_VERSION=2.52
-<a name="l00087"></a>00087 fi
-<a name="l00088"></a>00088 <span class="comment"># set to minimum acceptable version of automake</span>
-<a name="l00089"></a>00089 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$AUTOMAKE_VERSION&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00090"></a><a class="code" href="namespaceautogen.html#af91633930c4bd5edbf9c69503fecfff1">00090</a>     AUTOMAKE_VERSION=1.6.0
-<a name="l00091"></a>00091 fi
-<a name="l00092"></a>00092 <span class="comment"># set to minimum acceptable version of libtool</span>
-<a name="l00093"></a>00093 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$LIBTOOL_VERSION&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00094"></a><a class="code" href="namespaceautogen.html#a7d208ba10c1c6552c6990c5102ecaaf8">00094</a>     LIBTOOL_VERSION=1.4.2
-<a name="l00095"></a>00095 fi
-<a name="l00096"></a>00096 
-<a name="l00097"></a>00097 
-<a name="l00098"></a>00098 <span class="comment">##################</span>
-<a name="l00099"></a>00099 <span class="comment"># ident function #</span>
-<a name="l00100"></a>00100 <span class="comment">##################</span>
-<a name="l00101"></a>00101 ident ( ) {
-<a name="l00102"></a>00102     <span class="comment"># extract copyright from header</span>
-<a name="l00103"></a><a class="code" href="namespaceautogen.html#ad93d950a4244c5bb4244cadce2b3d108">00103</a>     __copyright=<span class="stringliteral">&quot;`grep Copyright $AUTOGEN_SH | head -${HEAD_N}1 | awk &#39;{print $4}&#39;`&quot;</span>
-<a name="l00104"></a>00104     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$__copyright&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00105"></a>00105         __copyright=<span class="stringliteral">&quot;`date +%Y`&quot;</span>
-<a name="l00106"></a>00106     fi
-<a name="l00107"></a>00107 
-<a name="l00108"></a>00108     <span class="comment"># extract version from CVS Id string</span>
-<a name="l00109"></a><a class="code" href="namespaceautogen.html#a159a36e22577e18386daf06196c966e9">00109</a>     __id=<span class="stringliteral">&quot;$Id: autogen.sh 33925 2009-03-01 23:27:06Z brlcad $&quot;</span>
-<a name="l00110"></a><a class="code" href="namespaceautogen.html#a21dbd140331cfc834ca236b8fd506bea">00110</a>     __version=<span class="stringliteral">&quot;`echo $__id | sed &#39;s/.*\([0-9][0-9][0-9][0-9]\)[-\/]\([0-9][0-9]\)[-\/]\([0-9][0-9]\).*/\1\2\3/&#39;`&quot;</span>
-<a name="l00111"></a>00111     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$__version&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00112"></a>00112         __version=<span class="stringliteral">&quot;&quot;</span>
-<a name="l00113"></a>00113     fi
-<a name="l00114"></a>00114 
-<a name="l00115"></a>00115     echo <span class="stringliteral">&quot;autogen.sh build preparation script by Christopher Sean Morrison&quot;</span>
-<a name="l00116"></a>00116     echo <span class="stringliteral">&quot;  + config.guess download patch by Sebastian Pipping (2008-12-03)&quot;</span>
-<a name="l00117"></a>00117     echo <span class="stringliteral">&quot;revised 3-clause BSD-style license, copyright (c) $__copyright&quot;</span>
-<a name="l00118"></a>00118     echo <span class="stringliteral">&quot;script version $__version, ISO/IEC 9945 POSIX shell script&quot;</span>
-<a name="l00119"></a>00119 }
-<a name="l00120"></a>00120 
-<a name="l00121"></a>00121 
-<a name="l00122"></a>00122 <span class="comment">##################</span>
-<a name="l00123"></a>00123 <span class="comment"># USAGE FUNCTION #</span>
-<a name="l00124"></a>00124 <span class="comment">##################</span>
-<a name="l00125"></a>00125 usage ( ) {
-<a name="l00126"></a>00126     echo <span class="stringliteral">&quot;Usage: $AUTOGEN_SH [-h|--help] [-v|--verbose] [-q|--quiet] [-d|--download] [--version]&quot;</span>
-<a name="l00127"></a>00127     echo <span class="stringliteral">&quot;    --help      Help on $NAME_OF_AUTOGEN usage&quot;</span>
-<a name="l00128"></a>00128     echo <span class="stringliteral">&quot;    --verbose   Verbose progress output&quot;</span>
-<a name="l00129"></a>00129     echo <span class="stringliteral">&quot;    --quiet     Quiet suppressed progress output&quot;</span>
-<a name="l00130"></a>00130     echo <span class="stringliteral">&quot;    --download  Download the latest config.guess from gnulib&quot;</span>
-<a name="l00131"></a>00131     echo <span class="stringliteral">&quot;    --version   Only perform GNU Build System version checks&quot;</span>
-<a name="l00132"></a>00132     echo
-<a name="l00133"></a>00133     echo <span class="stringliteral">&quot;Description: This script will validate that minimum versions of the&quot;</span>
-<a name="l00134"></a>00134     echo <span class="stringliteral">&quot;GNU Build System tools are installed and then run autoreconf for you.&quot;</span>
-<a name="l00135"></a>00135     echo <span class="stringliteral">&quot;Should autoreconf fail, manual preparation steps will be run&quot;</span>
-<a name="l00136"></a>00136     echo <span class="stringliteral">&quot;potentially accounting for several common preparation issues.  The&quot;</span>
-<a name="l00137"></a>00137 
-<a name="l00138"></a>00138     echo <span class="stringliteral">&quot;AUTORECONF, AUTOCONF, AUTOMAKE, LIBTOOLIZE, ACLOCAL, AUTOHEADER,&quot;</span>
-<a name="l00139"></a>00139     echo <span class="stringliteral">&quot;PROJECT, &amp; CONFIGURE environment variables and corresponding _OPTIONS&quot;</span>
-<a name="l00140"></a>00140     echo <span class="stringliteral">&quot;variables (e.g. AUTORECONF_OPTIONS) may be used to override the&quot;</span>
-<a name="l00141"></a>00141     echo <span class="stringliteral">&quot;default automatic detection behavior.&quot;</span>
-<a name="l00142"></a>00142     echo
-<a name="l00143"></a>00143 
-<a name="l00144"></a>00144     ident
+<a name="l00079"></a>00079 <span class="comment">######################################################################</span>
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081 <span class="comment"># set to minimum acceptable version of autoconf</span>
+<a name="l00082"></a>00082 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$AUTOCONF_VERSION&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00083"></a><a class="code" href="namespaceautogen.html#a6ccbeb3dc4e2670d83dafcfbe21a9582">00083</a>     AUTOCONF_VERSION=2.52
+<a name="l00084"></a>00084 fi
+<a name="l00085"></a>00085 <span class="comment"># set to minimum acceptable version of automake</span>
+<a name="l00086"></a>00086 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$AUTOMAKE_VERSION&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00087"></a><a class="code" href="namespaceautogen.html#af91633930c4bd5edbf9c69503fecfff1">00087</a>     AUTOMAKE_VERSION=1.6.0
+<a name="l00088"></a>00088 fi
+<a name="l00089"></a>00089 <span class="comment"># set to minimum acceptable version of libtool</span>
+<a name="l00090"></a>00090 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$LIBTOOL_VERSION&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00091"></a><a class="code" href="namespaceautogen.html#a7d208ba10c1c6552c6990c5102ecaaf8">00091</a>     LIBTOOL_VERSION=1.4.2
+<a name="l00092"></a>00092 fi
+<a name="l00093"></a>00093 
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095 <span class="comment">##################</span>
+<a name="l00096"></a>00096 <span class="comment"># ident function #</span>
+<a name="l00097"></a>00097 <span class="comment">##################</span>
+<a name="l00098"></a>00098 ident ( ) {
+<a name="l00099"></a>00099     <span class="comment"># extract copyright from header</span>
+<a name="l00100"></a><a class="code" href="namespaceautogen.html#ad93d950a4244c5bb4244cadce2b3d108">00100</a>     __copyright=<span class="stringliteral">&quot;`grep Copyright $AUTOGEN_SH | head -${HEAD_N}1 | awk &#39;{print $4}&#39;`&quot;</span>
+<a name="l00101"></a>00101     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$__copyright&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00102"></a>00102         __copyright=<span class="stringliteral">&quot;`date +%Y`&quot;</span>
+<a name="l00103"></a>00103     fi
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105     <span class="comment"># extract version from CVS Id string</span>
+<a name="l00106"></a><a class="code" href="namespaceautogen.html#a159a36e22577e18386daf06196c966e9">00106</a>     __id=<span class="stringliteral">&quot;$Id$&quot;</span>
+<a name="l00107"></a><a class="code" href="namespaceautogen.html#a21dbd140331cfc834ca236b8fd506bea">00107</a>     __version=<span class="stringliteral">&quot;`echo $__id | sed &#39;s/.*\([0-9][0-9][0-9][0-9]\)[-\/]\([0-9][0-9]\)[-\/]\([0-9][0-9]\).*/\1\2\3/&#39;`&quot;</span>
+<a name="l00108"></a>00108     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$__version&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00109"></a>00109         __version=<span class="stringliteral">&quot;&quot;</span>
+<a name="l00110"></a>00110     fi
+<a name="l00111"></a>00111 
+<a name="l00112"></a>00112     echo <span class="stringliteral">&quot;autogen.sh build preparation script by Christopher Sean Morrison&quot;</span>
+<a name="l00113"></a>00113     echo <span class="stringliteral">&quot;  + config.guess download patch by Sebastian Pipping (2008-12-03)&quot;</span>
+<a name="l00114"></a>00114     echo <span class="stringliteral">&quot;revised 3-clause BSD-style license, copyright (c) $__copyright&quot;</span>
+<a name="l00115"></a>00115     echo <span class="stringliteral">&quot;script version $__version, ISO/IEC 9945 POSIX shell script&quot;</span>
+<a name="l00116"></a>00116 }
+<a name="l00117"></a>00117 
+<a name="l00118"></a>00118 
+<a name="l00119"></a>00119 <span class="comment">##################</span>
+<a name="l00120"></a>00120 <span class="comment"># USAGE FUNCTION #</span>
+<a name="l00121"></a>00121 <span class="comment">##################</span>
+<a name="l00122"></a>00122 usage ( ) {
+<a name="l00123"></a>00123     echo <span class="stringliteral">&quot;Usage: $AUTOGEN_SH [-h|--help] [-v|--verbose] [-q|--quiet] [-d|--download] [--version]&quot;</span>
+<a name="l00124"></a>00124     echo <span class="stringliteral">&quot;    --help      Help on $NAME_OF_AUTOGEN usage&quot;</span>
+<a name="l00125"></a>00125     echo <span class="stringliteral">&quot;    --verbose   Verbose progress output&quot;</span>
+<a name="l00126"></a>00126     echo <span class="stringliteral">&quot;    --quiet     Quiet suppressed progress output&quot;</span>
+<a name="l00127"></a>00127     echo <span class="stringliteral">&quot;    --download  Download the latest config.guess from gnulib&quot;</span>
+<a name="l00128"></a>00128     echo <span class="stringliteral">&quot;    --version   Only perform GNU Build System version checks&quot;</span>
+<a name="l00129"></a>00129     echo
+<a name="l00130"></a>00130     echo <span class="stringliteral">&quot;Description: This script will validate that minimum versions of the&quot;</span>
+<a name="l00131"></a>00131     echo <span class="stringliteral">&quot;GNU Build System tools are installed and then run autoreconf for you.&quot;</span>
+<a name="l00132"></a>00132     echo <span class="stringliteral">&quot;Should autoreconf fail, manual preparation steps will be run&quot;</span>
+<a name="l00133"></a>00133     echo <span class="stringliteral">&quot;potentially accounting for several common preparation issues.  The&quot;</span>
+<a name="l00134"></a>00134 
+<a name="l00135"></a>00135     echo <span class="stringliteral">&quot;AUTORECONF, AUTOCONF, AUTOMAKE, LIBTOOLIZE, ACLOCAL, AUTOHEADER,&quot;</span>
+<a name="l00136"></a>00136     echo <span class="stringliteral">&quot;PROJECT, &amp; CONFIGURE environment variables and corresponding _OPTIONS&quot;</span>
+<a name="l00137"></a>00137     echo <span class="stringliteral">&quot;variables (e.g. AUTORECONF_OPTIONS) may be used to override the&quot;</span>
+<a name="l00138"></a>00138     echo <span class="stringliteral">&quot;default automatic detection behavior.&quot;</span>
+<a name="l00139"></a>00139     echo
+<a name="l00140"></a>00140 
+<a name="l00141"></a>00141     ident
+<a name="l00142"></a>00142 
+<a name="l00143"></a>00143     <span class="keywordflow">return</span> 0
+<a name="l00144"></a>00144 }
 <a name="l00145"></a>00145 
-<a name="l00146"></a>00146     <span class="keywordflow">return</span> 0
-<a name="l00147"></a>00147 }
-<a name="l00148"></a>00148 
-<a name="l00149"></a>00149 
-<a name="l00150"></a>00150 <span class="comment">##########################</span>
-<a name="l00151"></a>00151 <span class="comment"># VERSION_ERROR FUNCTION #</span>
-<a name="l00152"></a>00152 <span class="comment">##########################</span>
-<a name="l00153"></a>00153 version_error ( ) {
-<a name="l00154"></a>00154     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$1&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00155"></a>00155         echo <span class="stringliteral">&quot;INTERNAL ERROR: version_error was not provided a version&quot;</span>
-<a name="l00156"></a>00156         exit 1
-<a name="l00157"></a>00157     fi
-<a name="l00158"></a>00158     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$2&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00159"></a>00159         echo <span class="stringliteral">&quot;INTERNAL ERROR: version_error was not provided an application name&quot;</span>
-<a name="l00160"></a>00160         exit 1
-<a name="l00161"></a>00161     fi
+<a name="l00146"></a>00146 
+<a name="l00147"></a>00147 <span class="comment">##########################</span>
+<a name="l00148"></a>00148 <span class="comment"># VERSION_ERROR FUNCTION #</span>
+<a name="l00149"></a>00149 <span class="comment">##########################</span>
+<a name="l00150"></a>00150 version_error ( ) {
+<a name="l00151"></a>00151     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$1&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00152"></a>00152         echo <span class="stringliteral">&quot;INTERNAL ERROR: version_error was not provided a version&quot;</span>
+<a name="l00153"></a>00153         exit 1
+<a name="l00154"></a>00154     fi
+<a name="l00155"></a>00155     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$2&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00156"></a>00156         echo <span class="stringliteral">&quot;INTERNAL ERROR: version_error was not provided an application name&quot;</span>
+<a name="l00157"></a>00157         exit 1
+<a name="l00158"></a>00158     fi
+<a name="l00159"></a>00159     $ECHO
+<a name="l00160"></a>00160     $ECHO <span class="stringliteral">&quot;ERROR:  To prepare the ${PROJECT} build system from scratch,&quot;</span>
+<a name="l00161"></a>00161     $ECHO <span class="stringliteral">&quot;        at least version $1 of $2 must be installed.&quot;</span>
 <a name="l00162"></a>00162     $ECHO
-<a name="l00163"></a>00163     $ECHO <span class="stringliteral">&quot;ERROR:  To prepare the ${PROJECT} build system from scratch,&quot;</span>
-<a name="l00164"></a>00164     $ECHO <span class="stringliteral">&quot;        at least version $1 of $2 must be installed.&quot;</span>
-<a name="l00165"></a>00165     $ECHO
-<a name="l00166"></a>00166     $ECHO <span class="stringliteral">&quot;$NAME_OF_AUTOGEN does not need to be run on the same machine that will&quot;</span>
-<a name="l00167"></a>00167     $ECHO <span class="stringliteral">&quot;run configure or make.  Either the GNU Autotools will need to be installed&quot;</span>
-<a name="l00168"></a>00168     $ECHO <span class="stringliteral">&quot;or upgraded on this system, or $NAME_OF_AUTOGEN must be run on the source&quot;</span>
-<a name="l00169"></a>00169     $ECHO <span class="stringliteral">&quot;code on another system and then transferred to here. -- Cheers!&quot;</span>
-<a name="l00170"></a>00170     $ECHO
-<a name="l00171"></a>00171 }
-<a name="l00172"></a>00172 
-<a name="l00173"></a>00173 <span class="comment">##########################</span>
-<a name="l00174"></a>00174 <span class="comment"># VERSION_CHECK FUNCTION #</span>
-<a name="l00175"></a>00175 <span class="comment">##########################</span>
-<a name="l00176"></a>00176 version_check ( ) {
-<a name="l00177"></a>00177     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$1&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00178"></a>00178         echo <span class="stringliteral">&quot;INTERNAL ERROR: version_check was not provided a minimum version&quot;</span>
-<a name="l00179"></a>00179         exit 1
-<a name="l00180"></a>00180     fi
-<a name="l00181"></a><a class="code" href="namespaceautogen.html#aff0507c7176dc9c02a1082ec95b458be">00181</a>     _min=<span class="stringliteral">&quot;$1&quot;</span>
-<a name="l00182"></a>00182     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$2&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00183"></a>00183         echo <span class="stringliteral">&quot;INTERNAL ERROR: version check was not provided a comparison version&quot;</span>
-<a name="l00184"></a>00184         exit 1
-<a name="l00185"></a>00185     fi
-<a name="l00186"></a><a class="code" href="namespaceautogen.html#abd9a3e55d88894019f9e0addd6917e1b">00186</a>     _cur=<span class="stringliteral">&quot;$2&quot;</span>
-<a name="l00187"></a>00187 
-<a name="l00188"></a>00188     <span class="comment"># needed to handle versions like 1.10 and 1.4-p6</span>
-<a name="l00189"></a>00189     _min=<span class="stringliteral">&quot;`echo ${_min}. | sed &#39;s/[^0-9]/./g&#39; | sed &#39;s/\.\././g&#39;`&quot;</span>
-<a name="l00190"></a>00190     _cur=<span class="stringliteral">&quot;`echo ${_cur}. | sed &#39;s/[^0-9]/./g&#39; | sed &#39;s/\.\././g&#39;`&quot;</span>
-<a name="l00191"></a>00191 
-<a name="l00192"></a><a class="code" href="namespaceautogen.html#a70cb67fe4f084c875b146d82b16384a7">00192</a>     _min_major=<span class="stringliteral">&quot;`echo $_min | cut -d. -f1`&quot;</span>
-<a name="l00193"></a><a class="code" href="namespaceautogen.html#aad44e21ea0330b99202f6fb6249d8a8e">00193</a>     _min_minor=<span class="stringliteral">&quot;`echo $_min | cut -d. -f2`&quot;</span>
-<a name="l00194"></a><a class="code" href="namespaceautogen.html#a4b5dcdfc5eb392e195e8408632742034">00194</a>     _min_patch=<span class="stringliteral">&quot;`echo $_min | cut -d. -f3`&quot;</span>
-<a name="l00195"></a>00195 
-<a name="l00196"></a><a class="code" href="namespaceautogen.html#ad8f6ff5a58dc130f154e5b7cebcbd41b">00196</a>     _cur_major=<span class="stringliteral">&quot;`echo $_cur | cut -d. -f1`&quot;</span>
-<a name="l00197"></a><a class="code" href="namespaceautogen.html#a968959e75f355028d398d83d92163ca2">00197</a>     _cur_minor=<span class="stringliteral">&quot;`echo $_cur | cut -d. -f2`&quot;</span>
-<a name="l00198"></a><a class="code" href="namespaceautogen.html#a948546054d561b2782798968c318c888">00198</a>     _cur_patch=<span class="stringliteral">&quot;`echo $_cur | cut -d. -f3`&quot;</span>
-<a name="l00199"></a>00199 
-<a name="l00200"></a>00200     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$_min_major&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00201"></a>00201         _min_major=0
+<a name="l00163"></a>00163     $ECHO <span class="stringliteral">&quot;$NAME_OF_AUTOGEN does not need to be run on the same machine that will&quot;</span>
+<a name="l00164"></a>00164     $ECHO <span class="stringliteral">&quot;run configure or make.  Either the GNU Autotools will need to be installed&quot;</span>
+<a name="l00165"></a>00165     $ECHO <span class="stringliteral">&quot;or upgraded on this system, or $NAME_OF_AUTOGEN must be run on the source&quot;</span>
+<a name="l00166"></a>00166     $ECHO <span class="stringliteral">&quot;code on another system and then transferred to here. -- Cheers!&quot;</span>
+<a name="l00167"></a>00167     $ECHO
+<a name="l00168"></a>00168 }
+<a name="l00169"></a>00169 
+<a name="l00170"></a>00170 <span class="comment">##########################</span>
+<a name="l00171"></a>00171 <span class="comment"># VERSION_CHECK FUNCTION #</span>
+<a name="l00172"></a>00172 <span class="comment">##########################</span>
+<a name="l00173"></a>00173 version_check ( ) {
+<a name="l00174"></a>00174     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$1&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00175"></a>00175         echo <span class="stringliteral">&quot;INTERNAL ERROR: version_check was not provided a minimum version&quot;</span>
+<a name="l00176"></a>00176         exit 1
+<a name="l00177"></a>00177     fi
+<a name="l00178"></a><a class="code" href="namespaceautogen.html#aff0507c7176dc9c02a1082ec95b458be">00178</a>     _min=<span class="stringliteral">&quot;$1&quot;</span>
+<a name="l00179"></a>00179     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$2&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00180"></a>00180         echo <span class="stringliteral">&quot;INTERNAL ERROR: version check was not provided a comparison version&quot;</span>
+<a name="l00181"></a>00181         exit 1
+<a name="l00182"></a>00182     fi
+<a name="l00183"></a><a class="code" href="namespaceautogen.html#abd9a3e55d88894019f9e0addd6917e1b">00183</a>     _cur=<span class="stringliteral">&quot;$2&quot;</span>
+<a name="l00184"></a>00184 
+<a name="l00185"></a>00185     <span class="comment"># needed to handle versions like 1.10 and 1.4-p6</span>
+<a name="l00186"></a>00186     _min=<span class="stringliteral">&quot;`echo ${_min}. | sed &#39;s/[^0-9]/./g&#39; | sed &#39;s/\.\././g&#39;`&quot;</span>
+<a name="l00187"></a>00187     _cur=<span class="stringliteral">&quot;`echo ${_cur}. | sed &#39;s/[^0-9]/./g&#39; | sed &#39;s/\.\././g&#39;`&quot;</span>
+<a name="l00188"></a>00188 
+<a name="l00189"></a><a class="code" href="namespaceautogen.html#a70cb67fe4f084c875b146d82b16384a7">00189</a>     _min_major=<span class="stringliteral">&quot;`echo $_min | cut -d. -f1`&quot;</span>
+<a name="l00190"></a><a class="code" href="namespaceautogen.html#aad44e21ea0330b99202f6fb6249d8a8e">00190</a>     _min_minor=<span class="stringliteral">&quot;`echo $_min | cut -d. -f2`&quot;</span>
+<a name="l00191"></a><a class="code" href="namespaceautogen.html#a4b5dcdfc5eb392e195e8408632742034">00191</a>     _min_patch=<span class="stringliteral">&quot;`echo $_min | cut -d. -f3`&quot;</span>
+<a name="l00192"></a>00192 
+<a name="l00193"></a><a class="code" href="namespaceautogen.html#ad8f6ff5a58dc130f154e5b7cebcbd41b">00193</a>     _cur_major=<span class="stringliteral">&quot;`echo $_cur | cut -d. -f1`&quot;</span>
+<a name="l00194"></a><a class="code" href="namespaceautogen.html#a968959e75f355028d398d83d92163ca2">00194</a>     _cur_minor=<span class="stringliteral">&quot;`echo $_cur | cut -d. -f2`&quot;</span>
+<a name="l00195"></a><a class="code" href="namespaceautogen.html#a948546054d561b2782798968c318c888">00195</a>     _cur_patch=<span class="stringliteral">&quot;`echo $_cur | cut -d. -f3`&quot;</span>
+<a name="l00196"></a>00196 
+<a name="l00197"></a>00197     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$_min_major&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00198"></a>00198         _min_major=0
+<a name="l00199"></a>00199     fi
+<a name="l00200"></a>00200     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$_min_minor&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00201"></a>00201         _min_minor=0
 <a name="l00202"></a>00202     fi
-<a name="l00203"></a>00203     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$_min_minor&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00204"></a>00204         _min_minor=0
+<a name="l00203"></a>00203     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$_min_patch&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00204"></a>00204         _min_patch=0
 <a name="l00205"></a>00205     fi
-<a name="l00206"></a>00206     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$_min_patch&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00207"></a>00207         _min_patch=0
+<a name="l00206"></a>00206     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$_cur_minor&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00207"></a>00207         _cur_major=0
 <a name="l00208"></a>00208     fi
 <a name="l00209"></a>00209     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$_cur_minor&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00210"></a>00210         _cur_major=0
+<a name="l00210"></a>00210         _cur_minor=0
 <a name="l00211"></a>00211     fi
-<a name="l00212"></a>00212     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$_cur_minor&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00213"></a>00213         _cur_minor=0
+<a name="l00212"></a>00212     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$_cur_patch&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00213"></a>00213         _cur_patch=0
 <a name="l00214"></a>00214     fi
-<a name="l00215"></a>00215     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$_cur_patch&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00216"></a>00216         _cur_patch=0
-<a name="l00217"></a>00217     fi
-<a name="l00218"></a>00218 
-<a name="l00219"></a>00219     $VERBOSE_ECHO <span class="stringliteral">&quot;Checking if ${_cur_major}.${_cur_minor}.${_cur_patch} is greater than ${_min_major}.${_min_minor}.${_min_patch}&quot;</span>
-<a name="l00220"></a>00220 
-<a name="l00221"></a>00221     <span class="keywordflow">if</span> [ $_min_major -lt $_cur_major ] ; then
-<a name="l00222"></a>00222         <span class="keywordflow">return</span> 0
-<a name="l00223"></a>00223     <span class="keywordflow">elif</span> [ $_min_major -eq $_cur_major ] ; then
-<a name="l00224"></a>00224         <span class="keywordflow">if</span> [ $_min_minor -lt $_cur_minor ] ; then
-<a name="l00225"></a>00225             <span class="keywordflow">return</span> 0
-<a name="l00226"></a>00226         <span class="keywordflow">elif</span> [ $_min_minor -eq $_cur_minor ] ; then
-<a name="l00227"></a>00227             <span class="keywordflow">if</span> [ $_min_patch -lt $_cur_patch ] ; then
-<a name="l00228"></a>00228                 <span class="keywordflow">return</span> 0
-<a name="l00229"></a>00229             <span class="keywordflow">elif</span> [ $_min_patch -eq $_cur_patch ] ; then
-<a name="l00230"></a>00230                 <span class="keywordflow">return</span> 0
-<a name="l00231"></a>00231             fi
-<a name="l00232"></a>00232         fi
-<a name="l00233"></a>00233     fi
-<a name="l00234"></a>00234     <span class="keywordflow">return</span> 1
-<a name="l00235"></a>00235 }
-<a name="l00236"></a>00236 
-<a name="l00237"></a>00237 
-<a name="l00238"></a>00238 <span class="comment">######################################</span>
-<a name="l00239"></a>00239 <span class="comment"># LOCATE_CONFIGURE_TEMPLATE FUNCTION #</span>
-<a name="l00240"></a>00240 <span class="comment">######################################</span>
-<a name="l00241"></a>00241 locate_configure_template ( ) {
-<a name="l00242"></a><a class="code" href="namespaceautogen.html#a13ada1ad645edd02e79c0e5f9169fb26">00242</a>     _pwd=<span class="stringliteral">&quot;`pwd`&quot;</span>
-<a name="l00243"></a>00243     <span class="keywordflow">if</span> test -f <span class="stringliteral">&quot;./configure.ac&quot;</span> ; then
-<a name="l00244"></a>00244         echo <span class="stringliteral">&quot;./configure.ac&quot;</span>
-<a name="l00245"></a>00245     <span class="keywordflow">elif</span> test -f <span class="stringliteral">&quot;./configure.in&quot;</span> ; then
-<a name="l00246"></a>00246         echo <span class="stringliteral">&quot;./configure.in&quot;</span>
-<a name="l00247"></a>00247     <span class="keywordflow">elif</span> test -f <span class="stringliteral">&quot;$_pwd/configure.ac&quot;</span> ; then
-<a name="l00248"></a>00248         echo <span class="stringliteral">&quot;$_pwd/configure.ac&quot;</span>
-<a name="l00249"></a>00249     <span class="keywordflow">elif</span> test -f <span class="stringliteral">&quot;$_pwd/configure.in&quot;</span> ; then
-<a name="l00250"></a>00250         echo <span class="stringliteral">&quot;$_pwd/configure.in&quot;</span>
-<a name="l00251"></a>00251     <span class="keywordflow">elif</span> test -f <span class="stringliteral">&quot;$PATH_TO_AUTOGEN/configure.ac&quot;</span> ; then
-<a name="l00252"></a>00252         echo <span class="stringliteral">&quot;$PATH_TO_AUTOGEN/configure.ac&quot;</span>
-<a name="l00253"></a>00253     <span class="keywordflow">elif</span> test -f <span class="stringliteral">&quot;$PATH_TO_AUTOGEN/configure.in&quot;</span> ; then
-<a name="l00254"></a>00254         echo <span class="stringliteral">&quot;$PATH_TO_AUTOGEN/configure.in&quot;</span>
-<a name="l00255"></a>00255     fi
-<a name="l00256"></a>00256 }
-<a name="l00257"></a>00257 
-<a name="l00258"></a>00258 
-<a name="l00259"></a>00259 <span class="comment">##################</span>
-<a name="l00260"></a>00260 <span class="comment"># argument check #</span>
-<a name="l00261"></a>00261 <span class="comment">##################</span>
-<a name="l00262"></a><a class="code" href="namespaceautogen.html#a9cb3d78b98cef3b9b0587986e37c4c12">00262</a> ARGS=<span class="stringliteral">&quot;$*&quot;</span>
-<a name="l00263"></a><a class="code" href="namespaceautogen.html#aedf013a142013663ac1f71f2a68ee246">00263</a> PATH_TO_AUTOGEN=<span class="stringliteral">&quot;`dirname $0`&quot;</span>
-<a name="l00264"></a><a class="code" href="namespaceautogen.html#a4613e3b049c06b0c6195537b2fd9de01">00264</a> NAME_OF_AUTOGEN=<span class="stringliteral">&quot;`basename $0`&quot;</span>
-<a name="l00265"></a><a class="code" href="namespaceautogen.html#ab602289f535b7ff289ed419f724ee26c">00265</a> AUTOGEN_SH=<span class="stringliteral">&quot;$PATH_TO_AUTOGEN/$NAME_OF_AUTOGEN&quot;</span>
-<a name="l00266"></a>00266 
-<a name="l00267"></a><a class="code" href="namespaceautogen.html#a9f2f13fb1ef802c68b248ad824528444">00267</a> LIBTOOL_M4=<span class="stringliteral">&quot;${PATH_TO_AUTOGEN}/misc/libtool.m4&quot;</span>
-<a name="l00268"></a>00268 
-<a name="l00269"></a>00269 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$HELP&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00270"></a><a class="code" href="namespaceautogen.html#aaddd096ab79829f07b1c762314f6fab5">00270</a>     HELP=no
+<a name="l00215"></a>00215 
+<a name="l00216"></a>00216     $VERBOSE_ECHO <span class="stringliteral">&quot;Checking if ${_cur_major}.${_cur_minor}.${_cur_patch} is greater than ${_min_major}.${_min_minor}.${_min_patch}&quot;</span>
+<a name="l00217"></a>00217 
+<a name="l00218"></a>00218     <span class="keywordflow">if</span> [ $_min_major -lt $_cur_major ] ; then
+<a name="l00219"></a>00219         <span class="keywordflow">return</span> 0
+<a name="l00220"></a>00220     <span class="keywordflow">elif</span> [ $_min_major -eq $_cur_major ] ; then
+<a name="l00221"></a>00221         <span class="keywordflow">if</span> [ $_min_minor -lt $_cur_minor ] ; then
+<a name="l00222"></a>00222             <span class="keywordflow">return</span> 0
+<a name="l00223"></a>00223         <span class="keywordflow">elif</span> [ $_min_minor -eq $_cur_minor ] ; then
+<a name="l00224"></a>00224             <span class="keywordflow">if</span> [ $_min_patch -lt $_cur_patch ] ; then
+<a name="l00225"></a>00225                 <span class="keywordflow">return</span> 0
+<a name="l00226"></a>00226             <span class="keywordflow">elif</span> [ $_min_patch -eq $_cur_patch ] ; then
+<a name="l00227"></a>00227                 <span class="keywordflow">return</span> 0
+<a name="l00228"></a>00228             fi
+<a name="l00229"></a>00229         fi
+<a name="l00230"></a>00230     fi
+<a name="l00231"></a>00231     <span class="keywordflow">return</span> 1
+<a name="l00232"></a>00232 }
+<a name="l00233"></a>00233 
+<a name="l00234"></a>00234 
+<a name="l00235"></a>00235 <span class="comment">######################################</span>
+<a name="l00236"></a>00236 <span class="comment"># LOCATE_CONFIGURE_TEMPLATE FUNCTION #</span>
+<a name="l00237"></a>00237 <span class="comment">######################################</span>
+<a name="l00238"></a>00238 locate_configure_template ( ) {
+<a name="l00239"></a><a class="code" href="namespaceautogen.html#a13ada1ad645edd02e79c0e5f9169fb26">00239</a>     _pwd=<span class="stringliteral">&quot;`pwd`&quot;</span>
+<a name="l00240"></a>00240     <span class="keywordflow">if</span> test -f <span class="stringliteral">&quot;./configure.ac&quot;</span> ; then
+<a name="l00241"></a>00241         echo <span class="stringliteral">&quot;./configure.ac&quot;</span>
+<a name="l00242"></a>00242     <span class="keywordflow">elif</span> test -f <span class="stringliteral">&quot;./configure.in&quot;</span> ; then
+<a name="l00243"></a>00243         echo <span class="stringliteral">&quot;./configure.in&quot;</span>
+<a name="l00244"></a>00244     <span class="keywordflow">elif</span> test -f <span class="stringliteral">&quot;$_pwd/configure.ac&quot;</span> ; then
+<a name="l00245"></a>00245         echo <span class="stringliteral">&quot;$_pwd/configure.ac&quot;</span>
+<a name="l00246"></a>00246     <span class="keywordflow">elif</span> test -f <span class="stringliteral">&quot;$_pwd/configure.in&quot;</span> ; then
+<a name="l00247"></a>00247         echo <span class="stringliteral">&quot;$_pwd/configure.in&quot;</span>
+<a name="l00248"></a>00248     <span class="keywordflow">elif</span> test -f <span class="stringliteral">&quot;$PATH_TO_AUTOGEN/configure.ac&quot;</span> ; then
+<a name="l00249"></a>00249         echo <span class="stringliteral">&quot;$PATH_TO_AUTOGEN/configure.ac&quot;</span>
+<a name="l00250"></a>00250     <span class="keywordflow">elif</span> test -f <span class="stringliteral">&quot;$PATH_TO_AUTOGEN/configure.in&quot;</span> ; then
+<a name="l00251"></a>00251         echo <span class="stringliteral">&quot;$PATH_TO_AUTOGEN/configure.in&quot;</span>
+<a name="l00252"></a>00252     fi
+<a name="l00253"></a>00253 }
+<a name="l00254"></a>00254 
+<a name="l00255"></a>00255 
+<a name="l00256"></a>00256 <span class="comment">##################</span>
+<a name="l00257"></a>00257 <span class="comment"># argument check #</span>
+<a name="l00258"></a>00258 <span class="comment">##################</span>
+<a name="l00259"></a><a class="code" href="namespaceautogen.html#a9cb3d78b98cef3b9b0587986e37c4c12">00259</a> ARGS=<span class="stringliteral">&quot;$*&quot;</span>
+<a name="l00260"></a><a class="code" href="namespaceautogen.html#aedf013a142013663ac1f71f2a68ee246">00260</a> PATH_TO_AUTOGEN=<span class="stringliteral">&quot;`dirname $0`&quot;</span>
+<a name="l00261"></a><a class="code" href="namespaceautogen.html#a4613e3b049c06b0c6195537b2fd9de01">00261</a> NAME_OF_AUTOGEN=<span class="stringliteral">&quot;`basename $0`&quot;</span>
+<a name="l00262"></a><a class="code" href="namespaceautogen.html#ab602289f535b7ff289ed419f724ee26c">00262</a> AUTOGEN_SH=<span class="stringliteral">&quot;$PATH_TO_AUTOGEN/$NAME_OF_AUTOGEN&quot;</span>
+<a name="l00263"></a>00263 
+<a name="l00264"></a><a class="code" href="namespaceautogen.html#a9f2f13fb1ef802c68b248ad824528444">00264</a> LIBTOOL_M4=<span class="stringliteral">&quot;${PATH_TO_AUTOGEN}/misc/libtool.m4&quot;</span>
+<a name="l00265"></a>00265 
+<a name="l00266"></a>00266 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$HELP&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00267"></a><a class="code" href="namespaceautogen.html#aaddd096ab79829f07b1c762314f6fab5">00267</a>     HELP=no
+<a name="l00268"></a>00268 fi
+<a name="l00269"></a>00269 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$QUIET&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00270"></a><a class="code" href="namespaceautogen.html#a7607e98b12e995dde8a116d26fa35cff">00270</a>     QUIET=no
 <a name="l00271"></a>00271 fi
-<a name="l00272"></a>00272 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$QUIET&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00273"></a><a class="code" href="namespaceautogen.html#a7607e98b12e995dde8a116d26fa35cff">00273</a>     QUIET=no
+<a name="l00272"></a>00272 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$VERBOSE&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00273"></a><a class="code" href="namespaceautogen.html#a291b51087431d5aeb3be043cca35dfb6">00273</a>     VERBOSE=no
 <a name="l00274"></a>00274 fi
-<a name="l00275"></a>00275 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$VERBOSE&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00276"></a><a class="code" href="namespaceautogen.html#a291b51087431d5aeb3be043cca35dfb6">00276</a>     VERBOSE=no
+<a name="l00275"></a>00275 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$VERSION_ONLY&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00276"></a><a class="code" href="namespaceautogen.html#a14235af245186692ca2b763db29bf94b">00276</a>     VERSION_ONLY=no
 <a name="l00277"></a>00277 fi
-<a name="l00278"></a>00278 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$VERSION_ONLY&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00279"></a><a class="code" href="namespaceautogen.html#a14235af245186692ca2b763db29bf94b">00279</a>     VERSION_ONLY=no
+<a name="l00278"></a>00278 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$DOWNLOAD&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00279"></a><a class="code" href="namespaceautogen.html#a3b6dba5457937cf8a0a3511761753555">00279</a>     DOWNLOAD=no
 <a name="l00280"></a>00280 fi
-<a name="l00281"></a>00281 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$DOWNLOAD&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00282"></a><a class="code" href="namespaceautogen.html#a3b6dba5457937cf8a0a3511761753555">00282</a>     DOWNLOAD=no
+<a name="l00281"></a>00281 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$AUTORECONF_OPTIONS&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00282"></a><a class="code" href="namespaceautogen.html#a6e768998c1f67007dfc9e23c6449300e">00282</a>     AUTORECONF_OPTIONS=<span class="stringliteral">&quot;-i -f&quot;</span>
 <a name="l00283"></a>00283 fi
-<a name="l00284"></a>00284 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$AUTORECONF_OPTIONS&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00285"></a><a class="code" href="namespaceautogen.html#a6e768998c1f67007dfc9e23c6449300e">00285</a>     AUTORECONF_OPTIONS=<span class="stringliteral">&quot;-i -f&quot;</span>
+<a name="l00284"></a>00284 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$AUTOCONF_OPTIONS&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00285"></a><a class="code" href="namespaceautogen.html#a25818e5d7c85c60120938d2f7f4e1763">00285</a>     AUTOCONF_OPTIONS=<span class="stringliteral">&quot;-f&quot;</span>
 <a name="l00286"></a>00286 fi
-<a name="l00287"></a>00287 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$AUTOCONF_OPTIONS&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00288"></a><a class="code" href="namespaceautogen.html#a25818e5d7c85c60120938d2f7f4e1763">00288</a>     AUTOCONF_OPTIONS=<span class="stringliteral">&quot;-f&quot;</span>
+<a name="l00287"></a>00287 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$AUTOMAKE_OPTIONS&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00288"></a><a class="code" href="namespaceautogen.html#a1976a47fa63b45c9ea84b74bf0b3a06a">00288</a>     AUTOMAKE_OPTIONS=<span class="stringliteral">&quot;-a -c -f&quot;</span>
 <a name="l00289"></a>00289 fi
-<a name="l00290"></a>00290 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$AUTOMAKE_OPTIONS&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00291"></a><a class="code" href="namespaceautogen.html#a1976a47fa63b45c9ea84b74bf0b3a06a">00291</a>     AUTOMAKE_OPTIONS=<span class="stringliteral">&quot;-a -c -f&quot;</span>
-<a name="l00292"></a>00292 fi
-<a name="l00293"></a><a class="code" href="namespaceautogen.html#aadd38a65fc0c05563a800b3f98d72447">00293</a> ALT_AUTOMAKE_OPTIONS=<span class="stringliteral">&quot;-a -c&quot;</span>
-<a name="l00294"></a>00294 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$LIBTOOLIZE_OPTIONS&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00295"></a><a class="code" href="namespaceautogen.html#a902a40dfeedab9d61a3510446ef3cfe0">00295</a>     LIBTOOLIZE_OPTIONS=<span class="stringliteral">&quot;--automake -c -f&quot;</span>
-<a name="l00296"></a>00296 fi
-<a name="l00297"></a><a class="code" href="namespaceautogen.html#aeac1c32ebbe96e35a1c539f2812fc91c">00297</a> ALT_LIBTOOLIZE_OPTIONS=<span class="stringliteral">&quot;--automake --copy --force&quot;</span>
-<a name="l00298"></a>00298 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$ACLOCAL_OPTIONS&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00299"></a><a class="code" href="namespaceautogen.html#a667ab11b35f1c8140061e362a54ff2fe">00299</a>     ACLOCAL_OPTIONS=<span class="stringliteral">&quot;&quot;</span>
+<a name="l00290"></a><a class="code" href="namespaceautogen.html#aadd38a65fc0c05563a800b3f98d72447">00290</a> ALT_AUTOMAKE_OPTIONS=<span class="stringliteral">&quot;-a -c&quot;</span>
+<a name="l00291"></a>00291 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$LIBTOOLIZE_OPTIONS&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00292"></a><a class="code" href="namespaceautogen.html#a902a40dfeedab9d61a3510446ef3cfe0">00292</a>     LIBTOOLIZE_OPTIONS=<span class="stringliteral">&quot;--automake -c -f&quot;</span>
+<a name="l00293"></a>00293 fi
+<a name="l00294"></a><a class="code" href="namespaceautogen.html#aeac1c32ebbe96e35a1c539f2812fc91c">00294</a> ALT_LIBTOOLIZE_OPTIONS=<span class="stringliteral">&quot;--automake --copy --force&quot;</span>
+<a name="l00295"></a>00295 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$ACLOCAL_OPTIONS&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00296"></a><a class="code" href="namespaceautogen.html#a667ab11b35f1c8140061e362a54ff2fe">00296</a>     ACLOCAL_OPTIONS=<span class="stringliteral">&quot;&quot;</span>
+<a name="l00297"></a>00297 fi
+<a name="l00298"></a>00298 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$AUTOHEADER_OPTIONS&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00299"></a><a class="code" href="namespaceautogen.html#aec31c6265f5ebb5736c1c84e77294194">00299</a>     AUTOHEADER_OPTIONS=<span class="stringliteral">&quot;&quot;</span>
 <a name="l00300"></a>00300 fi
-<a name="l00301"></a>00301 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$AUTOHEADER_OPTIONS&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00302"></a><a class="code" href="namespaceautogen.html#aec31c6265f5ebb5736c1c84e77294194">00302</a>     AUTOHEADER_OPTIONS=<span class="stringliteral">&quot;&quot;</span>
+<a name="l00301"></a>00301 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$CONFIG_GUESS_URL&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l00302"></a><a class="code" href="namespaceautogen.html#a720dfeddd478dbb25ec6177bdc10e752">00302</a>     CONFIG_GUESS_URL=<span class="stringliteral">&quot;http://git.savannah.gnu.org/gitweb/?p=gnulib.git;a=blob_plain;f=build-aux/config.guess;hb=HEAD&quot;</span>
 <a name="l00303"></a>00303 fi
-<a name="l00304"></a>00304 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$CONFIG_GUESS_URL&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l00305"></a><a class="code" href="namespaceautogen.html#a720dfeddd478dbb25ec6177bdc10e752">00305</a>     CONFIG_GUESS_URL=<span class="stringliteral">&quot;http://git.savannah.gnu.org/gitweb/?p=gnulib.git;a=blob_plain;f=build-aux/config.guess;hb=HEAD&quot;</span>
-<a name="l00306"></a>00306 fi
-<a name="l00307"></a>00307 <span class="keywordflow">for</span> arg <span class="keywordflow">in</span> $ARGS ; do
-<a name="l00308"></a>00308     case <span class="stringliteral">&quot;x$arg&quot;</span> <span class="keywordflow">in</span>
-<a name="l00309"></a>00309         x--help) HELP=yes ;;
-<a name="l00310"></a>00310         x-[hH]) HELP=yes ;;
-<a name="l00311"></a>00311         x--quiet) QUIET=yes ;;
-<a name="l00312"></a>00312         x-[qQ]) QUIET=yes ;;
-<a name="l00313"></a>00313         x--verbose) VERBOSE=yes ;;
-<a name="l00314"></a>00314         x-[dD]) DOWNLOAD=yes ;;
-<a name="l00315"></a>00315         x--download) DOWNLOAD=yes ;;
-<a name="l00316"></a>00316         x-[vV]) VERBOSE=yes ;;
-<a name="l00317"></a>00317         x--version) VERSION_ONLY=yes ;;
-<a name="l00318"></a>00318         *)
-<a name="l00319"></a>00319             echo <span class="stringliteral">&quot;Unknown option: $arg&quot;</span>
-<a name="l00320"></a>00320             echo
-<a name="l00321"></a>00321             usage
-<a name="l00322"></a>00322             exit 1
-<a name="l00323"></a>00323             ;;
-<a name="l00324"></a>00324     esac
-<a name="l00325"></a>00325 done
-<a name="l00326"></a>00326 
-<a name="l00327"></a>00327 
-<a name="l00328"></a>00328 <span class="comment">#####################</span>
-<a name="l00329"></a>00329 <span class="comment"># environment check #</span>
-<a name="l00330"></a>00330 <span class="comment">#####################</span>
-<a name="l00331"></a>00331 
-<a name="l00332"></a>00332 <span class="comment"># sanity check before recursions potentially begin</span>
-<a name="l00333"></a>00333 <span class="keywordflow">if</span> [ ! -f <span class="stringliteral">&quot;$AUTOGEN_SH&quot;</span> ] ; then
-<a name="l00334"></a>00334     echo <span class="stringliteral">&quot;INTERNAL ERROR: $AUTOGEN_SH does not exist&quot;</span>
-<a name="l00335"></a>00335     <span class="keywordflow">if</span> [ ! <span class="stringliteral">&quot;x$0&quot;</span> = <span class="stringliteral">&quot;x$AUTOGEN_SH&quot;</span> ] ; then
-<a name="l00336"></a>00336         echo <span class="stringliteral">&quot;INTERNAL ERROR: dirname/basename inconsistency: $0 != $AUTOGEN_SH&quot;</span>
-<a name="l00337"></a>00337     fi
-<a name="l00338"></a>00338     exit 1
+<a name="l00304"></a>00304 <span class="keywordflow">for</span> arg <span class="keywordflow">in</span> $ARGS ; do
+<a name="l00305"></a>00305     case <span class="stringliteral">&quot;x$arg&quot;</span> <span class="keywordflow">in</span>
+<a name="l00306"></a>00306         x--help) HELP=yes ;;
+<a name="l00307"></a>00307         x-[hH]) HELP=yes ;;
+<a name="l00308"></a>00308         x--quiet) QUIET=yes ;;
+<a name="l00309"></a>00309         x-[qQ]) QUIET=yes ;;
+<a name="l00310"></a>00310         x--verbose) VERBOSE=yes ;;
+<a name="l00311"></a>00311         x-[dD]) DOWNLOAD=yes ;;
+<a name="l00312"></a>00312         x--download) DOWNLOAD=yes ;;
+<a name="l00313"></a>00313         x-[vV]) VERBOSE=yes ;;
+<a name="l00314"></a>00314         x--version) VERSION_ONLY=yes ;;
+<a name="l00315"></a>00315         *)
+<a name="l00316"></a>00316             echo <span class="stringliteral">&quot;Unknown option: $arg&quot;</span>
+<a name="l00317"></a>00317             echo
+<a name="l00318"></a>00318             usage
+<a name="l00319"></a>00319             exit 1
+<a name="l00320"></a>00320             ;;
+<a name="l00321"></a>00321     esac
+<a name="l00322"></a>00322 done
+<a name="l00323"></a>00323 
+<a name="l00324"></a>00324 
+<a name="l00325"></a>00325 <span class="comment">#####################</span>
+<a name="l00326"></a>00326 <span class="comment"># environment check #</span>
+<a name="l00327"></a>00327 <span class="comment">#####################</span>
+<a name="l00328"></a>00328 
+<a name="l00329"></a>00329 <span class="comment"># sanity check before recursions potentially begin</span>
+<a name="l00330"></a>00330 <span class="keywordflow">if</span> [ ! -f <span class="stringliteral">&quot;$AUTOGEN_SH&quot;</span> ] ; then
+<a name="l00331"></a>00331     <span class="keywordflow">if</span> test -f ./autogen.sh ; then
+<a name="l00332"></a>00332         PATH_TO_AUTOGEN=<span class="stringliteral">&quot;.&quot;</span>
+<a name="l00333"></a>00333         NAME_OF_AUTOGEN=<span class="stringliteral">&quot;autogen.sh&quot;</span>
+<a name="l00334"></a>00334         AUTOGEN_SH=<span class="stringliteral">&quot;$PATH_TO_AUTOGEN/$NAME_OF_AUTOGEN&quot;</span>
+<a name="l00335"></a>00335     <span class="keywordflow">else</span>
+<a name="l00336"></a>00336         echo <span class="stringliteral">&quot;INTERNAL ERROR: $AUTOGEN_SH does not exist&quot;</span>
+<a name="l00337"></a>00337         exit 1
+<a name="l00338"></a>00338     fi
 <a name="l00339"></a>00339 fi
 <a name="l00340"></a>00340 
 <a name="l00341"></a>00341 <span class="comment"># force locale setting to C so things like date output as expected</span>
@@ -425,7 +425,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00343"></a>00343 
 <a name="l00344"></a>00344 <span class="comment"># commands that this script expects</span>
 <a name="l00345"></a>00345 <span class="keywordflow">for</span> __cmd <span class="keywordflow">in</span> echo head tail pwd ; do
-<a name="l00346"></a>00346     echo <span class="stringliteral">&quot;test&quot;</span> | $__cmd &gt; /dev/null 2&gt;&amp;1
+<a name="l00346"></a>00346     echo <span class="stringliteral">&quot;test&quot;</span> &gt; /dev/null 2&gt;&amp;1 | $__cmd &gt; /dev/null 2&gt;&amp;1
 <a name="l00347"></a>00347     <span class="keywordflow">if</span> [ $? != 0 ] ; then
 <a name="l00348"></a>00348         echo <span class="stringliteral">&quot;INTERNAL ERROR: &#39;${__cmd}&#39; command is required&quot;</span>
 <a name="l00349"></a>00349         exit 2
@@ -1108,7 +1108,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l01026"></a>01026             $ECHO <span class="stringliteral">&quot;coding standards were not found.  The files were automatically added&quot;</span>
 <a name="l01027"></a>01027             $ECHO <span class="stringliteral">&quot;for you since you do not have a &#39;foreign&#39; declaration specified.&quot;</span>
 <a name="l01028"></a>01028             $ECHO
-<a name="l01029"></a>01029             $ECHO <span class="stringliteral">&quot;Considered adding &#39;foreign&#39; to AM_INIT_AUTOMAKE in `basename \&quot;$CONFIGURE\&quot;`&quot;</span>
+<a name="l01029"></a>01029             $ECHO <span class="stringliteral">&quot;Consider adding &#39;foreign&#39; to AM_INIT_AUTOMAKE in `basename \&quot;$CONFIGURE\&quot;`&quot;</span>
 <a name="l01030"></a>01030             <span class="keywordflow">if</span> test -f <span class="stringliteral">&quot;`dirname \&quot;$CONFIGURE\&quot;/Makefile.am`&quot;</span> ; then
 <a name="l01031"></a>01031                 $ECHO <span class="stringliteral">&quot;or to AUTOMAKE_OPTIONS in your top-level Makefile.am file.&quot;</span>
 <a name="l01032"></a>01032             fi
@@ -1133,7 +1133,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l01051"></a>01051     <span class="keywordflow">for</span> dir <span class="keywordflow">in</span> m4 ; do
 <a name="l01052"></a>01052         <span class="keywordflow">if</span> [ -d $dir ] ; then
 <a name="l01053"></a>01053             $VERBOSE_ECHO <span class="stringliteral">&quot;Found extra aclocal search directory: $dir&quot;</span>
-<a name="l01054"></a>01054             SEARCH_DIRS=<span class="stringliteral">&quot;$SEARCH_DIRS -I $dir&quot;</span>
+<a name="l01054"></a>01054             SEARCH_DIRS=<span class="stringliteral">&quot;$SEARCH_DIRS -I `pwd`/$dir&quot;</span>
 <a name="l01055"></a>01055         fi
 <a name="l01056"></a>01056     done
 <a name="l01057"></a>01057 
@@ -1430,244 +1430,258 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l01348"></a>01348 
 <a name="l01349"></a>01349     <span class="keywordflow">if</span> [ ! $ret = 0 ] ; then
 <a name="l01350"></a>01350         <span class="comment"># retry without the -f and check for usage of macros that are too new</span>
-<a name="l01351"></a><a class="code" href="namespaceautogen.html#a9582144ea3ff0ebb8d2a9eb26ecb20dc">01351</a>         ac2_59_macros=<span class="stringliteral">&quot;AC_C_RESTRICT AC_INCLUDES_DEFAULT AC_LANG_ASSERT AC_LANG_WERROR AS_SET_CATFILE&quot;</span>
-<a name="l01352"></a><a class="code" href="namespaceautogen.html#a2bae1d8cb8c5e0a3c250398613a3d075">01352</a>         ac2_55_macros=<span class="stringliteral">&quot;AC_COMPILER_IFELSE AC_FUNC_MBRTOWC AC_HEADER_STDBOOL AC_LANG_CONFTEST AC_LANG_SOURCE AC_LANG_PROGRAM AC_LANG_CALL AC_LANG_FUNC_TRY_LINK AC_MSG_FAILURE AC_PREPROC_IFELSE&quot;</span>
-<a name="l01353"></a><a class="code" href="namespaceautogen.html#ac3145f8cd63f2acfc1b7e8400c584ecd">01353</a>         ac2_54_macros=<span class="stringliteral">&quot;AC_C_BACKSLASH_A AC_CONFIG_LIBOBJ_DIR AC_GNU_SOURCE AC_PROG_EGREP AC_PROG_FGREP AC_REPLACE_FNMATCH AC_FUNC_FNMATCH_GNU AC_FUNC_REALLOC AC_TYPE_MBSTATE_T&quot;</span>
-<a name="l01354"></a>01354 
-<a name="l01355"></a><a class="code" href="namespaceautogen.html#af2f7f6ca553b97b90d9e19da3e82c669">01355</a>         macros_to_search=<span class="stringliteral">&quot;&quot;</span>
-<a name="l01356"></a><a class="code" href="namespaceautogen.html#adaae8bd299221eed89001848126534d5">01356</a>         ac_major=<span class="stringliteral">&quot;`echo ${AUTOCONF_VERSION}. | cut -d. -f1 | sed &#39;s/[^0-9]//g&#39;`&quot;</span>
-<a name="l01357"></a><a class="code" href="namespaceautogen.html#a6d372525e0b6eb0a886cd9da99ef5d8f">01357</a>         ac_minor=<span class="stringliteral">&quot;`echo ${AUTOCONF_VERSION}. | cut -d. -f2 | sed &#39;s/[^0-9]//g&#39;`&quot;</span>
+<a name="l01351"></a><a class="code" href="namespaceautogen.html#a9517a2a48324a21e349e3ad80ef08f54">01351</a>         ac2_65_macros=<span class="stringliteral">&quot;AT_CHECK_EUNIT AC_PROG_OBJCXX AC_PROG_OBJCXXCPP&quot;</span>
+<a name="l01352"></a><a class="code" href="namespaceautogen.html#a9e1f665d8fdc96c5364e3bdf8984f7ff">01352</a>         ac2_64_macros=<span class="stringliteral">&quot;AT_CHECK_UNQUOTED AT_FAIL_IF AT_SKIP_IF AC_ERLANG_SUBST_ERTS_VER&quot;</span>
+<a name="l01353"></a><a class="code" href="namespaceautogen.html#a380e7c633aa009b23b23562e56da6989">01353</a>         ac2_62_macros=<span class="stringliteral">&quot;AC_AUTOCONF_VERSION AC_OPENMP AC_PATH_PROGS_FEATURE_CHECK&quot;</span>
+<a name="l01354"></a><a class="code" href="namespaceautogen.html#af937c1496a0620a0462ffb89e9a3d59b">01354</a>         ac2_60_macros=<span class="stringliteral">&quot;AC_C_FLEXIBLE_ARRAY_MEMBER AC_C_VARARRAYS&quot;</span>
+<a name="l01355"></a><a class="code" href="namespaceautogen.html#a9582144ea3ff0ebb8d2a9eb26ecb20dc">01355</a>         ac2_59_macros=<span class="stringliteral">&quot;AC_C_RESTRICT AC_INCLUDES_DEFAULT AC_LANG_ASSERT AC_LANG_WERROR AS_SET_CATFILE AC_PROG_SED AC_PROG_GREP AC_REQUIRE_AUX_FILE AC_CHECK_TARGET_TOOL AC_PATH_TARGET_TOOL AC_CHECK_TARGET_TOOLS AC_CHECK_ALIGNOF AC_PROG_OBJC AC_PROG_OBJCPP AC_ERLANG_SUBST_INSTALL_LIB_DIR AC_ERLANG_SUBST_INSTALL_LIB_SUBDIR AC_ERLANG_PATH_ERLC AC_ERLANG_NEED_ERLC AC_ERLANG_PATH_ERL AC_ERLANG_NEED_ERL AC_ERLANG_CHECK_LIB AC_ERLANG_SUBST_ROOT_DIR AC_ERLANG_SUBST_LIB_DIR AT_COPYRIGHT AS_BOURNE_COMPATIBLE AS_SHELL_SANITIZE AS_CASE AH_HEADER AC_USE_SYSTEM_EXTENSIONS AC_TYPE_INT8_T AC_TYPE_INT16_T AC_TYPE_INT32_T AC_TYPE_INT64_T AC_TYPE_INTMAX_T AC_TYPE_INTPTR_T AC_TYPE_LONG_LONG_INT AC_TYPE_SSIZE_T AC_TYPE_UINT8_T AC_TYPE_UINT16_T AC_TYPE_UINT32_T AC_TYPE_UINT64_T AC_TYPE_UINTMAX_T AC_TYPE_UINTPTR_T AC_TYPE_UNSIGNED_LONG_LONG_INT AC_TYPE_LONG_DOUBLE AC_TYPE_LONG_DOUBLE_WIDER AC_STRUCT_DIRENT_D_INO AC_STRUCT_DIRENT_D_TYPE AC_PROG_CC_C89 AC_PROG_CC_C99 AC_PRESERVE_HELP_ORDER AC_HEADER_ASSERT AC_FUNC_STRTOLD AC_C_TYPEOF AC_PROG_MKDIR_P AC_PROG_CXX_C_O&quot;</span>
+<a name="l01356"></a><a class="code" href="namespaceautogen.html#a2bae1d8cb8c5e0a3c250398613a3d075">01356</a>         ac2_55_macros=<span class="stringliteral">&quot;AC_COMPILER_IFELSE AC_FUNC_MBRTOWC AC_HEADER_STDBOOL AC_LANG_CONFTEST AC_LANG_SOURCE AC_LANG_PROGRAM AC_LANG_CALL AC_LANG_FUNC_TRY_LINK AC_MSG_FAILURE AC_PREPROC_IFELSE&quot;</span>
+<a name="l01357"></a><a class="code" href="namespaceautogen.html#ac3145f8cd63f2acfc1b7e8400c584ecd">01357</a>         ac2_54_macros=<span class="stringliteral">&quot;AC_C_BACKSLASH_A AC_CONFIG_LIBOBJ_DIR AC_GNU_SOURCE AC_PROG_EGREP AC_PROG_FGREP AC_REPLACE_FNMATCH AC_FUNC_FNMATCH_GNU AC_FUNC_REALLOC AC_TYPE_MBSTATE_T&quot;</span>
 <a name="l01358"></a>01358 
-<a name="l01359"></a>01359         <span class="keywordflow">if</span> [ $ac_major -lt 2 ] ; then
-<a name="l01360"></a>01360             macros_to_search=<span class="stringliteral">&quot;$ac2_59_macros $ac2_55_macros $ac2_54_macros&quot;</span>
-<a name="l01361"></a>01361         <span class="keywordflow">else</span>
-<a name="l01362"></a>01362             <span class="keywordflow">if</span> [ $ac_minor -lt 54 ] ; then
-<a name="l01363"></a>01363                 macros_to_search=<span class="stringliteral">&quot;$ac2_59_macros $ac2_55_macros $ac2_54_macros&quot;</span>
-<a name="l01364"></a>01364             <span class="keywordflow">elif</span> [ $ac_minor -lt 55 ] ; then
-<a name="l01365"></a>01365                 macros_to_search=<span class="stringliteral">&quot;$ac2_59_macros $ac2_55_macros&quot;</span>
-<a name="l01366"></a>01366             <span class="keywordflow">elif</span> [ $ac_minor -lt 59 ] ; then
-<a name="l01367"></a>01367                 macros_to_search=<span class="stringliteral">&quot;$ac2_59_macros&quot;</span>
-<a name="l01368"></a>01368             fi
-<a name="l01369"></a>01369         fi
-<a name="l01370"></a>01370 
-<a name="l01371"></a><a class="code" href="namespaceautogen.html#ad832fd6a9c2349d193be3e5c05f162fe">01371</a>         configure_ac_macros=__none__
-<a name="l01372"></a>01372         <span class="keywordflow">for</span> feature <span class="keywordflow">in</span> $macros_to_search ; do
-<a name="l01373"></a>01373             $VERBOSE_ECHO <span class="stringliteral">&quot;Searching for $feature in $CONFIGURE&quot;</span>
-<a name="l01374"></a>01374             found=<span class="stringliteral">&quot;`grep \&quot;^$feature.*\&quot; $CONFIGURE`&quot;</span>
-<a name="l01375"></a>01375             <span class="keywordflow">if</span> [ ! <span class="stringliteral">&quot;x$found&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l01376"></a>01376                 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$configure_ac_macros&quot;</span> = <span class="stringliteral">&quot;x__none__&quot;</span> ] ; then
-<a name="l01377"></a>01377                     configure_ac_macros=<span class="stringliteral">&quot;$feature&quot;</span>
-<a name="l01378"></a>01378                 <span class="keywordflow">else</span>
-<a name="l01379"></a>01379                     configure_ac_macros=<span class="stringliteral">&quot;$feature $configure_ac_macros&quot;</span>
-<a name="l01380"></a>01380                 fi
-<a name="l01381"></a>01381             fi
-<a name="l01382"></a>01382         done
-<a name="l01383"></a>01383         <span class="keywordflow">if</span> [ ! <span class="stringliteral">&quot;x$configure_ac_macros&quot;</span> = <span class="stringliteral">&quot;x__none__&quot;</span> ] ; then
-<a name="l01384"></a>01384             $ECHO
-<a name="l01385"></a>01385             $ECHO <span class="stringliteral">&quot;Warning:  Unsupported macros were found in $CONFIGURE&quot;</span>
-<a name="l01386"></a>01386             $ECHO
-<a name="l01387"></a>01387             $ECHO <span class="stringliteral">&quot;The `basename \&quot;$CONFIGURE\&quot;` file was scanned in order to determine if any&quot;</span>
-<a name="l01388"></a>01388             $ECHO <span class="stringliteral">&quot;unsupported macros are used that exceed the minimum version&quot;</span>
-<a name="l01389"></a>01389             $ECHO <span class="stringliteral">&quot;settings specified within this file.  As such, the following macros&quot;</span>
-<a name="l01390"></a>01390             $ECHO <span class="stringliteral">&quot;should be removed from configure.ac or the version numbers in this&quot;</span>
-<a name="l01391"></a>01391             $ECHO <span class="stringliteral">&quot;file should be increased:&quot;</span>
-<a name="l01392"></a>01392             $ECHO
-<a name="l01393"></a>01393             $ECHO <span class="stringliteral">&quot;$configure_ac_macros&quot;</span>
-<a name="l01394"></a>01394             $ECHO
-<a name="l01395"></a>01395             $ECHO $ECHO_N <span class="stringliteral">&quot;Ignorantly continuing build preparation ... $ECHO_C&quot;</span>
-<a name="l01396"></a>01396         fi
-<a name="l01397"></a>01397 
-<a name="l01398"></a>01398         <span class="comment">###################</span>
-<a name="l01399"></a>01399         <span class="comment"># autoconf, retry #</span>
-<a name="l01400"></a>01400         <span class="comment">###################</span>
-<a name="l01401"></a>01401         $VERBOSE_ECHO
-<a name="l01402"></a>01402         $VERBOSE_ECHO <span class="stringliteral">&quot;$AUTOCONF&quot;</span>
-<a name="l01403"></a>01403         autoconf_output=<span class="stringliteral">&quot;`$AUTOCONF 2&gt;&amp;1`&quot;</span>
-<a name="l01404"></a>01404         ret=$?
-<a name="l01405"></a>01405         $VERBOSE_ECHO <span class="stringliteral">&quot;$autoconf_output&quot;</span>
-<a name="l01406"></a>01406 
-<a name="l01407"></a>01407         <span class="keywordflow">if</span> [ ! $ret = 0 ] ; then
-<a name="l01408"></a>01408             <span class="comment"># test if libtool is busted</span>
-<a name="l01409"></a>01409             libtool_failure <span class="stringliteral">&quot;$autoconf_output&quot;</span>
-<a name="l01410"></a>01410 
-<a name="l01411"></a>01411             <span class="comment"># let the user know what went wrong</span>
-<a name="l01412"></a>01412             cat &lt;&lt;EOF
-<a name="l01413"></a>01413 $autoconf_output
-<a name="l01414"></a>01414 EOF
-<a name="l01415"></a>01415             $ECHO <span class="stringliteral">&quot;ERROR: $AUTOCONF failed&quot;</span>
-<a name="l01416"></a>01416             exit 2
-<a name="l01417"></a>01417         <span class="keywordflow">else</span>
-<a name="l01418"></a>01418             <span class="comment"># autoconf sans -f and possibly sans unsupported options succeed so warn verbosely</span>
-<a name="l01419"></a>01419             $ECHO
-<a name="l01420"></a>01420             $ECHO <span class="stringliteral">&quot;Warning: autoconf seems to have succeeded by removing the following options:&quot;</span>
-<a name="l01421"></a>01421             $ECHO <span class="stringliteral">&quot;     AUTOCONF_OPTIONS=\&quot;$AUTOCONF_OPTIONS\&quot;&quot;</span>
-<a name="l01422"></a>01422             $ECHO
-<a name="l01423"></a>01423             $ECHO <span class="stringliteral">&quot;Removing those options should not be necessary and indicate some other&quot;</span>
-<a name="l01424"></a>01424             $ECHO <span class="stringliteral">&quot;problem with the build system.  The build preparation is highly suspect&quot;</span>
-<a name="l01425"></a>01425             $ECHO <span class="stringliteral">&quot;and may result in configuration or compilation errors.  Consider&quot;</span>
-<a name="l01426"></a>01426             <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$VERBOSE_ECHO&quot;</span> = <span class="stringliteral">&quot;x:&quot;</span> ] ; then
-<a name="l01427"></a>01427                 $ECHO <span class="stringliteral">&quot;rerunning the build preparation with verbose output enabled.&quot;</span>
-<a name="l01428"></a>01428                 $ECHO <span class="stringliteral">&quot; $AUTOGEN_SH --verbose&quot;</span>
-<a name="l01429"></a>01429             <span class="keywordflow">else</span>
-<a name="l01430"></a>01430                 $ECHO <span class="stringliteral">&quot;reviewing the minimum GNU Autotools version settings contained in&quot;</span>
-<a name="l01431"></a>01431                 $ECHO <span class="stringliteral">&quot;this script along with the macros being used in your `basename \&quot;$CONFIGURE\&quot;` file.&quot;</span>
-<a name="l01432"></a>01432             fi
-<a name="l01433"></a>01433             $ECHO
-<a name="l01434"></a>01434             $ECHO $ECHO_N <span class="stringliteral">&quot;Continuing build preparation ... $ECHO_C&quot;</span>
-<a name="l01435"></a>01435         fi <span class="comment"># autoconf ret = 0</span>
-<a name="l01436"></a>01436     fi <span class="comment"># autoconf ret = 0</span>
-<a name="l01437"></a>01437 
-<a name="l01438"></a>01438     <span class="comment">##############</span>
-<a name="l01439"></a>01439     <span class="comment"># autoheader #</span>
-<a name="l01440"></a>01440     <span class="comment">##############</span>
-<a name="l01441"></a><a class="code" href="namespaceautogen.html#a9def25934a031c800519357f86e63a6e">01441</a>     need_autoheader=no
-<a name="l01442"></a>01442     <span class="keywordflow">for</span> feature <span class="keywordflow">in</span> AM_CONFIG_HEADER AC_CONFIG_HEADER ; do
-<a name="l01443"></a>01443         $VERBOSE_ECHO <span class="stringliteral">&quot;Searching for $feature in $CONFIGURE&quot;</span>
-<a name="l01444"></a>01444         found=<span class="stringliteral">&quot;`grep \&quot;^$feature.*\&quot; $CONFIGURE`&quot;</span>
-<a name="l01445"></a>01445         <span class="keywordflow">if</span> [ ! <span class="stringliteral">&quot;x$found&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l01446"></a>01446             need_autoheader=yes
-<a name="l01447"></a>01447             <span class="keywordflow">break</span>
-<a name="l01448"></a>01448         fi
-<a name="l01449"></a>01449     done
-<a name="l01450"></a>01450     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$need_autoheader&quot;</span> = <span class="stringliteral">&quot;xyes&quot;</span> ] ; then
-<a name="l01451"></a>01451         $VERBOSE_ECHO <span class="stringliteral">&quot;$AUTOHEADER $AUTOHEADER_OPTIONS&quot;</span>
-<a name="l01452"></a><a class="code" href="namespaceautogen.html#ac83531091b3c670e25601bdc767f1889">01452</a>         autoheader_output=<span class="stringliteral">&quot;`$AUTOHEADER $AUTOHEADER_OPTIONS 2&gt;&amp;1`&quot;</span>
-<a name="l01453"></a>01453         ret=$?
-<a name="l01454"></a>01454         $VERBOSE_ECHO <span class="stringliteral">&quot;$autoheader_output&quot;</span>
-<a name="l01455"></a>01455         <span class="keywordflow">if</span> [ ! $ret = 0 ] ; then $ECHO <span class="stringliteral">&quot;ERROR: $AUTOHEADER failed&quot;</span> &amp;&amp; exit 2 ; fi
-<a name="l01456"></a>01456     fi <span class="comment"># need_autoheader</span>
-<a name="l01457"></a>01457 
-<a name="l01458"></a>01458     <span class="comment">############</span>
-<a name="l01459"></a>01459     <span class="comment"># automake #</span>
-<a name="l01460"></a>01460     <span class="comment">############</span>
-<a name="l01461"></a><a class="code" href="namespaceautogen.html#a937b6dc9cefdde1f67ea22cff777bd90">01461</a>     need_automake=no
-<a name="l01462"></a>01462     <span class="keywordflow">for</span> feature <span class="keywordflow">in</span> AM_INIT_AUTOMAKE ; do
-<a name="l01463"></a>01463         $VERBOSE_ECHO <span class="stringliteral">&quot;Searching for $feature in $CONFIGURE&quot;</span>
-<a name="l01464"></a>01464         found=<span class="stringliteral">&quot;`grep \&quot;^$feature.*\&quot; $CONFIGURE`&quot;</span>
-<a name="l01465"></a>01465         <span class="keywordflow">if</span> [ ! <span class="stringliteral">&quot;x$found&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l01466"></a>01466             need_automake=yes
-<a name="l01467"></a>01467             <span class="keywordflow">break</span>
-<a name="l01468"></a>01468         fi
-<a name="l01469"></a>01469     done
-<a name="l01470"></a>01470 
-<a name="l01471"></a>01471     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$need_automake&quot;</span> = <span class="stringliteral">&quot;xyes&quot;</span> ] ; then
-<a name="l01472"></a>01472         $VERBOSE_ECHO <span class="stringliteral">&quot;$AUTOMAKE $AUTOMAKE_OPTIONS&quot;</span>
-<a name="l01473"></a><a class="code" href="namespaceautogen.html#a8b549c295af09001a3f85ee99ca72d7b">01473</a>         automake_output=<span class="stringliteral">&quot;`$AUTOMAKE $AUTOMAKE_OPTIONS 2&gt;&amp;1`&quot;</span>
-<a name="l01474"></a>01474         ret=$?
-<a name="l01475"></a>01475         $VERBOSE_ECHO <span class="stringliteral">&quot;$automake_output&quot;</span>
-<a name="l01476"></a>01476 
-<a name="l01477"></a>01477         <span class="keywordflow">if</span> [ ! $ret = 0 ] ; then
-<a name="l01478"></a>01478 
-<a name="l01479"></a>01479             <span class="comment">###################</span>
-<a name="l01480"></a>01480             <span class="comment"># automake, retry #</span>
-<a name="l01481"></a>01481             <span class="comment">###################</span>
-<a name="l01482"></a>01482             $VERBOSE_ECHO
-<a name="l01483"></a>01483             $VERBOSE_ECHO <span class="stringliteral">&quot;$AUTOMAKE $ALT_AUTOMAKE_OPTIONS&quot;</span>
-<a name="l01484"></a>01484             <span class="comment"># retry without the -f</span>
-<a name="l01485"></a>01485             automake_output=<span class="stringliteral">&quot;`$AUTOMAKE $ALT_AUTOMAKE_OPTIONS 2&gt;&amp;1`&quot;</span>
-<a name="l01486"></a>01486             ret=$?
-<a name="l01487"></a>01487             $VERBOSE_ECHO <span class="stringliteral">&quot;$automake_output&quot;</span>
+<a name="l01359"></a><a class="code" href="namespaceautogen.html#af2f7f6ca553b97b90d9e19da3e82c669">01359</a>         macros_to_search=<span class="stringliteral">&quot;&quot;</span>
+<a name="l01360"></a><a class="code" href="namespaceautogen.html#adaae8bd299221eed89001848126534d5">01360</a>         ac_major=<span class="stringliteral">&quot;`echo ${AUTOCONF_VERSION}. | cut -d. -f1 | sed &#39;s/[^0-9]//g&#39;`&quot;</span>
+<a name="l01361"></a><a class="code" href="namespaceautogen.html#a6d372525e0b6eb0a886cd9da99ef5d8f">01361</a>         ac_minor=<span class="stringliteral">&quot;`echo ${AUTOCONF_VERSION}. | cut -d. -f2 | sed &#39;s/[^0-9]//g&#39;`&quot;</span>
+<a name="l01362"></a>01362 
+<a name="l01363"></a>01363         <span class="keywordflow">if</span> [ $ac_major -lt 2 ] ; then
+<a name="l01364"></a>01364             macros_to_search=<span class="stringliteral">&quot;$ac2_65 $ac2_64 $ac2_62 $ac2_60 $ac2_59 $ac2_55 $ac2_54&quot;</span>
+<a name="l01365"></a>01365         <span class="keywordflow">else</span>
+<a name="l01366"></a>01366             <span class="keywordflow">if</span> [ $ac_minor -lt 54 ] ; then
+<a name="l01367"></a>01367                 macros_to_search=<span class="stringliteral">&quot;$ac2_65 $ac2_64 $ac2_62 $ac2_60 $ac2_59 $ac2_55 $ac2_54&quot;</span>
+<a name="l01368"></a>01368             <span class="keywordflow">elif</span> [ $ac_minor -lt 55 ] ; then
+<a name="l01369"></a>01369                 macros_to_search=<span class="stringliteral">&quot;$ac2_65 $ac2_64 $ac2_62 $ac2_60 $ac2_59 $ac2_55&quot;</span>
+<a name="l01370"></a>01370             <span class="keywordflow">elif</span> [ $ac_minor -lt 59 ] ; then
+<a name="l01371"></a>01371                 macros_to_search=<span class="stringliteral">&quot;$ac2_65 $ac2_64 $ac2_62 $ac2_60 $ac2_59&quot;</span>
+<a name="l01372"></a>01372             <span class="keywordflow">elif</span> [ $ac_minor -lt 60 ] ; then
+<a name="l01373"></a>01373                 macros_to_search=<span class="stringliteral">&quot;$ac2_65 $ac2_64 $ac2_62 $ac2_60&quot;</span>
+<a name="l01374"></a>01374             <span class="keywordflow">elif</span> [ $ac_minor -lt 62 ] ; then
+<a name="l01375"></a>01375                 macros_to_search=<span class="stringliteral">&quot;$ac2_65 $ac2_64 $ac2_62&quot;</span>
+<a name="l01376"></a>01376             <span class="keywordflow">elif</span> [ $ac_minor -lt 64 ] ; then
+<a name="l01377"></a>01377                 macros_to_search=<span class="stringliteral">&quot;$ac2_65 $ac2_64&quot;</span>
+<a name="l01378"></a>01378             <span class="keywordflow">elif</span> [ $ac_minor -lt 65 ] ; then
+<a name="l01379"></a>01379                 macros_to_search=<span class="stringliteral">&quot;$ac2_65&quot;</span>
+<a name="l01380"></a>01380             fi
+<a name="l01381"></a>01381         fi
+<a name="l01382"></a>01382 
+<a name="l01383"></a><a class="code" href="namespaceautogen.html#ad832fd6a9c2349d193be3e5c05f162fe">01383</a>         configure_ac_macros=__none__
+<a name="l01384"></a>01384         <span class="keywordflow">for</span> feature <span class="keywordflow">in</span> $macros_to_search ; do
+<a name="l01385"></a>01385             $VERBOSE_ECHO <span class="stringliteral">&quot;Searching for $feature in $CONFIGURE&quot;</span>
+<a name="l01386"></a>01386             found=<span class="stringliteral">&quot;`grep \&quot;^$feature.*\&quot; $CONFIGURE`&quot;</span>
+<a name="l01387"></a>01387             <span class="keywordflow">if</span> [ ! <span class="stringliteral">&quot;x$found&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l01388"></a>01388                 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$configure_ac_macros&quot;</span> = <span class="stringliteral">&quot;x__none__&quot;</span> ] ; then
+<a name="l01389"></a>01389                     configure_ac_macros=<span class="stringliteral">&quot;$feature&quot;</span>
+<a name="l01390"></a>01390                 <span class="keywordflow">else</span>
+<a name="l01391"></a>01391                     configure_ac_macros=<span class="stringliteral">&quot;$feature $configure_ac_macros&quot;</span>
+<a name="l01392"></a>01392                 fi
+<a name="l01393"></a>01393             fi
+<a name="l01394"></a>01394         done
+<a name="l01395"></a>01395         <span class="keywordflow">if</span> [ ! <span class="stringliteral">&quot;x$configure_ac_macros&quot;</span> = <span class="stringliteral">&quot;x__none__&quot;</span> ] ; then
+<a name="l01396"></a>01396             $ECHO
+<a name="l01397"></a>01397             $ECHO <span class="stringliteral">&quot;Warning:  Unsupported macros were found in $CONFIGURE&quot;</span>
+<a name="l01398"></a>01398             $ECHO
+<a name="l01399"></a>01399             $ECHO <span class="stringliteral">&quot;The `basename \&quot;$CONFIGURE\&quot;` file was scanned in order to determine if any&quot;</span>
+<a name="l01400"></a>01400             $ECHO <span class="stringliteral">&quot;unsupported macros are used that exceed the minimum version&quot;</span>
+<a name="l01401"></a>01401             $ECHO <span class="stringliteral">&quot;settings specified within this file.  As such, the following macros&quot;</span>
+<a name="l01402"></a>01402             $ECHO <span class="stringliteral">&quot;should be removed from configure.ac or the version numbers in this&quot;</span>
+<a name="l01403"></a>01403             $ECHO <span class="stringliteral">&quot;file should be increased:&quot;</span>
+<a name="l01404"></a>01404             $ECHO
+<a name="l01405"></a>01405             $ECHO <span class="stringliteral">&quot;$configure_ac_macros&quot;</span>
+<a name="l01406"></a>01406             $ECHO
+<a name="l01407"></a>01407             $ECHO $ECHO_N <span class="stringliteral">&quot;Ignorantly continuing build preparation ... $ECHO_C&quot;</span>
+<a name="l01408"></a>01408         fi
+<a name="l01409"></a>01409 
+<a name="l01410"></a>01410         <span class="comment">###################</span>
+<a name="l01411"></a>01411         <span class="comment"># autoconf, retry #</span>
+<a name="l01412"></a>01412         <span class="comment">###################</span>
+<a name="l01413"></a>01413         $VERBOSE_ECHO
+<a name="l01414"></a>01414         $VERBOSE_ECHO <span class="stringliteral">&quot;$AUTOCONF&quot;</span>
+<a name="l01415"></a>01415         autoconf_output=<span class="stringliteral">&quot;`$AUTOCONF 2&gt;&amp;1`&quot;</span>
+<a name="l01416"></a>01416         ret=$?
+<a name="l01417"></a>01417         $VERBOSE_ECHO <span class="stringliteral">&quot;$autoconf_output&quot;</span>
+<a name="l01418"></a>01418 
+<a name="l01419"></a>01419         <span class="keywordflow">if</span> [ ! $ret = 0 ] ; then
+<a name="l01420"></a>01420             <span class="comment"># test if libtool is busted</span>
+<a name="l01421"></a>01421             libtool_failure <span class="stringliteral">&quot;$autoconf_output&quot;</span>
+<a name="l01422"></a>01422 
+<a name="l01423"></a>01423             <span class="comment"># let the user know what went wrong</span>
+<a name="l01424"></a>01424             cat &lt;&lt;EOF
+<a name="l01425"></a>01425 $autoconf_output
+<a name="l01426"></a>01426 EOF
+<a name="l01427"></a>01427             $ECHO <span class="stringliteral">&quot;ERROR: $AUTOCONF failed&quot;</span>
+<a name="l01428"></a>01428             exit 2
+<a name="l01429"></a>01429         <span class="keywordflow">else</span>
+<a name="l01430"></a>01430             <span class="comment"># autoconf sans -f and possibly sans unsupported options succeed so warn verbosely</span>
+<a name="l01431"></a>01431             $ECHO
+<a name="l01432"></a>01432             $ECHO <span class="stringliteral">&quot;Warning: autoconf seems to have succeeded by removing the following options:&quot;</span>
+<a name="l01433"></a>01433             $ECHO <span class="stringliteral">&quot;     AUTOCONF_OPTIONS=\&quot;$AUTOCONF_OPTIONS\&quot;&quot;</span>
+<a name="l01434"></a>01434             $ECHO
+<a name="l01435"></a>01435             $ECHO <span class="stringliteral">&quot;Removing those options should not be necessary and indicate some other&quot;</span>
+<a name="l01436"></a>01436             $ECHO <span class="stringliteral">&quot;problem with the build system.  The build preparation is highly suspect&quot;</span>
+<a name="l01437"></a>01437             $ECHO <span class="stringliteral">&quot;and may result in configuration or compilation errors.  Consider&quot;</span>
+<a name="l01438"></a>01438             <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$VERBOSE_ECHO&quot;</span> = <span class="stringliteral">&quot;x:&quot;</span> ] ; then
+<a name="l01439"></a>01439                 $ECHO <span class="stringliteral">&quot;rerunning the build preparation with verbose output enabled.&quot;</span>
+<a name="l01440"></a>01440                 $ECHO <span class="stringliteral">&quot; $AUTOGEN_SH --verbose&quot;</span>
+<a name="l01441"></a>01441             <span class="keywordflow">else</span>
+<a name="l01442"></a>01442                 $ECHO <span class="stringliteral">&quot;reviewing the minimum GNU Autotools version settings contained in&quot;</span>
+<a name="l01443"></a>01443                 $ECHO <span class="stringliteral">&quot;this script along with the macros being used in your `basename \&quot;$CONFIGURE\&quot;` file.&quot;</span>
+<a name="l01444"></a>01444             fi
+<a name="l01445"></a>01445             $ECHO
+<a name="l01446"></a>01446             $ECHO $ECHO_N <span class="stringliteral">&quot;Continuing build preparation ... $ECHO_C&quot;</span>
+<a name="l01447"></a>01447         fi <span class="comment"># autoconf ret = 0</span>
+<a name="l01448"></a>01448     fi <span class="comment"># autoconf ret = 0</span>
+<a name="l01449"></a>01449 
+<a name="l01450"></a>01450     <span class="comment">##############</span>
+<a name="l01451"></a>01451     <span class="comment"># autoheader #</span>
+<a name="l01452"></a>01452     <span class="comment">##############</span>
+<a name="l01453"></a><a class="code" href="namespaceautogen.html#a9def25934a031c800519357f86e63a6e">01453</a>     need_autoheader=no
+<a name="l01454"></a>01454     <span class="keywordflow">for</span> feature <span class="keywordflow">in</span> AM_CONFIG_HEADER AC_CONFIG_HEADER ; do
+<a name="l01455"></a>01455         $VERBOSE_ECHO <span class="stringliteral">&quot;Searching for $feature in $CONFIGURE&quot;</span>
+<a name="l01456"></a>01456         found=<span class="stringliteral">&quot;`grep \&quot;^$feature.*\&quot; $CONFIGURE`&quot;</span>
+<a name="l01457"></a>01457         <span class="keywordflow">if</span> [ ! <span class="stringliteral">&quot;x$found&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l01458"></a>01458             need_autoheader=yes
+<a name="l01459"></a>01459             <span class="keywordflow">break</span>
+<a name="l01460"></a>01460         fi
+<a name="l01461"></a>01461     done
+<a name="l01462"></a>01462     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$need_autoheader&quot;</span> = <span class="stringliteral">&quot;xyes&quot;</span> ] ; then
+<a name="l01463"></a>01463         $VERBOSE_ECHO <span class="stringliteral">&quot;$AUTOHEADER $AUTOHEADER_OPTIONS&quot;</span>
+<a name="l01464"></a><a class="code" href="namespaceautogen.html#ac83531091b3c670e25601bdc767f1889">01464</a>         autoheader_output=<span class="stringliteral">&quot;`$AUTOHEADER $AUTOHEADER_OPTIONS 2&gt;&amp;1`&quot;</span>
+<a name="l01465"></a>01465         ret=$?
+<a name="l01466"></a>01466         $VERBOSE_ECHO <span class="stringliteral">&quot;$autoheader_output&quot;</span>
+<a name="l01467"></a>01467         <span class="keywordflow">if</span> [ ! $ret = 0 ] ; then $ECHO <span class="stringliteral">&quot;ERROR: $AUTOHEADER failed&quot;</span> &amp;&amp; exit 2 ; fi
+<a name="l01468"></a>01468     fi <span class="comment"># need_autoheader</span>
+<a name="l01469"></a>01469 
+<a name="l01470"></a>01470     <span class="comment">############</span>
+<a name="l01471"></a>01471     <span class="comment"># automake #</span>
+<a name="l01472"></a>01472     <span class="comment">############</span>
+<a name="l01473"></a><a class="code" href="namespaceautogen.html#a937b6dc9cefdde1f67ea22cff777bd90">01473</a>     need_automake=no
+<a name="l01474"></a>01474     <span class="keywordflow">for</span> feature <span class="keywordflow">in</span> AM_INIT_AUTOMAKE ; do
+<a name="l01475"></a>01475         $VERBOSE_ECHO <span class="stringliteral">&quot;Searching for $feature in $CONFIGURE&quot;</span>
+<a name="l01476"></a>01476         found=<span class="stringliteral">&quot;`grep \&quot;^$feature.*\&quot; $CONFIGURE`&quot;</span>
+<a name="l01477"></a>01477         <span class="keywordflow">if</span> [ ! <span class="stringliteral">&quot;x$found&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l01478"></a>01478             need_automake=yes
+<a name="l01479"></a>01479             <span class="keywordflow">break</span>
+<a name="l01480"></a>01480         fi
+<a name="l01481"></a>01481     done
+<a name="l01482"></a>01482 
+<a name="l01483"></a>01483     <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$need_automake&quot;</span> = <span class="stringliteral">&quot;xyes&quot;</span> ] ; then
+<a name="l01484"></a>01484         $VERBOSE_ECHO <span class="stringliteral">&quot;$AUTOMAKE $AUTOMAKE_OPTIONS&quot;</span>
+<a name="l01485"></a><a class="code" href="namespaceautogen.html#a8b549c295af09001a3f85ee99ca72d7b">01485</a>         automake_output=<span class="stringliteral">&quot;`$AUTOMAKE $AUTOMAKE_OPTIONS 2&gt;&amp;1`&quot;</span>
+<a name="l01486"></a>01486         ret=$?
+<a name="l01487"></a>01487         $VERBOSE_ECHO <span class="stringliteral">&quot;$automake_output&quot;</span>
 <a name="l01488"></a>01488 
-<a name="l01489"></a>01489             <span class="keywordflow">if</span> [ ! $ret = 0 ] ; then
-<a name="l01490"></a>01490                 <span class="comment"># test if libtool is busted</span>
-<a name="l01491"></a>01491                 libtool_failure <span class="stringliteral">&quot;$automake_output&quot;</span>
-<a name="l01492"></a>01492 
-<a name="l01493"></a>01493                 <span class="comment"># let the user know what went wrong</span>
-<a name="l01494"></a>01494                 cat &lt;&lt;EOF
-<a name="l01495"></a>01495 $automake_output
-<a name="l01496"></a>01496 EOF
-<a name="l01497"></a>01497                 $ECHO <span class="stringliteral">&quot;ERROR: $AUTOMAKE failed&quot;</span>
-<a name="l01498"></a>01498                 exit 2
-<a name="l01499"></a>01499             fi <span class="comment"># automake retry</span>
-<a name="l01500"></a>01500         fi <span class="comment"># automake ret = 0</span>
-<a name="l01501"></a>01501     fi <span class="comment"># need_automake</span>
-<a name="l01502"></a>01502 } <span class="comment"># end of manual_autogen</span>
-<a name="l01503"></a>01503 
+<a name="l01489"></a>01489         <span class="keywordflow">if</span> [ ! $ret = 0 ] ; then
+<a name="l01490"></a>01490 
+<a name="l01491"></a>01491             <span class="comment">###################</span>
+<a name="l01492"></a>01492             <span class="comment"># automake, retry #</span>
+<a name="l01493"></a>01493             <span class="comment">###################</span>
+<a name="l01494"></a>01494             $VERBOSE_ECHO
+<a name="l01495"></a>01495             $VERBOSE_ECHO <span class="stringliteral">&quot;$AUTOMAKE $ALT_AUTOMAKE_OPTIONS&quot;</span>
+<a name="l01496"></a>01496             <span class="comment"># retry without the -f</span>
+<a name="l01497"></a>01497             automake_output=<span class="stringliteral">&quot;`$AUTOMAKE $ALT_AUTOMAKE_OPTIONS 2&gt;&amp;1`&quot;</span>
+<a name="l01498"></a>01498             ret=$?
+<a name="l01499"></a>01499             $VERBOSE_ECHO <span class="stringliteral">&quot;$automake_output&quot;</span>
+<a name="l01500"></a>01500 
+<a name="l01501"></a>01501             <span class="keywordflow">if</span> [ ! $ret = 0 ] ; then
+<a name="l01502"></a>01502                 <span class="comment"># test if libtool is busted</span>
+<a name="l01503"></a>01503                 libtool_failure <span class="stringliteral">&quot;$automake_output&quot;</span>
 <a name="l01504"></a>01504 
-<a name="l01505"></a>01505 <span class="comment">#####################################</span>
-<a name="l01506"></a>01506 <span class="comment"># RECURSIVE_MANUAL_AUTOGEN FUNCTION #</span>
-<a name="l01507"></a>01507 <span class="comment">#####################################</span>
-<a name="l01508"></a>01508 recursive_manual_autogen ( ) {
-<a name="l01509"></a>01509 
-<a name="l01510"></a>01510     <span class="comment"># run the build preparation steps manually for this directory</span>
-<a name="l01511"></a>01511     manual_autogen
-<a name="l01512"></a>01512 
-<a name="l01513"></a>01513     <span class="comment"># for projects using recursive configure, run the build</span>
-<a name="l01514"></a>01514     <span class="comment"># preparation steps for the subdirectories.</span>
-<a name="l01515"></a>01515     <span class="keywordflow">if</span> [ ! <span class="stringliteral">&quot;x$CONFIG_SUBDIRS&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l01516"></a>01516         $VERBOSE_ECHO <span class="stringliteral">&quot;Recursively configuring the following directories:&quot;</span>
-<a name="l01517"></a>01517         $VERBOSE_ECHO <span class="stringliteral">&quot;  $CONFIG_SUBDIRS&quot;</span>
-<a name="l01518"></a>01518         <span class="keywordflow">for</span> dir <span class="keywordflow">in</span> $CONFIG_SUBDIRS ; do
-<a name="l01519"></a>01519             $VERBOSE_ECHO <span class="stringliteral">&quot;Processing recursive configure in $dir&quot;</span>
-<a name="l01520"></a>01520             cd <span class="stringliteral">&quot;$START_PATH&quot;</span>
-<a name="l01521"></a>01521             cd <span class="stringliteral">&quot;$dir&quot;</span>
-<a name="l01522"></a>01522 
-<a name="l01523"></a>01523             <span class="comment"># new directory, prepare</span>
-<a name="l01524"></a>01524             initialize
-<a name="l01525"></a>01525 
-<a name="l01526"></a>01526             <span class="comment"># run manual steps for the subdir and any others below</span>
-<a name="l01527"></a>01527             recursive_manual_autogen
-<a name="l01528"></a>01528         done
-<a name="l01529"></a>01529     fi
-<a name="l01530"></a>01530 }
-<a name="l01531"></a>01531 
-<a name="l01532"></a>01532 
-<a name="l01533"></a>01533 <span class="comment">################################</span>
-<a name="l01534"></a>01534 <span class="comment"># run manual preparation steps #</span>
-<a name="l01535"></a>01535 <span class="comment">################################</span>
-<a name="l01536"></a>01536 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$reconfigure_manually&quot;</span> = <span class="stringliteral">&quot;xyes&quot;</span> ] ; then
-<a name="l01537"></a>01537     $ECHO
-<a name="l01538"></a>01538     $ECHO $ECHO_N <span class="stringliteral">&quot;Preparing build ... $ECHO_C&quot;</span>
-<a name="l01539"></a>01539 
-<a name="l01540"></a>01540     recursive_manual_autogen
-<a name="l01541"></a>01541 fi
-<a name="l01542"></a>01542 
+<a name="l01505"></a>01505                 <span class="comment"># let the user know what went wrong</span>
+<a name="l01506"></a>01506                 cat &lt;&lt;EOF
+<a name="l01507"></a>01507 $automake_output
+<a name="l01508"></a>01508 EOF
+<a name="l01509"></a>01509                 $ECHO <span class="stringliteral">&quot;ERROR: $AUTOMAKE failed&quot;</span>
+<a name="l01510"></a>01510                 exit 2
+<a name="l01511"></a>01511             fi <span class="comment"># automake retry</span>
+<a name="l01512"></a>01512         fi <span class="comment"># automake ret = 0</span>
+<a name="l01513"></a>01513     fi <span class="comment"># need_automake</span>
+<a name="l01514"></a>01514 } <span class="comment"># end of manual_autogen</span>
+<a name="l01515"></a>01515 
+<a name="l01516"></a>01516 
+<a name="l01517"></a>01517 <span class="comment">#####################################</span>
+<a name="l01518"></a>01518 <span class="comment"># RECURSIVE_MANUAL_AUTOGEN FUNCTION #</span>
+<a name="l01519"></a>01519 <span class="comment">#####################################</span>
+<a name="l01520"></a>01520 recursive_manual_autogen ( ) {
+<a name="l01521"></a>01521 
+<a name="l01522"></a>01522     <span class="comment"># run the build preparation steps manually for this directory</span>
+<a name="l01523"></a>01523     manual_autogen
+<a name="l01524"></a>01524 
+<a name="l01525"></a>01525     <span class="comment"># for projects using recursive configure, run the build</span>
+<a name="l01526"></a>01526     <span class="comment"># preparation steps for the subdirectories.</span>
+<a name="l01527"></a>01527     <span class="keywordflow">if</span> [ ! <span class="stringliteral">&quot;x$CONFIG_SUBDIRS&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l01528"></a>01528         $VERBOSE_ECHO <span class="stringliteral">&quot;Recursively configuring the following directories:&quot;</span>
+<a name="l01529"></a>01529         $VERBOSE_ECHO <span class="stringliteral">&quot;  $CONFIG_SUBDIRS&quot;</span>
+<a name="l01530"></a>01530         <span class="keywordflow">for</span> dir <span class="keywordflow">in</span> $CONFIG_SUBDIRS ; do
+<a name="l01531"></a>01531             $VERBOSE_ECHO <span class="stringliteral">&quot;Processing recursive configure in $dir&quot;</span>
+<a name="l01532"></a>01532             cd <span class="stringliteral">&quot;$START_PATH&quot;</span>
+<a name="l01533"></a>01533             cd <span class="stringliteral">&quot;$dir&quot;</span>
+<a name="l01534"></a>01534 
+<a name="l01535"></a>01535             <span class="comment"># new directory, prepare</span>
+<a name="l01536"></a>01536             initialize
+<a name="l01537"></a>01537 
+<a name="l01538"></a>01538             <span class="comment"># run manual steps for the subdir and any others below</span>
+<a name="l01539"></a>01539             recursive_manual_autogen
+<a name="l01540"></a>01540         done
+<a name="l01541"></a>01541     fi
+<a name="l01542"></a>01542 }
 <a name="l01543"></a>01543 
-<a name="l01544"></a>01544 <span class="comment">#########################</span>
-<a name="l01545"></a>01545 <span class="comment"># restore and summarize #</span>
-<a name="l01546"></a>01546 <span class="comment">#########################</span>
-<a name="l01547"></a>01547 cd <span class="stringliteral">&quot;$START_PATH&quot;</span>
-<a name="l01548"></a>01548 
-<a name="l01549"></a>01549 <span class="comment"># restore COPYING and INSTALL from backup if necessary</span>
-<a name="l01550"></a>01550 recursive_restore
+<a name="l01544"></a>01544 
+<a name="l01545"></a>01545 <span class="comment">################################</span>
+<a name="l01546"></a>01546 <span class="comment"># run manual preparation steps #</span>
+<a name="l01547"></a>01547 <span class="comment">################################</span>
+<a name="l01548"></a>01548 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$reconfigure_manually&quot;</span> = <span class="stringliteral">&quot;xyes&quot;</span> ] ; then
+<a name="l01549"></a>01549     $ECHO
+<a name="l01550"></a>01550     $ECHO $ECHO_N <span class="stringliteral">&quot;Preparing build ... $ECHO_C&quot;</span>
 <a name="l01551"></a>01551 
-<a name="l01552"></a>01552 <span class="comment"># make sure we end up with a configure script</span>
-<a name="l01553"></a><a class="code" href="namespaceautogen.html#aa61ab0bd2126304c82d30cb83633fabe">01553</a> config_ac=<span class="stringliteral">&quot;`locate_configure_template`&quot;</span>
-<a name="l01554"></a><a class="code" href="namespaceautogen.html#a73d7cabcf2def1e6e42b1c9d39b3b784">01554</a> config=<span class="stringliteral">&quot;`echo $config_ac | sed &#39;s/\.ac$//&#39; | sed &#39;s/\.in$//&#39;`&quot;</span>
-<a name="l01555"></a>01555 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$config&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
-<a name="l01556"></a>01556     $VERBOSE_ECHO <span class="stringliteral">&quot;Could not locate the configure template (from `pwd`)&quot;</span>
-<a name="l01557"></a>01557 fi
-<a name="l01558"></a>01558 
-<a name="l01559"></a>01559 <span class="comment"># summarize</span>
-<a name="l01560"></a>01560 $ECHO <span class="stringliteral">&quot;done&quot;</span>
-<a name="l01561"></a>01561 $ECHO
-<a name="l01562"></a>01562 <span class="keywordflow">if</span> test <span class="stringliteral">&quot;x$config&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> -o ! -f <span class="stringliteral">&quot;$config&quot;</span> ; then
-<a name="l01563"></a>01563     $ECHO <span class="stringliteral">&quot;WARNING: The $PROJECT build system should now be prepared but there&quot;</span>
-<a name="l01564"></a>01564     $ECHO <span class="stringliteral">&quot;does not seem to be a resulting configure file.  This is unexpected&quot;</span>
-<a name="l01565"></a>01565     $ECHO <span class="stringliteral">&quot;and likely the result of an error.  You should run $NAME_OF_AUTOGEN&quot;</span>
-<a name="l01566"></a>01566     $ECHO <span class="stringliteral">&quot;with the --verbose option to get more details on a potential&quot;</span>
-<a name="l01567"></a>01567     $ECHO <span class="stringliteral">&quot;misconfiguration.&quot;</span>
-<a name="l01568"></a>01568 <span class="keywordflow">else</span>
-<a name="l01569"></a>01569     $ECHO <span class="stringliteral">&quot;The $PROJECT build system is now prepared.  To build here, run:&quot;</span>
-<a name="l01570"></a>01570     $ECHO <span class="stringliteral">&quot;  $config&quot;</span>
-<a name="l01571"></a>01571     $ECHO <span class="stringliteral">&quot;  make&quot;</span>
-<a name="l01572"></a>01572 fi
-<a name="l01573"></a>01573 
-<a name="l01574"></a>01574 
-<a name="l01575"></a>01575 <span class="comment"># Local Variables:</span>
-<a name="l01576"></a>01576 <span class="comment"># mode: sh</span>
-<a name="l01577"></a>01577 <span class="comment"># tab-width: 8</span>
-<a name="l01578"></a>01578 <span class="comment"># sh-basic-offset: 4</span>
-<a name="l01579"></a>01579 <span class="comment"># sh-indentation: 4</span>
-<a name="l01580"></a>01580 <span class="comment"># indent-tabs-mode: t</span>
-<a name="l01581"></a>01581 <span class="comment"># End:</span>
-<a name="l01582"></a>01582 <span class="comment"># ex: shiftwidth=4 tabstop=8</span>
+<a name="l01552"></a>01552     recursive_manual_autogen
+<a name="l01553"></a>01553 fi
+<a name="l01554"></a>01554 
+<a name="l01555"></a>01555 
+<a name="l01556"></a>01556 <span class="comment">#########################</span>
+<a name="l01557"></a>01557 <span class="comment"># restore and summarize #</span>
+<a name="l01558"></a>01558 <span class="comment">#########################</span>
+<a name="l01559"></a>01559 cd <span class="stringliteral">&quot;$START_PATH&quot;</span>
+<a name="l01560"></a>01560 
+<a name="l01561"></a>01561 <span class="comment"># restore COPYING and INSTALL from backup if necessary</span>
+<a name="l01562"></a>01562 recursive_restore
+<a name="l01563"></a>01563 
+<a name="l01564"></a>01564 <span class="comment"># make sure we end up with a configure script</span>
+<a name="l01565"></a><a class="code" href="namespaceautogen.html#aa61ab0bd2126304c82d30cb83633fabe">01565</a> config_ac=<span class="stringliteral">&quot;`locate_configure_template`&quot;</span>
+<a name="l01566"></a><a class="code" href="namespaceautogen.html#a73d7cabcf2def1e6e42b1c9d39b3b784">01566</a> config=<span class="stringliteral">&quot;`echo $config_ac | sed &#39;s/\.ac$//&#39; | sed &#39;s/\.in$//&#39;`&quot;</span>
+<a name="l01567"></a>01567 <span class="keywordflow">if</span> [ <span class="stringliteral">&quot;x$config&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> ] ; then
+<a name="l01568"></a>01568     $VERBOSE_ECHO <span class="stringliteral">&quot;Could not locate the configure template (from `pwd`)&quot;</span>
+<a name="l01569"></a>01569 fi
+<a name="l01570"></a>01570 
+<a name="l01571"></a>01571 <span class="comment"># summarize</span>
+<a name="l01572"></a>01572 $ECHO <span class="stringliteral">&quot;done&quot;</span>
+<a name="l01573"></a>01573 $ECHO
+<a name="l01574"></a>01574 <span class="keywordflow">if</span> test <span class="stringliteral">&quot;x$config&quot;</span> = <span class="stringliteral">&quot;x&quot;</span> -o ! -f <span class="stringliteral">&quot;$config&quot;</span> ; then
+<a name="l01575"></a>01575     $ECHO <span class="stringliteral">&quot;WARNING: The $PROJECT build system should now be prepared but there&quot;</span>
+<a name="l01576"></a>01576     $ECHO <span class="stringliteral">&quot;does not seem to be a resulting configure file.  This is unexpected&quot;</span>
+<a name="l01577"></a>01577     $ECHO <span class="stringliteral">&quot;and likely the result of an error.  You should run $NAME_OF_AUTOGEN&quot;</span>
+<a name="l01578"></a>01578     $ECHO <span class="stringliteral">&quot;with the --verbose option to get more details on a potential&quot;</span>
+<a name="l01579"></a>01579     $ECHO <span class="stringliteral">&quot;misconfiguration.&quot;</span>
+<a name="l01580"></a>01580 <span class="keywordflow">else</span>
+<a name="l01581"></a>01581     $ECHO <span class="stringliteral">&quot;The $PROJECT build system is now prepared.  To build here, run:&quot;</span>
+<a name="l01582"></a>01582     $ECHO <span class="stringliteral">&quot;  $config&quot;</span>
+<a name="l01583"></a>01583     $ECHO <span class="stringliteral">&quot;  make&quot;</span>
+<a name="l01584"></a>01584 fi
+<a name="l01585"></a>01585 
+<a name="l01586"></a>01586 <span class="comment"># finish up where we started</span>
+<a name="l01587"></a>01587 cd <span class="stringliteral">&quot;$START_PATH&quot;</span>
+<a name="l01588"></a>01588 
+<a name="l01589"></a>01589 <span class="comment"># Local Variables:</span>
+<a name="l01590"></a>01590 <span class="comment"># mode: sh</span>
+<a name="l01591"></a>01591 <span class="comment"># tab-width: 8</span>
+<a name="l01592"></a>01592 <span class="comment"># sh-basic-offset: 4</span>
+<a name="l01593"></a>01593 <span class="comment"># sh-indentation: 4</span>
+<a name="l01594"></a>01594 <span class="comment"># indent-tabs-mode: t</span>
+<a name="l01595"></a>01595 <span class="comment"># End:</span>
+<a name="l01596"></a>01596 <span class="comment"># ex: shiftwidth=4 tabstop=8</span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
-      <li class="navelem"><a class="el" href="autogen_8sh.html">autogen.sh</a>      </li>
-      <li class="footer">Generated on Fri Oct 14 2011 18:00:35 for Openbenchmarks by&#160;
+      <li class="navelem"><a class="el" href="buildconf_2autogen_8sh.html">autogen.sh</a>      </li>
+      <li class="footer">Generated on Thu Oct 27 2011 17:48:24 for Openbenchmarks by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

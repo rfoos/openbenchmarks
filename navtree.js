@@ -4,12 +4,32 @@ var NAVTREE =
     [ "Openbenchmarks - Open Source Benchmark Collection", "index.html", null ],
     [ "Namespace List", "namespaces.html", [
       [ "autogen", "namespaceautogen.html", null ],
-      [ "postmark_1", "namespacepostmark__1.html", null ]
+      [ "dhrystone_2", "namespacedhrystone__2.html", null ],
+      [ "helpers", "namespacehelpers.html", null ],
+      [ "httperf-run", "namespacehttperf-run.html", null ],
+      [ "iperf_2", "namespaceiperf__2.html", null ],
+      [ "netperf_2", "namespacenetperf__2.html", null ],
+      [ "postmark_1", "namespacepostmark__1.html", null ],
+      [ "run", "namespacerun.html", null ],
+      [ "suite", "namespacesuite.html", null ]
     ] ],
     [ "Namespace Members", "namespacemembers.html", null ],
     [ "File List", "files.html", [
-      [ "buildconf/autogen.sh", "autogen_8sh.html", null ],
-      [ "recipes/postmark/postmark_1.51.bb", "postmark__1_851_8bb.html", null ]
+      [ "buildconf/autogen.sh", "buildconf_2autogen_8sh.html", null ],
+      [ "buildconf/test/helpers.sh", "helpers_8sh.html", null ],
+      [ "buildconf/test/suite.sh", "suite_8sh.html", null ],
+      [ "buildconf/test/detect-foreign-configure/run.sh", "detect-foreign-configure_2run_8sh.html", null ],
+      [ "buildconf/test/detect-foreign-makefile-am/run.sh", "detect-foreign-makefile-am_2run_8sh.html", null ],
+      [ "buildconf/test/neither-foreign-nor-cygnus/run.sh", "neither-foreign-nor-cygnus_2run_8sh.html", null ],
+      [ "httperf/httperf-run.sh", "httperf-run_8sh.html", null ],
+      [ "iperf/autogen.sh", "iperf_2autogen_8sh.html", null ],
+      [ "netperf/autogen.sh", "netperf_2autogen_8sh.html", null ],
+      [ "nuttcp/autogen.sh", "nuttcp_2autogen_8sh.html", null ],
+      [ "recipes/dhrystone/dhrystone_2.1.bb", "dhrystone__2_81_8bb.html", null ],
+      [ "recipes/iperf/iperf_2.0.5.bb", "iperf__2_80_85_8bb.html", null ],
+      [ "recipes/netperf/netperf_2.5.bb", "netperf__2_85_8bb.html", null ],
+      [ "recipes/postmark/postmark_1.51.bb", "postmark__1_851_8bb.html", null ],
+      [ "ttcp/autogen.sh", "ttcp_2autogen_8sh.html", null ]
     ] ]
   ] ]
 ];

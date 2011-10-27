@@ -2,11 +2,31 @@
   <topic label="Openbenchmarks - Open Source Benchmark Collection" href="index.html"/>
   <topic label="Namespace List" href="namespaces.html">
     <topic label="autogen" href="namespaceautogen.html"/>
+    <topic label="dhrystone_2" href="namespacedhrystone__2.html"/>
+    <topic label="helpers" href="namespacehelpers.html"/>
+    <topic label="httperf-run" href="namespacehttperf-run.html"/>
+    <topic label="iperf_2" href="namespaceiperf__2.html"/>
+    <topic label="netperf_2" href="namespacenetperf__2.html"/>
     <topic label="postmark_1" href="namespacepostmark__1.html"/>
+    <topic label="run" href="namespacerun.html"/>
+    <topic label="suite" href="namespacesuite.html"/>
   </topic>
   <topic label="Namespace Members" href="namespacemembers.html"/>
   <topic label="File List" href="files.html">
-    <topic label="buildconf/autogen.sh" href="autogen_8sh.html"/>
+    <topic label="buildconf/autogen.sh" href="buildconf_2autogen_8sh.html"/>
+    <topic label="buildconf/test/helpers.sh" href="helpers_8sh.html"/>
+    <topic label="buildconf/test/suite.sh" href="suite_8sh.html"/>
+    <topic label="buildconf/test/detect-foreign-configure/run.sh" href="detect-foreign-configure_2run_8sh.html"/>
+    <topic label="buildconf/test/detect-foreign-makefile-am/run.sh" href="detect-foreign-makefile-am_2run_8sh.html"/>
+    <topic label="buildconf/test/neither-foreign-nor-cygnus/run.sh" href="neither-foreign-nor-cygnus_2run_8sh.html"/>
+    <topic label="httperf/httperf-run.sh" href="httperf-run_8sh.html"/>
+    <topic label="iperf/autogen.sh" href="iperf_2autogen_8sh.html"/>
+    <topic label="netperf/autogen.sh" href="netperf_2autogen_8sh.html"/>
+    <topic label="nuttcp/autogen.sh" href="nuttcp_2autogen_8sh.html"/>
+    <topic label="recipes/dhrystone/dhrystone_2.1.bb" href="dhrystone__2_81_8bb.html"/>
+    <topic label="recipes/iperf/iperf_2.0.5.bb" href="iperf__2_80_85_8bb.html"/>
+    <topic label="recipes/netperf/netperf_2.5.bb" href="netperf__2_85_8bb.html"/>
     <topic label="recipes/postmark/postmark_1.51.bb" href="postmark__1_851_8bb.html"/>
+    <topic label="ttcp/autogen.sh" href="ttcp_2autogen_8sh.html"/>
   </topic>
 </toc>
