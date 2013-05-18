@@ -39,6 +39,7 @@ memtester - http://pyropus.ca/software/memtester/old-versions/memtester-4.2.2.ta
 tiobench - cvs -d:pserver:anonymous@cvs.tiobench.sourceforge.net:/cvsroot/tiobench
 tiobench - http://sourceforge.net/projects/tiobench/files/tiobench/0.3.3/tiobench-0.3.3.tar.gz
 tiobench 0.4.1 - wget http://tiobench.cvs.sourceforge.net/viewvc/tiobench/tiobench/?view=tar -O tiobench-tiobench.tar.gz
+coremark - http://coremark.org
 
 Changelog:
 - Create grandmaster -> master, gh-pages peers for doxygen site.
@@ -47,6 +48,7 @@ Changelog:
 - Add benchmarks
 - Porting Iperf: undefined reference to rpl_malloc
 http://lecs.cs.ucla.edu/wiki/index.php/Cross_compile_iperf
+- Add coremark, fork to add autotools/toolchains.
 
 
 
