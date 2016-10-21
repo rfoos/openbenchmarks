@@ -82,7 +82,8 @@
 #include <errno.h>
 #include <string.h>
 #include <time.h>
-#include <math.h>
+// build breaks on 'struct __is_integer<int>' in cpp_type_traits.h
+//#include <math.h>
 
 #ifdef WIN32
 
