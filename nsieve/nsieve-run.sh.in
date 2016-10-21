@@ -1,10 +1,10 @@
 #!/bin/bash
-## Automated run of Bonnie.
+## Run script for NSieve
 # @author Rick Foos
 # @file
 
 #debug
-set -x #echo onset +x #echo off
+#set -x #echo onset +x #echo off
 
 # Simple optarg to set environment variables, and execute commands.
 for i
@@ -38,13 +38,13 @@ do
     fi
 done
 
-# Set Default values from Autotools, may be overridden in command line
-[ -n "${srcdir}" ] || srcdir=$(dirname $0) # srcdir: @srcdir@
-[ -n "${bindir}" ] || bindir=$(dirname $0) # bindir: @bindir@
-[ -n "${SIMULATOR}" ] || SIMULATOR=@SIMULATOR@
-[ -n "${PROGRAM}"  ] || PROGRAM=${bindir}/bonnie
-[ -n "${OUTFILE}" ] || OUTFILE="${srcdir}/bonnie.txt"
-[ -n "${ARGS}" ] || ARGS="-d /tmp -s 2 -r 1"
+## Allows Simulator or other exec tools.
+[ -n ${SIMULATOR} ] || SIMULATOR="@SIMULATOR@"
+[ -n "${srcdir}" ] || srcdir="$(dirname $0)" # srcdir: @srcdir@
+[ -n "${bindir}" ] || bindir="$(dirname $0)" # bindir: @bindir@
+[ -n "${PROGRAM}" ] || PROGRAM="${bindir}/nsieve"
+[ -n "${OUTFILE}" ] || OUTFILE="${srcdir}/nsieve.txt"
+#[ -n "${ARGS}" ] || ARGS=""
 
 # Command Execution
 [ "${RUNCMD}" == "clean" ] && rm -f ${OUTFILE} && echo "INFO: clean..."
@@ -58,9 +58,15 @@ fi
 
 if [ -f "${OUTFILE}" ]
 then
-	echo "INFO: skipping, results in ${OUTFILE}"
+    echo "INFO: RERUN results in ${OUTFILE}"
 else
-	echo "INFO: running ${PROGRAM} ${ARGS} >${OUTFILE}..."
-	$SIMULATOR ${PROGRAM} ${ARGS} >${OUTFILE}
+    echo "INFO: running ${PROGRAM} ..."
+    $SIMULATOR ${PROGRAM} ${ARGS} >${OUTFILE}
+    rc=$?
+    if [ "$rc" != "0" ]
+    then
+        echo "ERROR: run failed: $rc"
+        rm -f ${OUTFILE}
+    fi
 fi
 

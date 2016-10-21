@@ -40,9 +40,9 @@ done
 
 ## Allows Simulator or other exec tools.
 [ -n ${SIMULATOR} ] || SIMULATOR="@SIMULATOR@"
-[ -n "${srcdir}" ] || srcdir="$(dirname $0)" # srcdir: @srcdir@
+[ -n "${srcdir}" ] || srcdir="$(dirname $0)/src" # srcdir: @srcdir@
 [ -n "${bindir}" ] || bindir="$(dirname $0)" # bindir: @bindir@
-[ -n "${PROGRAM}" ] || PROGRAM="${bindir}/httperf"
+[ -n "${PROGRAM}" ] || PROGRAM="${srcdir}/httperf"
 [ -n "${OUTFILE}" ] || OUTFILE="${srcdir}/httperf.txt"
 #[ -n "${ARGS}" ] || ARGS=""
 #[ -n "${SERVERARGS}" ] || SERVERARGS=""

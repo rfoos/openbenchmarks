@@ -75,4 +75,4 @@ AC_FUNC_STRTOD
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([gethostbyname gettimeofday memset munmap select socket strcasecmp strchr strdup strerror strncasecmp strrchr strstr strtol strtoul inet_aton getopt_long])
 
-AC_OUTPUT(Makefile man/Makefile src/stat/Makefile src/lib/Makefile src/gen/Makefile src/Makefile)
+AC_OUTPUT([Makefile man/Makefile src/stat/Makefile src/lib/Makefile src/gen/Makefile src/Makefile httperf-run.sh], [chmod +x httperf-run.sh])

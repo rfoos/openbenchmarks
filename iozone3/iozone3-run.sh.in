@@ -23,7 +23,7 @@ done
 
 [ -n "${bindir}" ] || bindir=$(dirname $0)
 [ -n "${srcdir}" ] || srcdir=$(dirname $0)
-[ -n "${PROGRAM}" ] || PROGRAM='${bindir}/iozone"
+[ -n "${PROGRAM}" ] || PROGRAM="${bindir}/iozone"
 [ -n "${OUTFILE}" ] || OUTFILE="${srcdir}/iozone.txt"
 [ -n "${LOOPS}" ] || LOOPS=10000
 

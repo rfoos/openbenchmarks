@@ -97,4 +97,4 @@ AC_CHECK_FUNCS([getpagesize gettimeofday memset rmdir strdup uname])
 # Pass Simulator
 AC_SUBST([SIMULATOR])
 AC_CONFIG_FILES([Makefile])
-AC_OUTPUT([bonnie.h port.h bonnie++.spec bon_csv2html bon_csv2txt sun/pkginfo bonnie-run.sh],[chmod a+x bonnie-run.sh])
+AC_OUTPUT([bonnie.h port.h bonnie++.spec bon_csv2html bon_csv2txt sun/pkginfo bonnie-run.sh], [chmod a+x bonnie-run.sh])
