@@ -3,6 +3,7 @@ AC_INIT([openbenchmarks],[1.0])
 AC_CONFIG_SRCDIR([README])
 AM_INIT_AUTOMAKE([foreign])
 AC_ARG_VAR([SUBDIRS],[benchmarks])
+AC_CONFIG_HEADERS([config.h])
 
 # If running with --config-cache, save a little time here.
 AC_PROG_MAKE_SET

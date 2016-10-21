@@ -14,6 +14,3 @@ pit_server_SOURCES = src/current/pit_server.c
 
 iozone_SOURCES = src/current/libasync.c  src/current/libbif.c src/current/iozone.c 
 
-
-
-	

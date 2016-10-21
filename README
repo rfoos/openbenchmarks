@@ -1,5 +1,8 @@
 Openbenchmarks - Open Source Benchmark Collection
 
+Quickstart
+    ./autogen.sh
+
 There are a number of tried and true benchmarks that run great on embedded
 systems, break drivers, useful for both QA and Performance Studies. With
 a little modification and upgrades, these can be brought to a common level

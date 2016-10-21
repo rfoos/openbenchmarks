@@ -3,7 +3,7 @@
 
 AC_INIT([iozone3], [3.397])
 AC_CONFIG_SRCDIR([src/current/fileop.c])
-AM_INIT_AUTOMAKE([foreign])
+AM_INIT_AUTOMAKE([foreign subdir-objects])
 AM_CONFIG_HEADER([config.h])
 
 # Checks for programs.
@@ -47,7 +47,7 @@ AC_HAVE_LIBRARY([thread])
 AC_CHECK_HEADERS([arpa/inet.h fcntl.h limits.h malloc.h netdb.h netinet/in.h stdlib.h string.h strings.h sys/file.h sys/socket.h sys/time.h unistd.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
-AC_HEADER_STDBOOL
+AC_CHECK_HEADER_STDBOOL
 AC_TYPE_OFF_T
 AC_TYPE_PID_T
 AC_TYPE_SIZE_T
@@ -61,6 +61,5 @@ AC_CHECK_FUNCS([malloc bzero ftruncate getcwd gethostbyname gethostname getpages
 
 # Pass Simulator
 AC_SUBST([SIMULATOR])
-AC_CONFIG_FILES([Makefile iozone3-run.sh],[chmod a+x iozone3-run.sh])
+AC_CONFIG_FILES([Makefile iozone3-run.sh], [chmod a+x iozone3-run.sh])
 AC_OUTPUT
-
