@@ -18,6 +18,7 @@ bonnie
 iperf
 netpipe
 nuttcp
+nsieve
 memtester
 postmark
 ttcp
