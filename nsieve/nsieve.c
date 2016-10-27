@@ -102,15 +102,28 @@
 /***********************/
 
 /* Modifications for embedded target. */
-/* Allow printf removal for power measurement. */
-#ifdef NOPRINTF
-#define PRINTF(x)
-#else
+/* Allow printf removal. */
+#ifndef NOPRINTF
 #define PRINTF(x) printf x
+#else
+#define PRINTF(x)
 #endif
+
 /* Clear warnings. */
 int dtime(double *);
 int SIEVE(long,long,long);
+
+/* Options to run in minimal memory. */
+#ifdef MICROCONTROLLER
+int em_end(void);
+void *em_malloc(long size);
+void em_free(void *ptr);
+/*#define LIMIT 0 // 8192 = 8k, 16k*/
+#define LIMIT 1 // 10000 - 16k 
+/*#define LIMIT 3 // 40000 - 32k*/
+/*#define LIMIT 4 // 80000 - 64k*/
+/*#define LIMIT 5 // 160000 - 256k*/
+#endif
 
 #include <stdio.h>
 #ifndef vax
@@ -118,8 +131,9 @@ int SIEVE(long,long,long);
 #endif
 #include <math.h>
 		    /***********************************************/
-#define LIMIT 9      /* You may need to change this to '3' for PC's */
-		    /* and Clones or you can experiment with higher*/
+#ifndef LIMIT
+#define LIMIT 9 /* You may need to change this to '3' for PC's */
+#endif		    /* and Clones or you can experiment with higher*/
 		    /* values, but '13' is currently the max.      */
 		    /***********************************************/
 
@@ -154,6 +168,13 @@ long Number_Of_Primes[21]; /* List of Correct Number of Primes for */
 
 long NLoops[21];
 
+#ifdef MICROCONTROLLER
+/* Hook for embedded system init. */
+int system_init(void);
+#define SYSTEM_INIT() system_init()
+#else
+#define SYSTEM_INIT()
+#endif
 
 int main()
 {
@@ -161,6 +182,7 @@ int main()
 long  i,j,k,p;
 double sumtime;
 
+SYSTEM_INIT();
 
 PRINTF(("\n   Sieve of Eratosthenes (Scaled to 10 Iterations)\n"));
 PRINTF(("   Version 1.2b, 26 Sep 1992\n\n"));
@@ -278,6 +300,10 @@ PRINTF(("\n   Relative to 10 Iterations and the 8191 Array Size:\n"));
 PRINTF(("   Average RunTime = %8.3f (sec)\n",sumtime));
 PRINTF(("   High  MIPS      = %8.1f\n",hmips));
 PRINTF(("   Low   MIPS      = %8.1f\n\n",lmips));
+#ifdef MICROCONTROLLER
+em_end();
+while(1);
+#endif
 return ErrorFlag;
 }
 
@@ -285,14 +311,14 @@ return ErrorFlag;
 /**************************************/
 /*  Sieve of Erathosthenes Program    */
 /**************************************/
-int
-SIEVE(m,n,p)
+
+int SIEVE(m,n,p)
 long m,n,p;
 {
 
 register char *flags;
-register long i,prime,k,ci;
-register long count,size;
+register long i,prime=0,k,ci=0;
+register long count=0,size;
 
 long  iter,j;
 
@@ -304,7 +330,11 @@ int   free();
 #endif
 
 size  = m - 1;
+#ifndef MICROCONTROLLER
 ptr   = malloc(m);
+#else
+ptr   = em_malloc(m);
+#endif
 
    ErrorFlag = 0L;
    N_Prime   = 0L;
@@ -358,8 +388,12 @@ ptr   = malloc(m);
    }                                               
 						   
    dtime(TimeArray);
-
+#ifndef MICROCONTROLLER
    free(ptr);
+#else
+    em_free(ptr);
+#endif
+
 
    runtime = (TimeArray[1] - nulltime) * 10.0 / (double)n;
 
